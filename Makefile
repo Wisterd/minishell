@@ -6,7 +6,9 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 LIBFT =  -L ./libft #-lftlibft
 
-SRC_FILES = $(addprefix $(SRC_DIR), main.c)
+SRC_FILES = $(addprefix $(SRC_DIR), \
+	mainc.c \
+	parsing.c)
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
