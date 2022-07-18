@@ -1,51 +1,29 @@
 NAME = minishell
-RM = rm -f
-DEPS = Makefile ./inc/minishell.h
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=thread
+DEPS = $(INCLUDES)minishell.h Makefile
+INCLUDES = inc/
+SRC_DIR = src/
+OBJ_DIR = obj/
 
-# compilation
-CC = cc
-FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+SRC_FILES = $(addprefix $(SRC_DIR), main.c)
+OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
-# directories
-SRCDIR	:=	./src
-INCDIR	:=	./inc
-OBJDIR	:=	./obj
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
+	gcc $(CFLAGS) -c $< -o $@
 
-# sources and objects
-SRC = main.c \
+$(NAME): $(OBJ) $(DEPS)
+	gcc $(CFLAGS) $(OBJ) $(FT_PRINTF) -o $(NAME)
 
-OBJ := $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
-SRC	:= $(addprefix $(SRCDIR)/, $(SRC))
+all : $(NAME)
 
-# libft
-LIBFT_PATH = ./libft/libft.a
-LIBDIR	=	./libft/
-LIBFTINC = -I ./libft
-LIBFT_LINK = -L ./libft -l ft -l pthread
+clean :
+	rm -rf $(OBJ_DIR)
 
-# rules
-all: obj $(LIBFT_PATH) $(NAME)
+fclean : clean
+	rm -f $(NAME)
 
-obj:
-	mkdir -p $(OBJDIR)
+re : fclean all
 
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c $(DEPS)
-	$(CC) $(FLAGS) $(LIBFTINC) -I $(INCDIR) -o $@ -c $<
+.PHONY : all clean fclean re
 
-$(LIBFT_PATH):
-	@make -C $(LIBDIR)
-
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) $(LIBFT_LINK) -o $(NAME) $(FLAGS)
-
-clean:
-	rm -rf $(OBJDIR)
-	make -C $(LIBDIR) clean
-
-fclean: clean
-	rm -rf $(LIBFT_PATH)
-	rm -rf $(NAME)
-
-re: fclean all
-
-.PHONY: all clean fclean re
