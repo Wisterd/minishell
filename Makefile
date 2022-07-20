@@ -4,7 +4,7 @@ DEPS = $(INCLUDES)minishell.h Makefile
 INCLUDES = inc/
 SRC_DIR = src/
 OBJ_DIR = obj/
-LIBFT =  -L ./libft #-lftlibft
+LIBFT =  -L ./libft -lft
 
 SRC_FILES = $(addprefix $(SRC_DIR), \
 	main.c \
@@ -17,7 +17,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 $(NAME): $(OBJ) $(DEPS)
 	$(MAKE) -C libft/
-	gcc $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	gcc $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 all : $(NAME)
 
