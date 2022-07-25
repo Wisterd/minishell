@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_strldup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/25 20:24:02 by vbarbier         ###   ########.fr       */
+/*   Created: 2022/07/25 18:27:40 by vbarbier          #+#    #+#             */
+/*   Updated: 2022/07/25 18:31:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-void	mini_exit(char *prompt)
+char	*ft_strldup(const char *s1, size_t size)
 {
-	while (ft_strncmp(prompt, "exit", 4) != 0)
+	int		len;
+	char	*cp;
+	int		i;
+
+	if (!size)
+		return (NULL);
+	len = ft_strlen(s1);
+	cp = (char *)malloc(len + 1);
+	i = 0;
+	if (!cp)
+		return (NULL);
+	else
 	{
-		prompt = readline("minishell> ");
-		if (prompt)
-			add_history(prompt);
-		printf("%s \n",prompt);
+		while (i < len + 1 && i < size)
+		{
+			cp[i] = s1[i];
+			i++;
+		}
 	}
-	clear_history();
-	exit(EXIT_SUCCESS);
-}
-
-int main(int ac, char **av)
-{
-	char	*prompt;
-	
-	parse(ac, av);
-	
-	prompt = "1";
-	mini_exit(prompt);
-	
-
+	return (cp);
 }
