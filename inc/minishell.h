@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/25 20:32:43 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/27 17:07:10 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define SPC 2
 # define PIPE 3
 # define QUOTE 4
+# define REDIR 5
+# define DOLLAR 6
 
 typedef struct s_lexer
 {
@@ -36,10 +38,11 @@ typedef struct s_lexer
 }			t_lexer;
 
 // lexer.c
-t_lexer *parse(int ac, char **av);
+t_lexer *parse(char *av);
 
-
-//test
+// error
+# define ERROR_
+// test
 # define TEST_LEXER 1
 
 #endif
