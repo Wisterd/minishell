@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/27 17:07:10 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/28 04:09:13 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,29 @@
 # define QUOTE 4
 # define REDIR 5
 # define DOLLAR 6
+# define SPECIAL 7
 
 typedef struct s_lexer
 {
 	int		id;
 	char	*contenu;
-	int		pos;
+	int		type;
 	struct s_lexer	*next;
 	struct s_lexer	*pre;
 }			t_lexer;
 
+typedef struct s_pars_error
+{
+	int	i;
+	char c;
+	char *fct;
+}	t_pars_error;
+
 // lexer.c
-t_lexer *parse(char *av);
+void *parse(char *av);
 
 // error
-# define ERROR_
+# define ERROR_MALLOC 42
 // test
 # define TEST_LEXER 1
 

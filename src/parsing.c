@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/27 16:19:23 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/07/29 03:28:23 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	mini_exit(char *prompt)
 		}
 		printf("%s \n",prompt);
 	}
-	clear_history();
+	rl_clear_history();
+	// free les str du lexer , la lst de lexer et le lexer;
 	exit(EXIT_SUCCESS);
 }
 
