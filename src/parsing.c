@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/29 03:28:23 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:19:32 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	mini_exit(char *prompt)
 int main()
 {
 	char	*prompt;
-	
 	prompt = NULL;
 	mini_exit(prompt);
-	
-
 }

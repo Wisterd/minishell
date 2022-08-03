@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/30 04:24:04 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/03 12:09:44 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char *chartostr(char c)
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
- }
+}
 
 void print_error(t_pars_error error)
 {
@@ -54,10 +54,6 @@ int	special_c(char *str)
 			return (SPECIAL);
 		}
 	i++;
-	//	if (str[i] == '\\' || str[i] == '>' ||  str[i] == '|' ||  str[i] == '<' 
-	//	|| str[i] == ';' || str[i])
-
-	//	if (str[i] == '$')
 	}
 	return (1);
 }
@@ -145,22 +141,34 @@ t_lexer	**lexing(char *prompt)
 	return (deb_lexer);
 }
 	
-t_lexer **fuz_lex_word(t_lexer	**deb_lexer)
+void fuz_lex_word(t_lexer **deb_lexer)
 {
-	//join contenu
 	t_lexer	*new_lexer;
+	t_lexer	*tmp_lexer;
 
 	new_lexer = *deb_lexer;
-	while (new_lexer->next)
+	while (new_lexer && new_lexer->next)
 	{
-		if (new_lexer->type == MOT && new_lexer->type == new_lexer->next->type)
+		if (new_lexer->type == MOT && new_lexer->next->type == MOT)
 		{
 			new_lexer->contenu = ft_strjoin(new_lexer->contenu, new_lexer->next->contenu);
-			new_lexer->id
+			tmp_lexer = new_lexer->next->next;
+			free(new_lexer->next);
+			new_lexer->next = tmp_lexer;
+			if (tmp_lexer)
+				tmp_lexer->pre = new_lexer;
 		}
-		new_lexer = new_lexer->next;
+		else if (new_lexer->next)
+		{
+			if (new_lexer->pre)
+				new_lexer->id = new_lexer->pre->id + 1;
+			new_lexer = new_lexer->next;
+		}
+		if (new_lexer->pre)
+			new_lexer->id = new_lexer->pre->id + 1;
 	}
 }
+
 void *parse(char *prompt)
 {
 	t_lexer	**deb_lexer;
@@ -170,8 +178,7 @@ void *parse(char *prompt)
 	deb_lexer = lexing(prompt);
 	fuz_lex_word(deb_lexer);
 	print_lexer(deb_lexer);
-	//tab_lexer = malloc((ac - 1) * sizeof(t_lexer));
-	//tab_lexer[i - 1] = create_lexer(prompt, ac);
+	// valide?
 	//test_lexer(tab_lexer);
 	//return (tab_lexer);
 	return (NULL);
