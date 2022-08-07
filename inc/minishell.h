@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/07/28 04:09:13 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/08 00:09:55 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,21 @@ typedef struct s_pars_error
 	char *fct;
 }	t_pars_error;
 
+// utilitaires_parsing.c
+char	*chartostr(char c);
+int		special_c(char *str);
+
 // lexer.c
-void *parse(char *av);
+void	print_lexer(t_lexer **deb_lexer);
+t_lexer	**lexing(char *prompt);
+void	free_lexer(t_lexer **deb_lexer);
+
+//lexer2.c
+void fuz_lex_word(t_lexer **deb_lexer);
+
+// error.c
+void	print_error(t_pars_error error);
+void	error_malloc(char *str);
 
 // error
 # define ERROR_MALLOC 42

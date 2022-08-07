@@ -6,59 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/07 23:53:21 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/08 00:01:47 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-char *chartostr(char c)
-{
-	char *str;
-
-	str = malloc(2 * sizeof(char));
-	if (!str)
-		error_malloc("chartostr");
-	str[0] = c;
-	str[1] = '\0';
-	return (str);
-}
-
-void print_error(t_pars_error error)
-{
-	if (error.i == SPECIAL)
-		printf("erreur de syntaxe près du symbole inattendu « %c »\n", error.c);
-	if (error.i == ERROR_MALLOC)
-		printf("erreur d'allocation de memoire, fonction %s", error.fct);
-}
-
-void	error_malloc(char *str)
-{
-	t_pars_error	error;
-	error.i = ERROR_MALLOC;
-	error.fct = str;
-	print_error(error);
-}
-
-int	special_c(char *str)
-{
-	int 			i;
-	t_pars_error	error;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\\' || str[i] == ';' || str[i] == '(' || str[i] == ')' || str[i] == '&')
-		{
-			error.c = str[i];
-			error.i = SPECIAL;
-			print_error(error);
-			return (SPECIAL);
-		}
-	i++;
-	}
-	return (1);
-}
 
 void	print_lexer(t_lexer **deb_lexer)
 {
@@ -93,7 +45,6 @@ void	add_lexer(t_lexer **deb_lexer, t_lexer *lexer)
 	lexer->id = new_lexer->id + 1;
 }
 
-//IA
 void free_lexer(t_lexer **deb_lexer)
 {
 	t_lexer *new_lexer;
@@ -161,47 +112,3 @@ t_lexer	**lexing(char *prompt)
 	return (deb_lexer);
 }
 	
-void fuz_lex_word(t_lexer **deb_lexer)
-{
-	t_lexer	*new_lexer;
-	t_lexer	*tmp_lexer;
-
-	new_lexer = *deb_lexer;
-	while (new_lexer && new_lexer->next)
-	{
-		if (new_lexer->type == MOT && new_lexer->next->type == MOT)
-		{
-			new_lexer->contenu = ft_strjoin_free(new_lexer->contenu, new_lexer->next->contenu);
-			tmp_lexer = new_lexer->next->next;
-			free(new_lexer->next);
-			new_lexer->next = tmp_lexer;
-			if (tmp_lexer)
-				tmp_lexer->pre = new_lexer;
-		}
-		else if (new_lexer->next)
-		{
-			if (new_lexer->pre)
-				new_lexer->id = new_lexer->pre->id + 1;
-			new_lexer = new_lexer->next;
-		}
-		if (new_lexer->pre)
-			new_lexer->id = new_lexer->pre->id + 1;
-	}
-}
-
-
-void *parse(char *prompt)
-{
-	t_lexer	**deb_lexer;
-	
-	if (special_c(prompt) == SPECIAL)
-		return (NULL);
-	deb_lexer = lexing(prompt);
-	fuz_lex_word(deb_lexer);
-	print_lexer(deb_lexer);
-	free_lexer(deb_lexer);
-	//valide ?
-	//test_lexer(tab_lexer);
-	//return (tab_lexer);
-	return (NULL);
-}
