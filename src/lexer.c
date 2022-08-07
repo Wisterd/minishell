@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/05 16:59:43 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/07 23:53:21 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char *chartostr(char c)
 	char *str;
 
 	str = malloc(2 * sizeof(char));
+	if (!str)
+		error_malloc("chartostr");
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
@@ -91,6 +93,24 @@ void	add_lexer(t_lexer **deb_lexer, t_lexer *lexer)
 	lexer->id = new_lexer->id + 1;
 }
 
+//IA
+void free_lexer(t_lexer **deb_lexer)
+{
+	t_lexer *new_lexer;
+	t_lexer *tmp;
+
+	new_lexer = *deb_lexer;
+	while (new_lexer)
+	{
+		tmp = new_lexer;
+		new_lexer = new_lexer->next;
+		free(tmp->contenu);
+		free(tmp);
+	}
+	free(deb_lexer);
+	deb_lexer = NULL;
+}
+
 void	create_lexer(t_lexer **deb_lexer, char *str, int type)
 {
 	t_lexer	*lexer;
@@ -151,7 +171,7 @@ void fuz_lex_word(t_lexer **deb_lexer)
 	{
 		if (new_lexer->type == MOT && new_lexer->next->type == MOT)
 		{
-			new_lexer->contenu = ft_strjoin(new_lexer->contenu, new_lexer->next->contenu);
+			new_lexer->contenu = ft_strjoin_free(new_lexer->contenu, new_lexer->next->contenu);
 			tmp_lexer = new_lexer->next->next;
 			free(new_lexer->next);
 			new_lexer->next = tmp_lexer;
@@ -169,6 +189,7 @@ void fuz_lex_word(t_lexer **deb_lexer)
 	}
 }
 
+
 void *parse(char *prompt)
 {
 	t_lexer	**deb_lexer;
@@ -178,6 +199,7 @@ void *parse(char *prompt)
 	deb_lexer = lexing(prompt);
 	fuz_lex_word(deb_lexer);
 	print_lexer(deb_lexer);
+	free_lexer(deb_lexer);
 	//valide ?
 	//test_lexer(tab_lexer);
 	//return (tab_lexer);

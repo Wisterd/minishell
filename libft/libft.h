@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 18:57:46 by mvue              #+#    #+#             */
-/*   Updated: 2022/07/25 18:43:33 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/05 18:07:17 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 // Nouvelle fct ajouter lors de minishell
 
 char	*ft_strldup(const char *s1, size_t size);
+char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif
