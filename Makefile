@@ -10,11 +10,11 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	main.c \
 	parsing.c\
 	lexer.c error.c lexer2.c utilitaires_parsing.c valide_lexer.c)
-#test.c)
+
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(DEPS)
+	@if [ ! -d "$(dir $@)" ]; then mkdir $(dir $@); fi
 	gcc $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(DEPS)
@@ -34,4 +34,3 @@ fclean : clean
 re : fclean all
 
 .PHONY : all clean fclean re
-

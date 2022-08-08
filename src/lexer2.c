@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/08 17:57:21 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/08 23:18:09 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 	{
 		if (new_lexer->type == type && new_lexer->next->type == type)
 		{
-			new_lexer->contenu = ft_strjoin_free(\
+			new_lexer->contenu = ft_strjoin_2free(\
 			new_lexer->contenu, new_lexer->next->contenu);
 			tmp_lexer = new_lexer->next->next;
 			free(new_lexer->next);
@@ -59,6 +59,27 @@ int	is_cmd(char *str)
 	
 }
 
+int pull_env(char *str)
+{
+	char **path;
+	int	i;
+
+	i = 0;
+	path = ft_split(getenv("PATH"), ':');
+	while (path[i])
+	{
+		path[i] = ft_strjoin_1free(path[i], "/");
+		path[i] = ft_strjoin_2free(path[i], str);
+		if (!access(path[i], F_OK))
+			return (1);
+		i++;
+	}
+ //  	printf("PATH environment variable == %s\n", path[0]);
+	// if (!access("./src/lexer2.c", F_OK))
+	// 	printf("JE PEUX %d",access("./src/lexer2.c", F_OK));
+	return(0);
+}
+
 void	word_or_cmd(t_lexer **deb_lexer)
 {
 	t_lexer	*new_lexer;
@@ -67,8 +88,8 @@ void	word_or_cmd(t_lexer **deb_lexer)
 	while (new_lexer)
 	{
 		if (new_lexer->type == MOT)
-			if (is_cmd(new_lexer->contenu))
-				new_lexer->type = CMD;			
+			// if (pull_env(new_lexer->contenu))
+			// 	new_lexer->type = CMD;
 		new_lexer = new_lexer->next;
 	}
 }

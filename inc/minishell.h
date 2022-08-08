@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/08 17:42:19 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/08 21:19:41 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	error_malloc(char *str);
 
 // error
 # define ERROR_MALLOC 42
+
 // test
 # define TEST_LEXER 1
 
