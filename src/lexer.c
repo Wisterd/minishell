@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/08 00:01:47 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:42:39 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_lexer(t_lexer **deb_lexer)
 {
-	t_lexer *new_lexer;
+	t_lexer	*new_lexer;
 
 	new_lexer = *deb_lexer;
 	while (new_lexer)
@@ -35,7 +35,7 @@ void	print_lexer(t_lexer **deb_lexer)
 
 void	add_lexer(t_lexer **deb_lexer, t_lexer *lexer)
 {
-	t_lexer *new_lexer;
+	t_lexer	*new_lexer;
 
 	new_lexer = *deb_lexer;
 	while (new_lexer->next)
@@ -45,10 +45,10 @@ void	add_lexer(t_lexer **deb_lexer, t_lexer *lexer)
 	lexer->id = new_lexer->id + 1;
 }
 
-void free_lexer(t_lexer **deb_lexer)
+void	free_lexer(t_lexer **deb_lexer)
 {
-	t_lexer *new_lexer;
-	t_lexer *tmp;
+	t_lexer	*new_lexer;
+	t_lexer	*tmp;
 
 	new_lexer = *deb_lexer;
 	while (new_lexer)
@@ -67,7 +67,7 @@ void	create_lexer(t_lexer **deb_lexer, char *str, int type)
 	t_lexer	*lexer;
 
 	lexer = malloc(sizeof(t_lexer));
-	if(!lexer)
+	if (!lexer)
 		error_malloc("create_lexer");
 	lexer->type = type;
 	lexer->contenu = str;
@@ -80,7 +80,6 @@ void	create_lexer(t_lexer **deb_lexer, char *str, int type)
 	}
 	else
 		add_lexer(deb_lexer, lexer);
-	
 }
 
 t_lexer	**lexing(char *prompt)
@@ -106,9 +105,8 @@ t_lexer	**lexing(char *prompt)
 		else if (prompt[i] == '$')
 			create_lexer(deb_lexer, chartostr(prompt[i]), DOLLAR);
 		else
-			create_lexer(deb_lexer, chartostr(prompt[i]) , MOT);
+			create_lexer(deb_lexer, chartostr(prompt[i]), MOT);
 		i++;
 	}
 	return (deb_lexer);
 }
-	

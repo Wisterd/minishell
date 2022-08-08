@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/07 23:59:51 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:33:59 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ void *parse(char *prompt)
 	if (special_c(prompt) == SPECIAL)
 		return (NULL);
 	deb_lexer = lexing(prompt);
-	fuz_lex_word(deb_lexer);
+	fuz_lex(deb_lexer, MOT);
+	fuz_lex(deb_lexer, SPC);
+	word_or_cmd(deb_lexer);
+	
 	print_lexer(deb_lexer);
 	free_lexer(deb_lexer);
+	
 	//valide ?
 	//test_lexer(tab_lexer);
 	//return (tab_lexer);
