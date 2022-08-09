@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/08 23:18:09 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/09 19:23:27 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,23 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 	}
 }
 
-int	is_cmd(char *str)
-{
-	if (ft_strncmp(str, "echo", 5) == 0)
-		return (1);
-	if (ft_strncmp(str, "cd", 3) == 0)
-		return (1);
-	if (ft_strncmp(str, "pwd", 4) == 0)
-		return (1);
-	if (ft_strncmp(str, "export" , 7) == 0)
-		return (1);
-	if (ft_strncmp(str, "unset", 6) == 0)
-		return (1);
-	if (ft_strncmp(str, "env", 4) == 0)
-		return (1);
-	return (0);
+// int	is_cmd(char *str)
+// {
+// 	if (ft_strncmp(str, "echo", 5) == 0)
+// 		return (1);
+// 	if (ft_strncmp(str, "cd", 3) == 0)
+// 		return (1);
+// 	if (ft_strncmp(str, "pwd", 4) == 0)
+// 		return (1);
+// 	if (ft_strncmp(str, "export" , 7) == 0)
+// 		return (1);
+// 	if (ft_strncmp(str, "unset", 6) == 0)
+// 		return (1);
+// 	if (ft_strncmp(str, "env", 4) == 0)
+// 		return (1);
+// 	return (0);
 	
-}
+// }
 
 int pull_env(char *str)
 {
@@ -69,14 +69,11 @@ int pull_env(char *str)
 	while (path[i])
 	{
 		path[i] = ft_strjoin_1free(path[i], "/");
-		path[i] = ft_strjoin_2free(path[i], str);
+		path[i] = ft_strjoin_1free(path[i], str);
 		if (!access(path[i], F_OK))
 			return (1);
 		i++;
 	}
- //  	printf("PATH environment variable == %s\n", path[0]);
-	// if (!access("./src/lexer2.c", F_OK))
-	// 	printf("JE PEUX %d",access("./src/lexer2.c", F_OK));
 	return(0);
 }
 
@@ -88,8 +85,8 @@ void	word_or_cmd(t_lexer **deb_lexer)
 	while (new_lexer)
 	{
 		if (new_lexer->type == MOT)
-			// if (pull_env(new_lexer->contenu))
-			// 	new_lexer->type = CMD;
+			if (pull_env(new_lexer->contenu))
+				new_lexer->type = CMD;
 		new_lexer = new_lexer->next;
 	}
 }
