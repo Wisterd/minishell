@@ -1,5 +1,5 @@
 NAME = minishell
-CFLAGS = #-Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS =  -g #-Wall -Wextra -Werror-fsanitize=thread
 DEPS = $(INCLUDES)minishell.h Makefile
 INCLUDES = inc/
 SRC_DIR = src/

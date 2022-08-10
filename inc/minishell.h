@@ -20,6 +20,6 @@ typedef struct s_garbage
 void	*ft_malloc(int size);
 void	garbage_collector(int mode, void *pointer);
 void	add_front(t_garbage **alst, void *pointer);
-void	rm_ele(t_garbage **l_malloc, void *pointer);
+void	rm_ele(t_garbage **l_garbage, void *pointer);
 
 #endif
