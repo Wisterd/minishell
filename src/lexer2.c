@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/09 19:23:27 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/11 22:42:38 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,6 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 	}
 }
 
-// int	is_cmd(char *str)
-// {
-// 	if (ft_strncmp(str, "echo", 5) == 0)
-// 		return (1);
-// 	if (ft_strncmp(str, "cd", 3) == 0)
-// 		return (1);
-// 	if (ft_strncmp(str, "pwd", 4) == 0)
-// 		return (1);
-// 	if (ft_strncmp(str, "export" , 7) == 0)
-// 		return (1);
-// 	if (ft_strncmp(str, "unset", 6) == 0)
-// 		return (1);
-// 	if (ft_strncmp(str, "env", 4) == 0)
-// 		return (1);
-// 	return (0);
-	
-// }
-
 int pull_env(char *str)
 {
 	char **path;
@@ -80,13 +62,20 @@ int pull_env(char *str)
 void	word_or_cmd(t_lexer **deb_lexer)
 {
 	t_lexer	*new_lexer;
+	int		possible_cmd;
 
+	possible_cmd = 1;
 	new_lexer = *deb_lexer;
 	while (new_lexer)
 	{
-		if (new_lexer->type == MOT)
+		if (new_lexer->type == MOT && possible_cmd)
 			if (pull_env(new_lexer->contenu))
+			{
 				new_lexer->type = CMD;
+				possible_cmd = 0;
+			}
+		if  (new_lexer->type == PIPE)
+			possible_cmd = 1;
 		new_lexer = new_lexer->next;
 	}
 }

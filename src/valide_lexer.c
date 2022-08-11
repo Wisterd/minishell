@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/08 17:45:00 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/11 23:06:13 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,20 @@ int	valide_redir(t_lexer *tmp_lexer)
 	t_pars_error	error;
 
 	if (tmp_lexer->type == REDIR)
-	{
-		if (!tmp_lexer->pre)
+	{	
+		while (tmp_lexer->next && tmp_lexer->next->type == SPC)
+			tmp_lexer = tmp_lexer->next;
+		if (!tmp_lexer->next)
 		{
-			error.str = tmp_lexer->contenu;
-			error.i = SPECIAL;
+			error.str = "newline";
+			error.i = REDIR;
+			print_error(error);
+			return (0);
+		}
+		if (tmp_lexer->next->type == REDIR)
+		{
+			error.str = tmp_lexer->next->contenu;
+			error.i = REDIR;
 			print_error(error);
 			return (0);
 		}
@@ -29,7 +38,7 @@ int	valide_redir(t_lexer *tmp_lexer)
 	return (1);
 }
 
-void	valide_lexer(t_lexer **deb_lexer)
+int	valide_lexer(t_lexer **deb_lexer)
 {
 	t_lexer	*tmp_lexer;
 
@@ -40,12 +49,10 @@ void	valide_lexer(t_lexer **deb_lexer)
 		// valide_pipe();
 		// valide_quote();
 		if (!valide_redir(tmp_lexer))
-		{
-			free_lexer(deb_lexer);
-		//	return(NULL);
-		}
+			return(0);
 		// valide_dollar();
 		tmp_lexer = tmp_lexer->next;
 	}
+	return (1);
 
 }
