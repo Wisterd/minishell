@@ -18,9 +18,22 @@ typedef struct s_garbage
 	struct s_garbage	*prev;
 }	t_garbage;
 
+typedef struct s_tab
+{
+	char			**tab;
+	struct s_tab	*next;
+	struct s_tab	*prev;
+}	t_tab;
+
+typedef struct s_args_exec
+{
+	t_tab	*tab_cmds;
+	t_tab	*tab_args;
+	char 	*path_cmd;
+}	t_args_exec;
+
 void	*ft_malloc(int size);
+void	ft_free(void *pointer);
 void	garbage_collector(int mode, void *pointer);
-void	add_front(t_garbage **alst, void *pointer);
-void	rm_ele(t_garbage **l_garbage, void *pointer);
 
 #endif

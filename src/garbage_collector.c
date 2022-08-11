@@ -14,7 +14,7 @@ void	ft_free(void *pointer)
 	free(pointer);
 }
 
-void	add_front(t_garbage **l_garbage, void *pointer)
+static void	add_front(t_garbage **l_garbage, void *pointer)
 {
 	t_garbage	*l_new;
 
@@ -31,7 +31,7 @@ void	add_front(t_garbage **l_garbage, void *pointer)
 		*l_garbage = l_new;
 }
 
-void	rm_ele(t_garbage **l_garbage, void *pointer)
+static void	rm_ele(t_garbage **l_garbage, void *pointer)
 {
 	t_garbage *list;
 
@@ -40,7 +40,6 @@ void	rm_ele(t_garbage **l_garbage, void *pointer)
 	{
 		if (list->pointer == pointer)
 		{
-			printf("freeing : %p\n", list->pointer);
 			if (!list->prev && list->next)
 			{
 				list->next->prev = NULL;
@@ -55,7 +54,7 @@ void	rm_ele(t_garbage **l_garbage, void *pointer)
 			}
 			list->pointer = NULL;
 			free(list);
-			break ;
+			return ;
 		}
 		list = list->next;
 	}
@@ -96,18 +95,4 @@ void	garbage_collector(int mode, void *pointer)
 		free_all(&l_garbage);
 		free(l_garbage);
 	}
-}
-
-int	main(void)
-{
-	int	*test1;
-	char *test2;
-
-	garbage_collector(INIT, NULL);
-	test1 = ft_malloc(sizeof(int));
-	test2 = ft_malloc(sizeof(char) * 5);
-	printf("real test1 : %p\n", test1);
-	printf("real test2 : %p\n", test2);
-	ft_free(test2);
-	garbage_collector(END, NULL);
 }
