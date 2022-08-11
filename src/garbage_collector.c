@@ -53,9 +53,24 @@ void	rm_ele(t_garbage **l_garbage, void *pointer)
 				list->prev->next = list->next;
 				list->next->prev = list->prev;
 			}
+			list->pointer = NULL;
 			free(list);
+			break ;
 		}
 		list = list->next;
+	}
+}
+
+void	free_all(t_garbage **l_garbage)
+{
+	t_garbage	*tmp_next;
+
+	while (*l_garbage)
+	{
+		tmp_next = (*l_garbage)->next;
+		free((*l_garbage)->pointer);
+		free(*l_garbage);
+		*l_garbage = tmp_next;
 	}
 }
 
@@ -64,23 +79,22 @@ void	garbage_collector(int mode, void *pointer)
 	static t_garbage	*l_garbage = NULL;
 	t_garbage			*first;
 	
+	first = l_garbage;
+	if (mode == INIT)
+	{
+		l_garbage = malloc(sizeof(t_garbage));
+		l_garbage->prev = NULL;
+		l_garbage->next = NULL;
+		l_garbage->pointer = NULL;
+	}
 	if (mode == MALLOC)
 		add_front(&l_garbage, pointer);
 	if (mode == FREE)
 		rm_ele(&l_garbage, pointer);
-	//if (mode == END)
-	//	free_all(&l_garbage);
-	if (mode == 9)
+	if (mode == END)
 	{
-		first = l_garbage;
-		while (l_garbage)
-		{
-			printf("prev : %p\n", l_garbage->prev);
-			printf("pointer : %p\n", l_garbage->pointer);
-			printf("next : %p\n", l_garbage->next);
-			l_garbage = l_garbage->next;
-		}
-		l_garbage = first;
+		free_all(&l_garbage);
+		free(l_garbage);
 	}
 }
 
@@ -89,12 +103,11 @@ int	main(void)
 	int	*test1;
 	char *test2;
 
+	garbage_collector(INIT, NULL);
 	test1 = ft_malloc(sizeof(int));
 	test2 = ft_malloc(sizeof(char) * 5);
-	garbage_collector(9, NULL);
 	printf("real test1 : %p\n", test1);
 	printf("real test2 : %p\n", test2);
-	ft_free(test1);
 	ft_free(test2);
-	//garbage_collector(9, NULL);
+	garbage_collector(END, NULL);
 }

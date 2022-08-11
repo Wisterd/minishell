@@ -9,6 +9,7 @@
 #define MALLOC 0
 #define FREE 1
 #define END 2
+#define INIT 3
 
 typedef struct s_garbage
 {
