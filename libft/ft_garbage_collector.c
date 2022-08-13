@@ -1,18 +1,4 @@
-#include "../inc/minishell.h"
-
-void	*ft_malloc(int size)
-{
-	void	*pointer;
-	pointer = malloc(size);
-	garbage_collector(MALLOC, pointer);
-	return (pointer);
-}
-
-void	ft_free(void *pointer)
-{
-	garbage_collector(FREE, pointer);
-	free(pointer);
-}
+#include "libft.h"
 
 static void	add_front(t_garbage **l_garbage, void *pointer)
 {
@@ -60,7 +46,7 @@ static void	rm_ele(t_garbage **l_garbage, void *pointer)
 	}
 }
 
-void	free_all(t_garbage **l_garbage)
+static void	free_all(t_garbage **l_garbage)
 {
 	t_garbage	*tmp_next;
 
@@ -73,12 +59,10 @@ void	free_all(t_garbage **l_garbage)
 	}
 }
 
-void	garbage_collector(int mode, void *pointer)
+void	ft_garbage_collector(int mode, void *pointer)
 {
 	static t_garbage	*l_garbage = NULL;
-	t_garbage			*first;
 	
-	first = l_garbage;
 	if (mode == INIT)
 	{
 		l_garbage = malloc(sizeof(t_garbage));

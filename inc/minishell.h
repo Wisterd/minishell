@@ -4,19 +4,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/types.h>
 # include "../libft/libft.h"
 
-#define MALLOC 0
-#define FREE 1
-#define END 2
-#define INIT 3
+#define EXISTS 10;
+#define ACCESSIBLE 11;
 
-typedef struct s_garbage
-{
-	void				*pointer;
-	struct s_garbage	*next;
-	struct s_garbage	*prev;
-}	t_garbage;
+extern int exit_stat;
+
+void	ft_error(int error_code, char *to_print);
 
 typedef struct s_tab
 {
@@ -27,13 +23,9 @@ typedef struct s_tab
 
 typedef struct s_args_exec
 {
-	t_tab	*tab_cmds;
+	char	**path_cmds;
 	t_tab	*tab_args;
-	char 	*path_cmd;
+	char 	**path;
 }	t_args_exec;
-
-void	*ft_malloc(int size);
-void	ft_free(void *pointer);
-void	garbage_collector(int mode, void *pointer);
 
 #endif

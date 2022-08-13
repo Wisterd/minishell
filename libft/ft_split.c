@@ -60,7 +60,7 @@ char	**ft_split(char const *s, char c)
 	int		istr;
 
 	nbword = ft_countword(s, c);
-	tab = (char **)malloc((nbword + 1) * sizeof(char *));
+	tab = ft_malloc((nbword + 1) * sizeof(char *));
 	if (!tab)
 		return (NULL);
 	if (!*s)

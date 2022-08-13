@@ -19,11 +19,23 @@
 # include <string.h>
 # include <stddef.h>
 
+#define MALLOC 0
+#define FREE 1
+#define END 2
+#define INIT 3
+
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_garbage
+{
+	void				*pointer;
+	struct s_garbage	*next;
+	struct s_garbage	*prev;
+}	t_garbage;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -67,5 +79,8 @@ void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
+void	ft_garbage_collector(int mode, void *pointer);
+void	*ft_malloc(int size);
+void	ft_free(void *pointer);
 
 #endif
