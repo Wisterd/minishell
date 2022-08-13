@@ -4,10 +4,11 @@ DEPS = $(INCLUDES)minishell.h Makefile
 INCLUDES = inc/
 SRC_DIR = src/
 OBJ_DIR = obj/
-LIBFT =  -L ./libft #-lftlibft
+LIBFT =  -L ./libft -lft
 
 SRC_FILES = $(addprefix $(SRC_DIR), \
 	execution.c \
+	path.c \
 	pipe.c \
 	error.c)
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
