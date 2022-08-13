@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/11 22:42:38 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/13 17:22:45 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 		{
 			new_lexer->contenu = ft_strjoin_2free(\
 			new_lexer->contenu, new_lexer->next->contenu);
+			if (!new_lexer->contenu)
+				error_malloc("fuz_lex");
 			tmp_lexer = new_lexer->next->next;
 			free(new_lexer->next);
 			new_lexer->next = tmp_lexer;
@@ -51,11 +53,20 @@ int pull_env(char *str)
 	while (path[i])
 	{
 		path[i] = ft_strjoin_1free(path[i], "/");
+		if (!path[i])
+			error_malloc("pull_env");
 		path[i] = ft_strjoin_1free(path[i], str);
+		if (!path[i])
+			error_malloc("pull_env");
 		if (!access(path[i], F_OK))
+		{
+			free(path);
 			return (1);
+		}
+		free(path[i]);
 		i++;
 	}
+	free(path);
 	return(0);
 }
 

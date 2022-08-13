@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/11 22:54:43 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/13 15:32:33 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@
 # define PIPE 3
 # define QUOTE 4
 # define REDIR 5
-# define DOLLAR 6
-# define SPECIAL 7
+# define REDIR2 6
+# define DOLLAR 7
+# define SPECIAL 8
 
 typedef struct s_lexer
 {
