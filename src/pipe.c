@@ -42,16 +42,6 @@ void	ft_exec(char *path_cmd, char **args, char **path)
 	execve(path_cmd, args, path);
 }
 
-/*
-pid_t	*ft_fork(t_args_exec args_exec)
-{
-	int	i;
-
-	i = 0;
-	while ()
-}
-*/
-
 int	*init_pipes(int n_pipe)
 {
 	int	i;
@@ -69,23 +59,31 @@ int	*init_pipes(int n_pipe)
 	return (pipe_fds);
 }
 
+
+pid_t	*ft_fork(t_args_exec args_exec, int n_cmds)
+{
+	int		*pipe_fds;
+	int		i;
+	pid_t	*childs;
+	
+	childs = ft_malloc(sizeof(pid_t) * n_cmds);
+	pipe_fds = init_pipes(n_cmds - 1);
+	i = 0;
+	while (i < n_cmds)
+	{
+		childs[i] = fork();
+		if (childs[i] < 0)
+			ft_error(ERR_FORK, NULL);
+		if (childs[i] == 0)
+			ft_child(args_exec, i, pipe_fds);
+		i++;
+	}
+	ft_wait();
+	ft_close_pipes();
+}
+
 int	main(int ac, char **av)
 {
-	char	*path_cmd;
-	char	**split_path;
-
-	if (ac == 1)
-	{
-		printf("%d\n", access("/mnt/nfs/homes/mvue/Documents/minishell/bonjour", X_OK));
-	}
-	else if (ac == 2)
-	{
-		ft_garbage_collector(INIT, NULL);
-		split_path = ft_split(getenv("PATH"), ':');
-		path_cmd = get_path_cmd(split_path, av[1]);
-		printf("%s\n", path_cmd);
-		ft_garbage_collector(END, NULL);
-	}
-	else
-		return (1);
+	ft_garbage_collector(INIT, NULL);
+	ft_garbage_collector(END, NULL);
 }

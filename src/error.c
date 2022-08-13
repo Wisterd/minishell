@@ -27,6 +27,11 @@ void	ft_error(int error_code, char *to_print)
 		exit_stat = 1;
 		ft_putstr_fd("Malloc error\n", 2);
 	}
+	if (error_code == ERR_FORK)
+	{
+		exit_stat = 1;
+		ft_putstr_fd("Fork error\n", 2);
+	}
 	ft_garbage_collector(END, NULL);
 	exit(1);
 }

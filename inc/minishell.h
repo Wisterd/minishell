@@ -13,6 +13,7 @@
 #define	ERR_NOT_FOUND 13
 #define ERR_NO_FILE 14
 #define ERR_PERM_DENIED 15
+#define	ERR_FORK 16
 
 extern int exit_stat;
 
