@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/13 17:32:52 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/13 19:32:33 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,11 @@ int	valide_lexer(t_lexer **deb_lexer)
 	tmp_lexer = *deb_lexer;
 	while (tmp_lexer)
 	{
-		replace_dollar(deb_lexer, tmp_lexer);
+		if (tmp_lexer->pre)
+		{
+			if (strncmp(tmp_lexer->pre->contenu, "\'", 1) == 0)
+				replace_dollar(deb_lexer, tmp_lexer);
+		}
 		if (!valide_pipe(tmp_lexer))
 			return (0);
 		// valide_quote();

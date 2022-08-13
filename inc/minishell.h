@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/13 15:32:33 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/13 20:03:17 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		special_c(char *str);
 
 // lexer.c
 void	print_lexer(t_lexer **deb_lexer);
-t_lexer	**lexing(char *prompt);
+t_lexer	**lexing(t_lexer **deb_lexer, char *prompt);
 void	free_lexer(t_lexer **deb_lexer);
 
 //lexer2.c
