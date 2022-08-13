@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/13 21:06:23 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/13 21:19:43 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	pair_quote(t_lexer **deb_lexer)
 		if ((in_sq && ft_strncmp(tmp_lexer->contenu, "'", 2) != 0)\
 		|| (in_dq && ft_strncmp(tmp_lexer->contenu, "\"", 2) != 0))
 			tmp_lexer->type = MOT;
-		if (tmp_lexer->type == QUOTE)
+		else if (tmp_lexer->type == QUOTE)
 		{
-			if (ft_strncmp(tmp_lexer->contenu, "\'", 2) == 0)
+			if (ft_strncmp(tmp_lexer->contenu, "'", 2) == 0)
 			{
 				if (!in_sq)
 					in_sq = 1;
@@ -79,7 +79,6 @@ void *parse(char *prompt)
 	lexing(deb_lexer, prompt);
 	while (!pair_quote(deb_lexer))
 	{
-		print_lexer(deb_lexer);
 		prompt = readline("> ");
 		lexing(deb_lexer, prompt);
 	}
@@ -88,13 +87,13 @@ void *parse(char *prompt)
 	word_or_cmd(deb_lexer);
 	if (!valide_lexer(deb_lexer))
 	{
-	//	print_lexer(deb_lexer);
+		print_lexer(deb_lexer);
 		free_lexer(deb_lexer);
 		return (NULL);
 	}
 
 
-	//print_lexer(deb_lexer);
+	print_lexer(deb_lexer);
 	free_lexer(deb_lexer);
 	
 	//test_lexer(tab_lexer);
