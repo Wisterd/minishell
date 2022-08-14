@@ -117,11 +117,9 @@ int	valide_lexer(t_lexer **deb_lexer)
 	tmp_lexer = *deb_lexer;
 	while (tmp_lexer)
 	{
-		if (tmp_lexer->pre)
-		{
-			if (strncmp(tmp_lexer->pre->contenu, "\'", 1) == 0)
-				replace_dollar(deb_lexer, tmp_lexer);
-		}
+		if ((tmp_lexer->pre && !strncmp(tmp_lexer->pre->contenu, "\"", 1) == 0) \
+		|| !tmp_lexer->pre)
+			replace_dollar(deb_lexer, tmp_lexer);
 		if (!valide_pipe(tmp_lexer))
 			return (0);
 		// valide_quote();

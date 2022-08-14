@@ -54,6 +54,7 @@ int		special_c(char *str);
 void	print_lexer(t_lexer **deb_lexer);
 void	lexing(t_lexer **deb_lexer, char *prompt);
 void	free_lexer(t_lexer **deb_lexer);
+void	create_lexer(t_lexer **deb_lexer, char *str, int type);
 
 //lexer2.c
 void	fuz_lex(t_lexer **deb_lexer, int type);
