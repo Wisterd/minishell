@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/14 18:06:50 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/16 18:49:28 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ int	in_quote(t_lexer **deb_lexer)
 	tmp_lexer = *deb_lexer;
 	while (tmp_lexer)
 	{
-		if (tmp_lexer->next && tmp_lexer->type == QUOTE)
+		if (tmp_lexer->type == QUOTE)
 		{
+			if (!tmp_lexer->next)
+				return(1);
 			str = tmp_lexer->contenu;
 			tmp_lexer = tmp_lexer->next;
 			while (tmp_lexer && ft_strncmp(tmp_lexer->contenu, str, 2) != 0)
@@ -108,8 +110,8 @@ void *parse(char *prompt)
 	lexing(deb_lexer, prompt);
 	while (in_quote(deb_lexer))
 	{
-		create_lexer(deb_lexer, chartostr(' '), SPC);
-		print_lexer(deb_lexer);
+		//create_lexer(deb_lexer, chartostr(' '), SPC);
+		//print_lexer(deb_lexer);
 		prompt = readline("> ");
 		lexing(deb_lexer, prompt);
 	}
@@ -118,7 +120,7 @@ void *parse(char *prompt)
 	word_or_cmd(deb_lexer);
 	if (!valide_lexer(deb_lexer))
 	{
-		print_lexer(deb_lexer);
+	//	print_lexer(deb_lexer);
 		free_lexer(deb_lexer);
 		return (NULL);
 	}
