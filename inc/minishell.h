@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
+#include <sys/wait.h>
 # include "../libft/libft.h"
 
 #define EXISTS 10
@@ -17,6 +18,21 @@
 
 extern int exit_stat;
 
+typedef struct s_args_exec
+{
+	char	**path_cmds;
+	char	***tab_args;
+	char 	**path;
+}	t_args_exec;
+
+typedef struct s_exec_data
+{
+	pid_t		*childs;
+	int			*pipe_fds;
+	t_args_exec args_exec;
+	int			n_cmds;
+}	t_exec_data;
+
 //error.c
 void	ft_error(int error_code, char *to_print);
 
@@ -25,19 +41,12 @@ char	*get_path_cmd(char **split_path, char *cmd);
 
 //utils.c
 char	*ft_strjoin_free(char *s1, char *s2);
+int		ft_wait(t_exec_data *data);
 
-typedef struct s_tab
-{
-	char			**tab;
-	struct s_tab	*next;
-	struct s_tab	*prev;
-}	t_tab;
+//pipe.c
+void	ft_exec(t_args_exec args_exec, int ind_cmd);
 
-typedef struct s_args_exec
-{
-	char	**path_cmds;
-	t_tab	*tab_args;
-	char 	**path;
-}	t_args_exec;
+//childs.c 
+void	ft_child(t_exec_data *exec_data, int ind_cmd);
 
 #endif

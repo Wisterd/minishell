@@ -1,45 +1,29 @@
 #include "../inc/minishell.h"
 
-char	*ft_strjoin_free(char *s1, char *s2)
-{
-	char	*s3;
-	int		i;
-	int		j;
-
-	if (!s1 && !s2)
-		return (NULL);
-	s3 = ft_malloc(ft_strlen(s1) + ft_strlen(s2) + sizeof(char));
-	i = -1;
-	j = 0;
-	if (!s3)
-		return (NULL);
-	else
-	{
-		while (s1[++i])
-			s3[i] = s1[i];
-		while (s2[j])
-			s3[i++] = s2[j++];
-		s3[i] = '\0';
-	}
-	ft_free(s1);
-	return (s3);
-}
-
-/*
-t_args_exec	init_args_exec(char *cmds)
+t_args_exec	init_args_exec(void)
 {
 	t_args_exec	args_exec;
-	char		**path_cmds;
+	char		**path = ft_split(getenv("PATH"), ':');
+	char		*path_cmds[3] = {get_path_cmd(path, "echo"), \
+		get_path_cmd(path, "ls"), get_path_cmd(path, "wc")};
+	char		*cmd1[3] = {"echo", "bonjour", NULL};
+	char		*cmd2[3] = {"ls", "-l", NULL};
+	char		*cmd3[3] = {"wc", "-l", NULL};
+	char		**tab_args[3];
 
-	args_exec.path = ft_split(getenv("PATH"), ':');
-	path_cmds = ft_malloc(sizeof(char *) * ac - 1);
+	tab_args[0] = cmd1;
+	tab_args[1] = cmd2;
+	tab_args[2] = cmd3;
+	args_exec.path_cmds = path_cmds;
+	args_exec.path = path;
+	args_exec.tab_args = tab_args;
 	return (args_exec);
 }
-*/
 
-void	ft_exec(char *path_cmd, char **args, char **path)
+void	ft_exec(t_args_exec args_exec, int ind_cmd)
 {
-	execve(path_cmd, args, path);
+	execve(args_exec.path_cmds[ind_cmd], \
+		args_exec.tab_args[ind_cmd], args_exec.path);
 }
 
 int	*init_pipes(int n_pipe)
@@ -48,37 +32,29 @@ int	*init_pipes(int n_pipe)
 	int	*pipe_fds;
 
 	i = 0;
-	pipe_fds = ft_malloc(sizeof(int) * (2 * n_pipe + 1));
+	pipe_fds = ft_malloc(sizeof(int) * (2 * n_pipe));
 	while (i < n_pipe)
 	{
 		pipe(pipe_fds + 2 * i);
 		//differentes erreurs intressantes de pipe
 		i++;
 	}
-	pipe_fds[2 * n_pipe] = -2;
 	return (pipe_fds);
 }
 
-int    ft_wait(t_exec_data *data, pid_t *childs)
+void	ft_close_pipes(t_exec_data *data)
 {
-    int        status;
-    int        res;
-    ssize_t    i;
+	int	i;
 
-    res = 0;
-    i = -1;
-    while (++i < data->n_cmds)
-    {
-        waitpid(childs[i], &status, 0);
-        if (WIFEXITED(status))
-            res = WEXITSTATUS(status);
-        else if (WIFSIGNALED(status))
-            res = WTERMSIG(128 + status);
-    }
-    return (res);
+	i = 0;
+	while (i < data->n_cmds - 1)
+	{
+		close(data->pipe_fds[i]);
+		i++;
+	}
 }
 
-pid_t	*ft_fork(t_exec_data *data)
+int	ft_fork(t_exec_data *data)
 {
 	int		*pipe_fds;
 	int		i;
@@ -86,6 +62,7 @@ pid_t	*ft_fork(t_exec_data *data)
 	
 	childs = ft_malloc(sizeof(pid_t) * data->n_cmds);
 	pipe_fds = init_pipes(data->n_cmds - 1);
+	data->pipe_fds = pipe_fds;
 	i = 0;
 	while (i < data->n_cmds)
 	{
@@ -93,15 +70,21 @@ pid_t	*ft_fork(t_exec_data *data)
 		if (childs[i] < 0)
 			ft_error(ERR_FORK, NULL);
 		if (childs[i] == 0)
-			ft_child(data->args_exec, i, pipe_fds);
+			ft_child(data, i);
 		i++;
 	}
-	ft_wait(data, childs);
-	ft_close_pipes();
+	data->childs = childs;
+	ft_close_pipes(data);
+	return (ft_wait(data));
 }
 
-int	main(int ac, char **av)
+int	main(void)
 {
+	t_args_exec	args_exec;
+	int	*pipe_fds;
+
 	ft_garbage_collector(INIT, NULL);
+	args_exec = init_args_exec();
+	pipe_fds = init_pipes(2);
 	ft_garbage_collector(END, NULL);
 }

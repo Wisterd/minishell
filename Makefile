@@ -10,7 +10,9 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	execution.c \
 	path.c \
 	pipe.c \
-	error.c)
+	error.c \
+	utils.c \
+	childs.c)
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
