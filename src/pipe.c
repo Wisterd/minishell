@@ -59,26 +59,44 @@ int	*init_pipes(int n_pipe)
 	return (pipe_fds);
 }
 
+int    ft_wait(t_exec_data *data, pid_t *childs)
+{
+    int        status;
+    int        res;
+    ssize_t    i;
 
-pid_t	*ft_fork(t_args_exec args_exec, int n_cmds)
+    res = 0;
+    i = -1;
+    while (++i < data->n_cmds)
+    {
+        waitpid(childs[i], &status, 0);
+        if (WIFEXITED(status))
+            res = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            res = WTERMSIG(128 + status);
+    }
+    return (res);
+}
+
+pid_t	*ft_fork(t_exec_data *data)
 {
 	int		*pipe_fds;
 	int		i;
 	pid_t	*childs;
 	
-	childs = ft_malloc(sizeof(pid_t) * n_cmds);
-	pipe_fds = init_pipes(n_cmds - 1);
+	childs = ft_malloc(sizeof(pid_t) * data->n_cmds);
+	pipe_fds = init_pipes(data->n_cmds - 1);
 	i = 0;
-	while (i < n_cmds)
+	while (i < data->n_cmds)
 	{
 		childs[i] = fork();
 		if (childs[i] < 0)
 			ft_error(ERR_FORK, NULL);
 		if (childs[i] == 0)
-			ft_child(args_exec, i, pipe_fds);
+			ft_child(data->args_exec, i, pipe_fds);
 		i++;
 	}
-	ft_wait();
+	ft_wait(data, childs);
 	ft_close_pipes();
 }
 
