@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/16 18:49:28 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/16 19:13:53 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	in_quote(t_lexer **deb_lexer)
 			tmp_lexer = tmp_lexer->next;
 			while (tmp_lexer && ft_strncmp(tmp_lexer->contenu, str, 2) != 0)
 			{
-				if (ft_strncmp(str, "'", 2) == 0 \
+				if (ft_strncmp(str, "\"", 2) == 0 \
 				&& ft_strncmp(tmp_lexer->contenu, "$", 2) == 0)
 					tmp_lexer->type = DOLLAR;
 				else

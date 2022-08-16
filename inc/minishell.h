@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/13 21:15:55 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/16 18:57:35 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ typedef struct s_pars_error
 	char	c;
 	char	*str;
 }	t_pars_error;
+
+typedef struct s_tab
+{
+    char            **tab;
+    struct s_tab    *next;
+    struct s_tab    *prev;
+}    t_tab;
+
+typedef struct s_args_exec
+{
+    char    **path_cmds;
+    t_tab    *tab_args;
+    char     **path;
+}    t_args_exec;
 
 // utilitaires_parsing.c
 char	*chartostr(char c);
