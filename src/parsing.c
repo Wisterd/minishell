@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/16 20:17:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/16 21:06:38 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ t_lexer	**create_deb_lexer()
 	if (!deb_lexer)
 		error_malloc("lexing");
 	return (deb_lexer);
+}
+
+int	near_mot(t_lexer **deb_lexer)
+{
+	t_lexer	*tmp_lexer;
+
+	tmp_lexer = *deb_lexer;
+	while (tmp_lexer->next)
+	{
+		if (tmp_lexer->type == MOT && tmp_lexer->next->type == MOT)
+			return (1);
+		tmp_lexer = tmp_lexer->next;
+	}
+	return(0);
 }
 
 int	in_quote(t_lexer **deb_lexer)
@@ -75,14 +89,17 @@ void *parse(char *prompt)
 		lexing(deb_lexer, prompt);
 	}
 	fuz_lex(deb_lexer, MOT);
-	fuz_lex(deb_lexer, SPC);
-	word_or_cmd(deb_lexer);
 	if (!valide_lexer(deb_lexer))
 	{
-	//	print_lexer(deb_lexer);
+		print_lexer(deb_lexer);
 		free_lexer(deb_lexer);
 		return (NULL);
 	}
+	while (near_mot(deb_lexer))
+		fuz_lex(deb_lexer, MOT);
+	fuz_lex(deb_lexer, SPC);
+	word_or_cmd(deb_lexer);
+	
 	print_lexer(deb_lexer);
 	free_lexer(deb_lexer);
 	
