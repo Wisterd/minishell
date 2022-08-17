@@ -33,14 +33,15 @@ int	ft_wait(t_exec_data *data)
 
 	status = 0;
 	res = 0;
-	i = -1;
-	while (++i < data->n_cmds)
+	i = 0;
+	while (i < data->n_cmds)
 	{
 		waitpid(data->childs[i], &status, 0);
 		if (WIFEXITED(status))
 			res = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			res = WTERMSIG(128 + status);
+		i++;
 	}
 	return (res);
 }

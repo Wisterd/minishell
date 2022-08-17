@@ -4,17 +4,29 @@ t_args_exec	*init_args_exec(void)
 {
 	t_args_exec	*args_exec;
 	char		**path;
-	/*
-	char		*cmd1[3] = {"echo", "bonjour", NULL};
-	char		*cmd2[3] = {"ls", "-l", NULL};
-	char		*cmd3[3] = {"wc", "-l", NULL};
-	char		**tab_args[3];
+	char		**cmd1;
+	char		**cmd2;
+	char		**cmd3;
+	char		***tab_args;
+
+	args_exec = ft_malloc(sizeof(t_args_exec));
+	tab_args = ft_malloc(sizeof(char **) * 3);
+	cmd1 = ft_malloc(sizeof(char *) * 3);
+	cmd2 = ft_malloc(sizeof(char *) * 3);
+	cmd3 = ft_malloc(sizeof(char *) * 3);
+	cmd1[0] = "touch";
+	cmd1[1] = "bonjour";
+	cmd1[2] = NULL;
+	cmd2[0] = "ls";
+	cmd2[1] = "-l";
+	cmd2[2] = NULL;
+	cmd3[0] = "wc";
+	cmd3[1] = "-l";
+	cmd3[2] = NULL;
 	tab_args[0] = cmd1;
 	tab_args[1] = cmd2;
 	tab_args[2] = cmd3;
 	args_exec->tab_args = tab_args;
-	*/
-	args_exec = ft_malloc(sizeof(args_exec));
 	path = ft_split(getenv("PATH"), ':');
 	args_exec->path = path;
 	return (args_exec);
@@ -81,15 +93,13 @@ int	ft_fork(t_exec_data *data)
 int	main(void)
 {
 	t_args_exec	*args_exec;
-	//t_exec_data	data;
+	t_exec_data	data;
 
 	ft_garbage_collector(INIT, NULL);
 	args_exec = init_args_exec();
-	//data.n_cmds = 3;
-	//data.args_exec = args_exec;
-	//ft_fork(&data);
-	args_exec->path_cmd = get_path_cmd(args_exec->path, "echo");
-	//execve(args_exec.path_cmd, args_exec.tab_args[0], args_exec.path);
-	printf("path : %s\n", args_exec->path[0]);
+	data.n_cmds = 3;
+	data.args_exec = args_exec;
+	ft_fork(&data);
+	ft_close_pipes(&data);
 	ft_garbage_collector(END, NULL);
 }

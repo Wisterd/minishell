@@ -29,7 +29,7 @@ typedef struct s_exec_data
 {
 	pid_t		*childs;
 	int			*pipe_fds;
-	t_args_exec args_exec;
+	t_args_exec *args_exec;
 	int			n_cmds;
 }	t_exec_data;
 
