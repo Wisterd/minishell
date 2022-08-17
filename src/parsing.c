@@ -28,7 +28,7 @@ int	near_mot(t_lexer **deb_lexer)
 	t_lexer	*tmp_lexer;
 
 	tmp_lexer = *deb_lexer;
-	while (tmp_lexer->next)
+	while (tmp_lexer && tmp_lexer->next)
 	{
 		if (tmp_lexer->type == MOT && tmp_lexer->next->type == MOT)
 			return (1);
