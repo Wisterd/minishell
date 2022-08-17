@@ -1,28 +1,28 @@
 #include "../inc/minishell.h"
 
-t_args_exec	init_args_exec(void)
+t_args_exec	*init_args_exec(void)
 {
-	t_args_exec	args_exec;
-	char		**path = ft_split(getenv("PATH"), ':');
-	char		*path_cmds[3] = {get_path_cmd(path, "echo"), \
-		get_path_cmd(path, "ls"), get_path_cmd(path, "wc")};
+	t_args_exec	*args_exec;
+	char		**path;
+	/*
 	char		*cmd1[3] = {"echo", "bonjour", NULL};
 	char		*cmd2[3] = {"ls", "-l", NULL};
 	char		*cmd3[3] = {"wc", "-l", NULL};
 	char		**tab_args[3];
-
 	tab_args[0] = cmd1;
 	tab_args[1] = cmd2;
 	tab_args[2] = cmd3;
-	args_exec.path_cmds = path_cmds;
-	args_exec.path = path;
-	args_exec.tab_args = tab_args;
+	args_exec->tab_args = tab_args;
+	*/
+	args_exec = ft_malloc(sizeof(args_exec));
+	path = ft_split(getenv("PATH"), ':');
+	args_exec->path = path;
 	return (args_exec);
 }
 
 void	ft_exec(t_args_exec args_exec, int ind_cmd)
 {
-	execve(args_exec.path_cmds[ind_cmd], \
+	execve(args_exec.path_cmd, \
 		args_exec.tab_args[ind_cmd], args_exec.path);
 }
 
@@ -47,7 +47,7 @@ void	ft_close_pipes(t_exec_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->n_cmds - 1)
+	while (i < (data->n_cmds - 1) * 2)
 	{
 		close(data->pipe_fds[i]);
 		i++;
@@ -80,11 +80,16 @@ int	ft_fork(t_exec_data *data)
 
 int	main(void)
 {
-	t_args_exec	args_exec;
-	int	*pipe_fds;
+	t_args_exec	*args_exec;
+	//t_exec_data	data;
 
 	ft_garbage_collector(INIT, NULL);
 	args_exec = init_args_exec();
-	pipe_fds = init_pipes(2);
+	//data.n_cmds = 3;
+	//data.args_exec = args_exec;
+	//ft_fork(&data);
+	args_exec->path_cmd = get_path_cmd(args_exec->path, "echo");
+	//execve(args_exec.path_cmd, args_exec.tab_args[0], args_exec.path);
+	printf("path : %s\n", args_exec->path[0]);
 	ft_garbage_collector(END, NULL);
 }

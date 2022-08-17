@@ -31,6 +31,7 @@ int	ft_wait(t_exec_data *data)
 	int		res;
 	ssize_t	i;
 
+	status = 0;
 	res = 0;
 	i = -1;
 	while (++i < data->n_cmds)

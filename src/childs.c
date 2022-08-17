@@ -16,9 +16,13 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 
 void	ft_child(t_exec_data *exec_data, int ind_cmd)
 {
-	int	fd_in;
-	int	fd_out;
+	int		fd_in;
+	int		fd_out;
+	char	*path_cmd;
 
+	path_cmd = get_path_cmd(exec_data->args_exec.path, \
+		exec_data->args_exec.tab_args[ind_cmd][0]);
+	exec_data->args_exec.path_cmd = path_cmd;
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
 	set_fds_inout(&fd_in, &fd_out, ind_cmd, exec_data);

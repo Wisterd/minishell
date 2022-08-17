@@ -20,7 +20,7 @@ extern int exit_stat;
 
 typedef struct s_args_exec
 {
-	char	**path_cmds;
+	char	*path_cmd;
 	char	***tab_args;
 	char 	**path;
 }	t_args_exec;
