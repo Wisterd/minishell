@@ -45,6 +45,8 @@ int	*init_pipes(int n_pipe)
 
 	i = 0;
 	pipe_fds = ft_malloc(sizeof(int) * (2 * n_pipe));
+	if (!pipe_fds)
+		ft_error(ERR_MALLOC, NULL);
 	while (i < n_pipe)
 	{
 		pipe(pipe_fds + 2 * i);
@@ -73,6 +75,8 @@ int	ft_fork(t_exec_data *data)
 	pid_t	*childs;
 	
 	childs = ft_malloc(sizeof(pid_t) * data->n_cmds);
+	if (!childs)
+		ft_error(ERR_MALLOC, NULL);
 	pipe_fds = init_pipes(data->n_cmds - 1);
 	data->pipe_fds = pipe_fds;
 	i = 0;

@@ -42,6 +42,7 @@ char	*get_path_cmd(char **split_path, char *cmd);
 //utils.c
 char	*ft_strjoin_free(char *s1, char *s2);
 int		ft_wait(t_exec_data *data);
+void	ft_exit(void);
 
 //pipe.c
 void	ft_exec(t_args_exec args_exec, int ind_cmd);

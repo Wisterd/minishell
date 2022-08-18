@@ -45,3 +45,9 @@ int	ft_wait(t_exec_data *data)
 	}
 	return (res);
 }
+
+void	ft_exit(void)
+{
+	ft_garbage_collector(END, NULL);
+	exit(1);
+}

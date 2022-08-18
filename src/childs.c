@@ -14,6 +14,19 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	}
 }
 
+static void	close_end_pipe(t_exec_data *exec_data, int ind_cmd)
+{
+	if (ind_cmd == 0)
+		close(exec_data->pipe_fds[ind_cmd]);
+	else if (ind_cmd == exec_data->n_cmds - 1)
+		close(exec_data->pipe_fds[ind_cmd + 1]);
+	else
+	{
+		close(exec_data->pipe_fds[ind_cmd]);
+		close(exec_data->pipe_fds[ind_cmd + 1]);
+	}
+}
+
 void	ft_child(t_exec_data *exec_data, int ind_cmd)
 {
 	int		fd_in;
@@ -26,20 +39,10 @@ void	ft_child(t_exec_data *exec_data, int ind_cmd)
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
 	set_fds_inout(&fd_in, &fd_out, ind_cmd, exec_data);
-	//fprintf(stderr, "fd_in : %d\n", fd_in);
-	//fprintf(stderr, "fd_out : %d\n", fd_out);
 	if (fd_in != STDIN_FILENO)
 		dup2(fd_in, STDIN_FILENO);
 	if (fd_out != STDOUT_FILENO)
 		dup2(fd_out, STDOUT_FILENO);
-	if (ind_cmd == 0)
-		close(exec_data->pipe_fds[ind_cmd]);
-	else if (ind_cmd == exec_data->n_cmds - 1)
-		close(exec_data->pipe_fds[ind_cmd + 1]);
-	else
-	{
-		close(exec_data->pipe_fds[ind_cmd]);
-		close(exec_data->pipe_fds[ind_cmd + 1]);
-	}
+	close_end_pipe(exec_data, ind_cmd);
 	ft_exec(*exec_data->args_exec, ind_cmd);
 }
