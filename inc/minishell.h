@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/16 18:57:35 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/18 16:02:33 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ int		valide_lexer(t_lexer **deb_lexer);
 // error.c
 void	print_error(t_pars_error error);
 void	error_malloc(char *str);
+
+int		in_quote(t_lexer **deb_lexer);
+
 
 // error
 # define ERROR_MALLOC 42

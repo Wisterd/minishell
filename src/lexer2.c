@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/16 20:18:35 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/18 15:56:50 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int pull_env(char *str)
 void	word_or_cmd(t_lexer **deb_lexer)
 {
 	t_lexer	*new_lexer;
+	t_lexer	*tmp_lexer;
 	int		possible_cmd;
 
 	possible_cmd = 1;
@@ -83,8 +84,16 @@ void	word_or_cmd(t_lexer **deb_lexer)
 		if (new_lexer->type == MOT && possible_cmd)
 			if (pull_env(new_lexer->contenu))
 			{
-				new_lexer->type = CMD;
-				possible_cmd = 0;
+				tmp_lexer = new_lexer;
+				while (tmp_lexer->pre && tmp_lexer->pre->type == SPC)
+					tmp_lexer = tmp_lexer->pre;
+				if (tmp_lexer->type == REDIR)
+					;
+				else
+				{
+					new_lexer->type = CMD;
+					possible_cmd = 0;
+				}
 			}
 		if  (new_lexer->type == PIPE)
 			possible_cmd = 1;

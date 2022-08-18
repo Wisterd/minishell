@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/16 21:06:38 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/18 17:41:42 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ void *parse(char *prompt)
 	fuz_lex(deb_lexer, SPC);
 	word_or_cmd(deb_lexer);
 	
+	// POur marine
+	
+
 	print_lexer(deb_lexer);
 	free_lexer(deb_lexer);
 	
@@ -124,9 +127,9 @@ void	mini_exit(char *prompt)
 	exit(EXIT_SUCCESS);
 }
 
-int main()
-{
+int main(){
 	char	*prompt;
+
 	prompt = NULL;
 	mini_exit(prompt);
 }

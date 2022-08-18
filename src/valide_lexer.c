@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/16 20:37:47 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/18 19:30:56 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,69 @@ int	valide_pipe(t_lexer *tmp_lexer)
 	return (1);
 }
 
-void	replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
+char	*erase_one(char *str)
+{
+	int	i;
+	char *cp;
+
+	i = 1;
+	if (!str)
+		cp = ft_strdup("\0");
+	else
+		cp = malloc(sizeof(char) * ft_strlen(str));
+	if (!cp)
+		error_malloc("erase one");
+	while (str[i])
+	{
+		cp[i - 1] = str[i];
+		i++;
+	}
+	cp[i - 1] = '\0';
+	cp = ft_strdup(cp);
+	free(str);
+	return (cp);
+}
+
+int erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
+{
+	if (!env || !ft_isalpha(*tmp_lexer->next->contenu) || !ft_strncmp(tmp_lexer->next->contenu, "_", 1) \
+	|| !ft_strncmp(tmp_lexer->next->contenu, "?", 1))
+	{
+		if (tmp_lexer->pre)
+		{
+			tmp_lexer->pre->next = tmp_lexer->next;
+			tmp_lexer->next->pre = tmp_lexer->pre;
+		}
+		else
+		{
+			tmp_lexer->next->pre = NULL;
+			*deb_lexer = tmp_lexer->next;
+		}
+		tmp_lexer->next->contenu = erase_one(tmp_lexer->next->contenu);
+		free(tmp_lexer->contenu);
+		free(tmp_lexer);
+		return (1);
+	}
+	return (0);
+
+}
+
+t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 {
 	char	*env;
+	t_lexer *to_free;
 
 	if (tmp_lexer->type == DOLLAR && tmp_lexer->next)
 	{
 		if (tmp_lexer->next->type == MOT || tmp_lexer->next->type == CMD)
 		{
 			env = getenv(tmp_lexer->next->contenu);
-			if (!env)
-				return ;
+			if (erase_dollar(deb_lexer, tmp_lexer, env))
+				return (tmp_lexer);
 			free(tmp_lexer->next->contenu);
 			tmp_lexer->next->contenu = ft_strdup(env);
+			if (!tmp_lexer->next->contenu)
+				error_malloc("replace dollar");
 			if (tmp_lexer->pre)
 			{
 				tmp_lexer->pre->next = tmp_lexer->next;
@@ -103,11 +153,14 @@ void	replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 				tmp_lexer->next->pre = NULL;
 				*deb_lexer = tmp_lexer->next;
 			}
-			free(tmp_lexer->contenu);
-			free(tmp_lexer);
+			tmp_lexer = tmp_lexer->next;
+			to_free = tmp_lexer;
+			free(to_free->contenu);
+			free(to_free);
+			
 		}
 	}
-	//return (1);
+	return (tmp_lexer);
 }
 
 int	valide_lexer(t_lexer **deb_lexer)
@@ -117,13 +170,18 @@ int	valide_lexer(t_lexer **deb_lexer)
 	tmp_lexer = *deb_lexer;
 	while (tmp_lexer)
 	{
-		if ((tmp_lexer->pre && !strncmp(tmp_lexer->pre->contenu, "\'", 1) == 0) \
-		|| !tmp_lexer->pre)
-			replace_dollar(deb_lexer, tmp_lexer);
+		if (tmp_lexer->pre || !tmp_lexer->pre)
+		{
+			tmp_lexer =	replace_dollar(deb_lexer, tmp_lexer);
+			//tmp_lexer = tmp_lexer->next;
+		}
+		if (tmp_lexer)
+		{
 		if (!valide_pipe(tmp_lexer))
 			return (0);
 		if (!valide_redir(tmp_lexer))
 			return(0);
+		}
 		// if (valide_cmd(tmp_lexer))
 		// 	return (0);???
 		
