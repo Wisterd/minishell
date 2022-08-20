@@ -4,26 +4,26 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	t_exec_data *exec_data)
 {
 	if (ind_cmd == 0)
-		*fd_out = exec_data->pipe_fds[ind_cmd + 1];
+		*fd_out = exec_data->r_pipe[1];
 	else if (ind_cmd == exec_data->n_cmds - 1)
-		*fd_in = exec_data->pipe_fds[ind_cmd];
+		*fd_in = exec_data->l_pipe[0];
 	else
 	{
-		*fd_in = exec_data->pipe_fds[ind_cmd - 1];
-		*fd_out = exec_data->pipe_fds[ind_cmd + 2];
+		*fd_in = exec_data->l_pipe[0];
+		*fd_out = exec_data->r_pipe[1];
 	}
 }
 
 static void	close_end_pipe(t_exec_data *exec_data, int ind_cmd)
 {
 	if (ind_cmd == 0)
-		close(exec_data->pipe_fds[ind_cmd]);
+		close(exec_data->r_pipe[0]);
 	else if (ind_cmd == exec_data->n_cmds - 1)
-		close(exec_data->pipe_fds[ind_cmd + 1]);
+		close(exec_data->l_pipe[1]);
 	else
 	{
-		close(exec_data->pipe_fds[ind_cmd]);
-		close(exec_data->pipe_fds[ind_cmd + 1]);
+		close(exec_data->l_pipe[1]);
+		close(exec_data->r_pipe[0]);
 	}
 }
 

@@ -27,10 +27,17 @@ typedef struct s_args_exec
 
 typedef struct s_exec_data
 {
-	pid_t		*childs;
-	int			*pipe_fds;
-	t_args_exec *args_exec;
 	int			n_cmds;
+	int			ind_cmd;
+	int			*l_pipe;
+	int			*r_pipe;
+	char		**infile;
+	char		**outfile;
+	char		**redir_in;
+	char		**redir_out;
+	pid_t		*childs;
+	t_args_exec *args_exec;
+	
 }	t_exec_data;
 
 //error.c
