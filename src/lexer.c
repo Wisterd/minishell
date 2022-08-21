@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/16 21:28:28 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/21 03:00:05 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ void	print_lexer(t_lexer **deb_lexer)
 	{
 	//	printf("-----------------------\n");
 	//	printf("lexer n = %d \n", new_lexer->id);
-		printf("contenu = %s \n", new_lexer->contenu);
-		printf("type = %d \n", new_lexer->type);
-		/*
-		if (new_lexer->next)
-			printf("id next n = %d \n", new_lexer->next->id);
-		if (new_lexer->pre)
-			printf("id pre n = %d \n", new_lexer->pre->id);
-		*/
+		// printf("contenu = %s \n", new_lexer->contenu);
+		// printf("type = %d \n", new_lexer->type);
+		
+		// if (new_lexer->next)
+		// 	printf("id next n = %d \n", new_lexer->next->id);
+		// if (new_lexer->pre)
+		// 	printf("id pre n = %d \n", new_lexer->pre->id);
+		// 
+		printf("%s", new_lexer->contenu);
 		new_lexer = new_lexer->next;
 	}
 }

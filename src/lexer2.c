@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/18 15:56:50 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/21 03:06:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 	t_lexer	*tmp_lexer;
 
 	new_lexer = *deb_lexer;
-	while (new_lexer && new_lexer->next
-	&& ft_strncmp(new_lexer->contenu, "/n", 2))
+	while (new_lexer && new_lexer->next && ft_strncmp(new_lexer->contenu, "/n", 2))
 	{
-		if (new_lexer->type == type && new_lexer->next->type == type)
+		if (!ft_strncmp(new_lexer->next->contenu, "'", 1))
+		{
+			new_lexer->next->type = CMD;
+			new_lexer = new_lexer->next;
+		}		
+		else if (new_lexer->type == type && new_lexer->next->type == type)
 		{
 			new_lexer->contenu = ft_strjoin_2free(\
 			new_lexer->contenu, new_lexer->next->contenu);
@@ -44,6 +48,37 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 	}
 }
 
+void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer)
+{
+	t_lexer	*to_free;
+
+	to_free = tmp_lexer;
+	if (!tmp_lexer->pre)
+	{
+		tmp_lexer = tmp_lexer->next;
+		*deb_lexer = tmp_lexer;
+		if (to_free->pre)
+			tmp_lexer->pre = NULL;
+		free(to_free->contenu);
+		free(to_free);
+	}
+	else
+	{
+		if (tmp_lexer->next)
+		{
+			tmp_lexer = tmp_lexer->next;
+			tmp_lexer->pre = tmp_lexer->pre->pre;
+			if (tmp_lexer->pre)
+				tmp_lexer->pre->next = tmp_lexer;
+		}
+		else
+			tmp_lexer->pre->next = NULL;
+		free(to_free->contenu);
+		free(to_free);
+	}
+	to_free = NULL;
+}
+/*
 int pull_env(char *str)
 {
 	char **path;
@@ -51,14 +86,15 @@ int pull_env(char *str)
 
 	i = 0;
 	path = ft_split(getenv("PATH"), ':');
+	//error_malloc("pull_env split");
 	while (path[i])
 	{
 		path[i] = ft_strjoin_1free(path[i], "/");
 		if (!path[i])
-			error_malloc("pull_env");
+			error_malloc("pull_env strjoin num 1");
 		path[i] = ft_strjoin_1free(path[i], str);
 		if (!path[i])
-			error_malloc("pull_env");
+			error_malloc("pull_env strjoin num 2");
 		if (!access(path[i], F_OK))
 		{
 			free(path);
@@ -100,3 +136,4 @@ void	word_or_cmd(t_lexer **deb_lexer)
 		new_lexer = new_lexer->next;
 	}
 }
+*/

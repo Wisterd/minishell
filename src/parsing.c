@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/18 17:41:42 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/21 03:08:28 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,36 @@ int	in_quote(t_lexer **deb_lexer)
 	return (0);
 }
 
-void *parse(char *prompt)
+int	have_quote(t_lexer **deb_lexer)
+{
+	t_lexer	*tmp_lexer;
+
+	tmp_lexer = *deb_lexer;
+	while (tmp_lexer)
+	{
+		if (tmp_lexer->type == QUOTE)
+			return (1);
+		tmp_lexer = tmp_lexer->next;
+	}
+	return (0);
+}
+
+void	remove_quote(t_lexer **deb_lexer)
+{
+	t_lexer	*tmp_lexer;
+	t_lexer	*next;
+
+	tmp_lexer = *deb_lexer;
+	while (tmp_lexer)
+	{
+		next = tmp_lexer->next;
+		if (tmp_lexer->type == QUOTE)
+			free_one_element(deb_lexer, tmp_lexer);
+		tmp_lexer = next;
+	}
+}
+
+void	*parse(char *prompt)
 {
 	t_lexer	**deb_lexer;
 
@@ -91,19 +120,22 @@ void *parse(char *prompt)
 	fuz_lex(deb_lexer, MOT);
 	if (!valide_lexer(deb_lexer))
 	{
-		print_lexer(deb_lexer);
 		free_lexer(deb_lexer);
 		return (NULL);
 	}
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
 	fuz_lex(deb_lexer, SPC);
-	word_or_cmd(deb_lexer);
+	//	word_or_cmd(deb_lexer);
+	while (have_quote(deb_lexer))
+		remove_quote(deb_lexer);
+	
 	
 	// POur marine
 	
 
 	print_lexer(deb_lexer);
+	printf("\n");
 	free_lexer(deb_lexer);
 	
 	//test_lexer(tab_lexer);

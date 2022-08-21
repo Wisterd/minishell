@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/18 16:02:33 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/20 22:04:10 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	create_lexer(t_lexer **deb_lexer, char *str, int type);
 //lexer2.c
 void	fuz_lex(t_lexer **deb_lexer, int type);
 void	word_or_cmd(t_lexer **deb_lexer);
+void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer);
 
 //valide_lexer.c
 int		valide_lexer(t_lexer **deb_lexer);
