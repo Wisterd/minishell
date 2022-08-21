@@ -1,8 +1,46 @@
 #include "../inc/minishell.h"
 
+void	create_outfile(t_exec_data *data)
+{
+	int	outfile;
+
+	outfile = open(data->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (outfile == -1)
+	{
+		if (access(outfile, W_OK) == -1)
+			ft_error(ERR_PERM_DENIED, data->outfile);
+		else
+			ft_error(ERR_OPEN, data->outfile);
+	}
+	close(data->r_pipe[1]);
+	data->r_pipe[1] = outfile;
+}
+
+void	open_infile(t_exec_data *data)
+{
+	int	infile;
+
+	infile = open(data->infile, O_RDONLY);
+	if (infile == -1)
+	{
+		if (access(infile, F_OK) == -1)
+			ft_error(ERR_NO_FILE, data->infile);
+		else if (access(infile, R_OK) == -1)
+			ft_error(ERR_PERM_DENIED, data->infile);
+		else 
+			ft_error(ERR_OPEN, data->infile);
+	}
+	close(data->l_pipe[0]);
+	data->l_pipe[0] = infile;
+}
+
 static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	t_exec_data *exec_data)
 {
+	if (exec_data->outfile)
+		create_outfile(exec_data);
+	if (exec_data->infile)
+		open_infile(exec_data);
 	if (ind_cmd == 0)
 		*fd_out = exec_data->r_pipe[1];
 	else if (ind_cmd == exec_data->n_cmds - 1)

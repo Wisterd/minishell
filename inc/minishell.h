@@ -5,7 +5,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 
 #define EXISTS 10
@@ -15,7 +17,7 @@
 #define ERR_NO_FILE 14
 #define ERR_PERM_DENIED 15
 #define	ERR_FORK 16
-
+#define	ERR_OPEN 17
 extern int exit_stat;
 
 typedef struct s_args_exec
