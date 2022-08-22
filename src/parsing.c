@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/21 03:08:28 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/22 22:54:33 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	*parse(char *prompt)
 		lexing(deb_lexer, prompt);
 	}
 	fuz_lex(deb_lexer, MOT);
+	history(deb_lexer);
 	if (!valide_lexer(deb_lexer))
 	{
 		free_lexer(deb_lexer);

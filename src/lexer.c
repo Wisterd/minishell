@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/21 03:00:05 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/22 22:55:42 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ void	print_lexer(t_lexer **deb_lexer)
 		printf("%s", new_lexer->contenu);
 		new_lexer = new_lexer->next;
 	}
+}
+
+void	history(t_lexer **deb_lexer)
+{
+	t_lexer	*new_lexer;
+	char	*history;
+
+	history = " ";
+	new_lexer = *deb_lexer;
+	while (new_lexer)
+	{
+		history = ft_strjoin_1free(history, new_lexer->contenu);
+		new_lexer = new_lexer->next;
+	}
+	add_history(history);
+	free(history);
 }
 
 void	add_lexer(t_lexer **deb_lexer, t_lexer *lexer)
