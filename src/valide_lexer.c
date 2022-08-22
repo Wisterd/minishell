@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/21 02:46:47 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/22 19:25:08 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,18 @@ int	valide_redir(t_lexer *tmp_lexer)
 int	valide_pipe(t_lexer *tmp_lexer)
 {
 	t_pars_error	error;
+	t_lexer			*pre_lexer;
 
+	pre_lexer = tmp_lexer;
 	if (tmp_lexer->type == PIPE)
 	{	
 		while (tmp_lexer->next && tmp_lexer->next->type == SPC)
 			tmp_lexer = tmp_lexer->next;
-		if (!tmp_lexer->next || !tmp_lexer->pre || \
-		tmp_lexer->next->type == PIPE || tmp_lexer->next->type == REDIR \
-		|| tmp_lexer->pre->type == PIPE || tmp_lexer->pre->type == REDIR)
+		while (pre_lexer->pre && pre_lexer->pre->type == SPC)
+			pre_lexer = pre_lexer->pre;
+		if (!tmp_lexer->next || !pre_lexer->pre || \
+		tmp_lexer->type == PIPE || tmp_lexer->type == REDIR \
+		|| pre_lexer->type == PIPE || pre_lexer->type == REDIR)
 		{
 			error.str = "|";
 			error.i = REDIR;
@@ -169,8 +173,6 @@ int	valide_lexer(t_lexer **deb_lexer)
 			return (0);
 			if (!valide_redir(tmp_lexer))
 			return(0);
-		// if (valide_cmd(tmp_lexer))
-		// 	return (0);???
 		tmp_lexer = tmp_lexer->next;
 		}
 	}

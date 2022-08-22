@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/20 22:04:10 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/22 19:26:32 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,13 @@ typedef struct s_pars_error
 	char	*str;
 }	t_pars_error;
 
-typedef struct s_tab
+typedef struct s_tab_parse
 {
-    char            **tab;
-    struct s_tab    *next;
-    struct s_tab    *prev;
-}    t_tab;
-
-typedef struct s_args_exec
-{
-    char    **path_cmds;
-    t_tab    *tab_args;
-    char     **path;
-}    t_args_exec;
+	char    ***tab_args; //tableau des commandes avec leurs arguments
+	char    **infile; //si il y a redirection '<' le nom du fichier d'entree, sinon NULL
+	char    **outfile; //si il y a redirection '>' le nom du fichier de sortie, sinon NULL
+	int     *redir;
+}    t_tab_parse;
 
 // utilitaires_parsing.c
 char	*chartostr(char c);
