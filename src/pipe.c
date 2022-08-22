@@ -11,15 +11,13 @@ t_args_exec	*init_args_exec(void)
 
 	args_exec = ft_malloc(sizeof(t_args_exec));
 	tab_args = ft_malloc(sizeof(char **) * 3);
-	cmd1 = ft_malloc(sizeof(char *) * 3);
-	cmd2 = ft_malloc(sizeof(char *) * 3);
+	cmd1 = ft_malloc(sizeof(char *) * 2);
+	cmd2 = ft_malloc(sizeof(char *) * 2);
 	cmd3 = ft_malloc(sizeof(char *) * 3);
-	cmd1[0] = "touch";
-	cmd1[1] = "bonjour";
-	cmd1[2] = NULL;
+	cmd1[0] = "cat";
+	cmd1[1] = NULL;
 	cmd2[0] = "cat";
-	cmd2[1] = "bonjour";
-	cmd2[2] = NULL;
+	cmd2[1] = NULL;
 	cmd3[0] = "wc";
 	cmd3[1] = "-l";
 	cmd3[2] = NULL;
@@ -138,6 +136,23 @@ int	ft_fork(t_exec_data *data)
 	return (ft_wait(data));
 }
 
+void	set_inoutfies(t_exec_data *data)
+{
+	char	**infiles;
+	char	**outfiles;
+
+	infiles = ft_malloc(sizeof(char *) * 3);
+	outfiles = ft_malloc(sizeof(char *) * 3);
+	infiles[0] = "je";
+	infiles[1] = "suis";
+	infiles[2] = "Marine";
+	outfiles[0] = "tu";
+	outfiles[1] = "es";
+	outfiles[2] = "Vincent";
+	data->infile = infiles;
+	data->outfile = outfiles;
+}
+
 //TODO :
 //gestion d erreur
 //regarder d abord si je trouve la commande demandee dans le repertoire courant avant de fouiller le PATH
@@ -153,6 +168,7 @@ int	main(void)
 	args_exec = init_args_exec();
 	data.n_cmds = 3;
 	data.args_exec = args_exec;
+	set_inoutfies(&data);
 	ft_fork(&data);
 	ft_garbage_collector(END, NULL);
 }
