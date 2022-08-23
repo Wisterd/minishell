@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/22 23:04:31 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 19:15:55 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,21 @@ int	in_quote(t_lexer **deb_lexer)
 	return (0);
 }
 
-int	have_quote(t_lexer **deb_lexer)
+int	have_type(t_lexer **deb_lexer, int type)
 {
 	t_lexer	*tmp_lexer;
 
 	tmp_lexer = *deb_lexer;
 	while (tmp_lexer)
 	{
-		if (tmp_lexer->type == QUOTE)
+		if (tmp_lexer->type == type)
 			return (1);
 		tmp_lexer = tmp_lexer->next;
 	}
 	return (0);
 }
 
-void	remove_quote(t_lexer **deb_lexer)
+void	remove_type(t_lexer **deb_lexer, int type)
 {
 	t_lexer	*tmp_lexer;
 	t_lexer	*next;
@@ -93,7 +93,7 @@ void	remove_quote(t_lexer **deb_lexer)
 	while (tmp_lexer)
 	{
 		next = tmp_lexer->next;
-		if (tmp_lexer->type == QUOTE)
+		if (tmp_lexer->type == type)
 			free_one_element(deb_lexer, tmp_lexer);
 		tmp_lexer = next;
 	}
@@ -128,15 +128,18 @@ void	*parse(char *prompt)
 		fuz_lex(deb_lexer, MOT);
 	fuz_lex(deb_lexer, SPC);
 	//	word_or_cmd(deb_lexer);
-	while (have_quote(deb_lexer))
-		remove_quote(deb_lexer);
-	
-	
+	while (have_type(deb_lexer, QUOTE))
+		remove_type(deb_lexer, QUOTE);
+	while (have_type(deb_lexer, SPC))
+		remove_type(deb_lexer, SPC);
 	// POur marine
-	
+	t_tab_parse	*tab_parse;
+	tab_parse = to_exec(deb_lexer);	
+	print_to_exec(tab_parse);
 
 	print_lexer(deb_lexer);
-	printf("\n");
+	if (*deb_lexer)
+		printf("\n");
 	free_lexer(deb_lexer);
 	
 	//test_lexer(tab_lexer);

@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/22 22:58:18 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 20:28:25 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ typedef struct s_pars_error
 
 typedef struct s_tab_parse
 {
-	char    ***tab_args; //tableau des commandes avec leurs arguments
+	char    **tab_args; //tableau des commandes avec leurs arguments
 	char    **infile; //si il y a redirection '<' le nom du fichier d'entree, sinon NULL
 	char    **outfile; //si il y a redirection '>' le nom du fichier de sortie, sinon NULL
-	int     *redir;
+	char	**outredir;
+	char	**inredir;
+	int		nb_cmd;
+	int		len_char;
 }    t_tab_parse;
 
 // utilitaires_parsing.c
@@ -78,6 +81,10 @@ void	print_error(t_pars_error error);
 void	error_malloc(char *str);
 
 int		in_quote(t_lexer **deb_lexer);
+
+//parse_to_exec.c
+t_tab_parse	*to_exec(t_lexer **deb_lexer);
+void		print_to_exec(t_tab_parse *tab_parse);
 
 
 // error

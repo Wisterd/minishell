@@ -8,8 +8,9 @@ LIBFT =  -L ./libft -lft
 
 SRC_FILES = $(addprefix $(SRC_DIR), \
 	main.c \
-	parsing.c\
-	lexer.c error.c lexer2.c utilitaires_parsing.c valide_lexer.c)
+	parsing.c \
+	lexer.c error.c lexer2.c utilitaires_parsing.c valide_lexer.c \
+	parse_to_exec.c)
 
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
