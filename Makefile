@@ -2,16 +2,16 @@ NAME = minishell
 CFLAGS =  -Wall -Wextra -Werror -g #-fsanitize=thread
 DEPS = $(INCLUDES)minishell.h Makefile
 INCLUDES = inc/
-SRC_DIR = src/exe/
+SRC_DIR = src/
 OBJ_DIR = obj/
 LIBFT =  -L ./libft -lft
 
 SRC_FILES = $(addprefix $(SRC_DIR), \
-	path.c \
-	pipe.c \
-	error.c \
-	utils.c \
-	childs.c)
+	exe/path.c \
+	exe/pipe.c \
+	exe/error.c \
+	exe/utils.c \
+	exe/childs.c)
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
