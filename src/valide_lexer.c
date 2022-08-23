@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/22 19:25:08 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 22:54:15 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	valide_pipe(t_lexer *tmp_lexer)
 		while (pre_lexer->pre && pre_lexer->pre->type == SPC)
 			pre_lexer = pre_lexer->pre;
 		if (!tmp_lexer->next || !pre_lexer->pre || \
-		tmp_lexer->type == PIPE || tmp_lexer->type == REDIR \
-		|| pre_lexer->type == PIPE || pre_lexer->type == REDIR)
+		tmp_lexer->next->type == PIPE || tmp_lexer->next->type == REDIR \
+		|| pre_lexer->pre->type == PIPE || pre_lexer->pre->type == REDIR)
 		{
 			error.str = "|";
 			error.i = REDIR;

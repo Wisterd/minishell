@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/23 19:15:55 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 22:00:02 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,16 +130,20 @@ void	*parse(char *prompt)
 	//	word_or_cmd(deb_lexer);
 	while (have_type(deb_lexer, QUOTE))
 		remove_type(deb_lexer, QUOTE);
+
+
+	print_lexer(deb_lexer);
+	if (*deb_lexer)
+		printf("\n");
 	while (have_type(deb_lexer, SPC))
 		remove_type(deb_lexer, SPC);
 	// POur marine
 	t_tab_parse	*tab_parse;
 	tab_parse = to_exec(deb_lexer);	
 	print_to_exec(tab_parse);
-
-	print_lexer(deb_lexer);
-	if (*deb_lexer)
-		printf("\n");
+	
+	
+	
 	free_lexer(deb_lexer);
 	
 	//test_lexer(tab_lexer);

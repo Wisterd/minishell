@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/23 21:06:15 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 22:47:03 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ void	print_to_exec(t_tab_parse *tab_parse)
 	int i;
 	int y;
 
-	i = 1;
-	y = 1;
+	i = 0;
+	y = 0;
 	while (tab_parse->nb_cmd > y)
 	{
 		while (tab_parse->len_char > i)
 		{
 			if (tab_parse[y].infile[i])
-				printf("f = %s %d \n", tab_parse[y].infile[i], i);
+				printf("f = %s %d \n", tab_parse[y].infile[i], y);
 			if (tab_parse[y].inredir[i])
-				printf("r = %s %d \n", tab_parse[y].inredir[i], i);
+				printf("r = %s %d \n", tab_parse[y].inredir[i], y);
 			if (tab_parse[y].outfile[i])
-				printf("f = %s %d \n", tab_parse[y].outfile[i], i);
+				printf("f = %s %d \n", tab_parse[y].outfile[i], y);
 			if (tab_parse[y].outredir[i])
-				printf("r = %s %d \n", tab_parse[y].outredir[i], i);
+				printf("r = %s %d \n", tab_parse[y].outredir[i], y);
 			i++;
 		}
 		i = 0;
@@ -56,14 +56,13 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 		tmp_lexer = tmp_lexer->next;
 	}
 	tab_parse = malloc(sizeof(t_tab_parse) * i);
-	// while (y < i)
-	// {
-	 	tab_parse->nb_cmd = i;
-		printf("LA = %d   \n", tab_parse->nb_cmd );
+	tab_parse->nb_cmd = i;
+	printf("nb cmd = %d \n", tab_parse->nb_cmd);
 		
-	// }
+
+
 	y = 0;
-	i = 1;
+	i = 0;
 	tmp_lexer = *deb_lexer;
 	while (tmp_lexer)
 	{
@@ -71,11 +70,8 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 			i++;
 		tmp_lexer = tmp_lexer->next;
 	}
-	while (y < tab_parse->nb_cmd)
-	{
-		tab_parse->len_char = i;
-		y++;
-	}
+	tab_parse->len_char = i;
+	printf("lenCHAR = %d \n", tab_parse->len_char);
 	y = 0;
 		// MALLOC des str au bonne indices du tab struc
 	while (tab_parse->nb_cmd > y)
@@ -86,21 +82,32 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 		tab_parse[y].outredir = malloc(sizeof(char **) * i);
 		y++;
 	}
-	while (i)
-	{
-		tab_parse->infile = malloc(sizeof(char *) * i);
-		tab_parse->outfile = malloc(sizeof(char *) * i);
-		tab_parse->inredir = malloc(sizeof(char *) * i);
-		tab_parse->outredir = malloc(sizeof(char *) * i);
-		i--;
-	}
+
+
 	i = 0;
 	y = 0;
-	while (tab_parse->nb_cmd > y + 1)
+	while (tab_parse->nb_cmd > y)
 	{
-		while (i + 1 < tab_parse->len_char)
+		while (i < tab_parse->len_char)
 		{
-			printf("i=%d   y=%d \n", i,y);
+			tab_parse[y].infile[i] = malloc(sizeof(char *) * tab_parse->len_char);
+			tab_parse[y].outfile[i] = malloc(sizeof(char *) * tab_parse->len_char);
+			tab_parse[y].inredir[i] = malloc(sizeof(char *) * tab_parse->len_char);
+			tab_parse[y].outredir[i] = malloc(sizeof(char *) * tab_parse->len_char);
+			i++;
+		}
+		y++;
+	}
+
+
+
+	i = 0;
+	y = 0;
+	while (tab_parse->nb_cmd > y)
+	{
+		while (i < tab_parse->len_char)
+		{
+			printf(" LA ---------------i=%d   y=%d \n", i,y);
 			tab_parse[y].infile[i] = NULL;
 			tab_parse[y].outfile[i] = NULL;
 			tab_parse[y].inredir[i] = NULL;
@@ -140,16 +147,16 @@ t_tab_parse	*to_exec(t_lexer **deb_lexer)
 			if (!ft_strncmp(tmp_lexer->contenu, "<<", 2) || \
 			!ft_strncmp(tmp_lexer->contenu, "<", 1))
 			{
-				tab_parse[i].inredir[y] = ft_strdup(tmp_lexer->contenu);
-				tab_parse[i].infile[y] = ft_strdup(tmp_lexer->next->contenu);
+				tab_parse[y].inredir[i] = ft_strdup(tmp_lexer->contenu);
+				tab_parse[y].infile[i] = ft_strdup(tmp_lexer->next->contenu);
 				// printf("bla = %s ok", tab_parse->inredir[i]);
-				// printf("bla = %s  i = %d ok", tab_parse->infile[i], i);
+				// printf("bla = %s  i = %d y = %d \n", tab_parse->infile[i], i, y);
 			}
 			else
 			{
-				tab_parse[i].outredir[y] = ft_strdup(tmp_lexer->contenu);
+				tab_parse[y].outredir[i] = ft_strdup(tmp_lexer->contenu);
 				// printf("bla = %s ok", tab_parse->outredir[i]);
-				tab_parse[i].outfile[y] = ft_strdup(tmp_lexer->next->contenu);				
+				tab_parse[y].outfile[i] = ft_strdup(tmp_lexer->next->contenu);				
 			}
 			i++;
 			tmp_lexer = tmp_lexer->next;
