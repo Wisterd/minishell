@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/21 03:06:00 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:48:02 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,7 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 				tmp_lexer->pre = new_lexer;
 		}
 		else if (new_lexer->next)
-		{
-			if (new_lexer->pre)
-				new_lexer->id = new_lexer->pre->id + 1;
 			new_lexer = new_lexer->next;
-		}
-		if (new_lexer->pre)
-			new_lexer->id = new_lexer->pre->id + 1;
 	}
 }
 
@@ -53,11 +47,13 @@ void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 	t_lexer	*to_free;
 
 	to_free = tmp_lexer;
+	if (!tmp_lexer || !*deb_lexer)
+		return ;
 	if (!tmp_lexer->pre)
 	{
 		tmp_lexer = tmp_lexer->next;
 		*deb_lexer = tmp_lexer;
-		if (to_free->pre)
+		if (!to_free->pre)
 			tmp_lexer->pre = NULL;
 		free(to_free->contenu);
 		free(to_free);
