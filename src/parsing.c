@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/22 22:54:33 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/22 23:04:31 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,7 @@ void	mini_exit(char *prompt)
 	{
 		prompt = readline("minishell> ");
 		if (prompt)
-		{
 			parse(prompt);
-			add_history(prompt);
-		}
-		//printf("%s \n",prompt);
 	}
 	rl_clear_history();
 	exit(EXIT_SUCCESS);

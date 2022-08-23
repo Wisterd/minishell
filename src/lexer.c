@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/22 22:55:42 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 02:17:56 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	history(t_lexer **deb_lexer)
 	t_lexer	*new_lexer;
 	char	*history;
 
-	history = " ";
+	history = ft_strdup("");
+	if (!history)
+		error_malloc("history");
 	new_lexer = *deb_lexer;
 	while (new_lexer)
 	{
