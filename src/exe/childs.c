@@ -5,9 +5,9 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 	int	outfile;
 
 	if (!ft_strncmp(data->redir_out[ind_cmd], ">>", 2))
-		outfile = open(data->outfile[ind_cmd], O_CREAT | O_RDWR | O_APPEND, 0644);
+		outfile = open(data->outfile[ind_cmd], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else
-		outfile = open(data->outfile[ind_cmd], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		outfile = open(data->outfile[ind_cmd], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (outfile == -1)
 	{
 		if (access(data->outfile[ind_cmd], W_OK) == -1)
@@ -62,7 +62,7 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 		*fd_out = exec_data->r_pipe[1];
 	}
 }
-
+/*
 static void	close_end_pipe(t_exec_data *exec_data, int ind_cmd)
 {
 	if (ind_cmd == 0)
@@ -75,13 +75,14 @@ static void	close_end_pipe(t_exec_data *exec_data, int ind_cmd)
 		close(exec_data->r_pipe[0]);
 	}
 }
-
+*/
 void	ft_child(t_exec_data *exec_data, int ind_cmd)
 {
 	int		fd_in;
 	int		fd_out;
 	char	*path_cmd;
 
+	//kill(getpid(), 19); // STOP
 	path_cmd = get_path_cmd(exec_data, \
 		exec_data->args_exec->tab_args[ind_cmd][0]);
 	exec_data->args_exec->path_cmd = path_cmd;
@@ -92,6 +93,6 @@ void	ft_child(t_exec_data *exec_data, int ind_cmd)
 		dup2(fd_in, STDIN_FILENO);
 	if (fd_out != STDOUT_FILENO)
 		dup2(fd_out, STDOUT_FILENO);
-	close_end_pipe(exec_data, ind_cmd);
+	ft_close_pipes(exec_data->pipes, -1);
 	ft_exec(*exec_data->args_exec, ind_cmd);
 }

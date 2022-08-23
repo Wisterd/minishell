@@ -16,7 +16,7 @@ t_args_exec	*init_args_exec(void)
 	cmd2 = ft_malloc(sizeof(char *) * 3);
 	cmd3 = ft_malloc(sizeof(char *) * 3);
 	cmd4 = ft_malloc(sizeof(char *) * 3);
-	cmd1[0] = ft_strdup("car");
+	cmd1[0] = ft_strdup("cat");
 	cmd1[1] = ft_strdup("in0");
 	cmd1[2] = NULL;
 	cmd2[0] = ft_strdup("cat");
@@ -59,10 +59,10 @@ void	set_inoutfies(t_exec_data *data)
 	infiles[1] = NULL;
 	infiles[2] = NULL;
 	infiles[3] = NULL;
-	outfiles[0] = "out0";
+	outfiles[0] = NULL;
 	outfiles[1] = NULL;
-	outfiles[2] = "out2";
-	outfiles[3] = "out3";
+	outfiles[2] = NULL;
+	outfiles[3] = NULL;
 	data->infile = infiles;
 	data->outfile = outfiles;
 }
@@ -130,14 +130,21 @@ void	fill_pipes(t_exec_data *data, int *pipes, int ind_cmd)
 	}
 }
 
-void	ft_close_pipes(int	*pipes)
+void	ft_close_pipes(int	*pipes, int dont_close)
 {
 	int	i;
 
 	i = 0;
 	while (i < 4)
 	{
-		close(pipes[i]);
+		if (i != dont_close)
+		{
+			if (close(pipes[i]) == -1)
+			{
+				perror("Close error:");
+				ft_error(ERR_CLOSE, NULL, pipes);
+			}
+		}
 		i++;
 	}
 	ft_free(pipes);
@@ -165,7 +172,7 @@ int	ft_fork(t_exec_data *data)
 			ft_child(data, i);
 	}
 	data->childs = childs;
-	ft_close_pipes(pipes);
+	ft_close_pipes(pipes, -1);
 	return (ft_wait(data));
 }
 
@@ -193,12 +200,16 @@ void	set_redirs(t_exec_data	*data)
 //regarder d abord si je trouve la commande demandee dans le repertoire courant avant de fouiller le PATH
 //cas special si une seule commande a executer (executer dans le parent et non le child)
 //redirections multiples 
+//gerer cas special des assignements de variable qu'il faut pas execve 
+//pas besoin de gerer les = sans export
 
-int	main(void)
+int	main(int ac, char **av, char *envp[])
 {
 	t_args_exec	*args_exec;
 	t_exec_data	data;
-
+	(void)		ac;
+	(void)		av;
+	(void)		envp;
 	ft_garbage_collector(INIT, NULL);
 	args_exec = init_args_exec();
 	data.n_cmds = 4;

@@ -36,8 +36,13 @@ void	ft_error(int error_code, char *to_print, int *pipes)
 		exit_stat = 1;
 		error_msg = ft_strjoin(to_print, ": Open failed\n");
 	}
+	if (error_code == ERR_CLOSE)
+	{
+		exit_stat = 1;
+		error_msg = ft_strjoin(to_print, "Close failed\n");
+	}
 	if (pipes)
-		ft_close_pipes(pipes);
+		ft_close_pipes(pipes, -1);
 	write(2, error_msg, ft_strlen(error_msg));
 	ft_exit();
 }

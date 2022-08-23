@@ -18,6 +18,7 @@
 #define ERR_PERM_DENIED 15
 #define	ERR_FORK 16
 #define	ERR_OPEN 17
+#define	ERR_CLOSE 18
 extern int exit_stat;
 
 typedef struct s_args_exec
@@ -42,6 +43,14 @@ typedef struct s_exec_data
 	t_args_exec *args_exec;
 }	t_exec_data;
 
+typedef struct s_env
+{
+	struct s_env	*prev;
+	struct s_env	*next;
+	char			*var_name;
+	char			*var_content;
+}	t_env;
+
 //error.c
 void	ft_error(int error_code, char *to_print, int *pipes);
 
@@ -55,7 +64,7 @@ void	ft_exit(void);
 
 //pipe.c
 void	ft_exec(t_args_exec args_exec, int ind_cmd);
-void	ft_close_pipes(int	*pipes);
+void	ft_close_pipes(int	*pipes, int dont_close);
 
 //childs.c 
 void	ft_child(t_exec_data *exec_data, int ind_cmd);
