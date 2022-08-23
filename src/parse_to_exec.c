@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/23 22:47:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/23 23:16:02 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,11 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 			tab_parse[y].outredir[i] = NULL;
 			i++;
 		}
+		i = 0;
 		y++;
 	}
 	i = 0;
+	
 	// while (tmp_lexer)
 	// {
 	// 	if (tmp_lexer->type == MOT && tmp_lexer.pre && !tmp_lexer->pre->type == REDIR)
@@ -138,8 +140,6 @@ t_tab_parse	*to_exec(t_lexer **deb_lexer)
 	i = 0;
 	y = 0;
 	tab_parse = init_tab_parse(deb_lexer);
-	// tab_parse = init_tab_parse(deb_lexer);
-	// tab_parse->tab_args = init_tab_args(deb_lexer);
 	while (tmp_lexer)
 	{
 		if (tmp_lexer->type == REDIR)
@@ -155,7 +155,6 @@ t_tab_parse	*to_exec(t_lexer **deb_lexer)
 			else
 			{
 				tab_parse[y].outredir[i] = ft_strdup(tmp_lexer->contenu);
-				// printf("bla = %s ok", tab_parse->outredir[i]);
 				tab_parse[y].outfile[i] = ft_strdup(tmp_lexer->next->contenu);				
 			}
 			i++;

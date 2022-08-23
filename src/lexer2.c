@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/23 13:48:02 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/24 00:06:18 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 	{
 		tmp_lexer = tmp_lexer->next;
 		*deb_lexer = tmp_lexer;
-		if (!to_free->pre)
+		if (!to_free->pre && tmp_lexer)
 			tmp_lexer->pre = NULL;
 		free(to_free->contenu);
 		free(to_free);
