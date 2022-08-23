@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/24 00:54:58 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/24 01:08:59 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 {
 	char	*env;
 
-	if (tmp_lexer->type == DOLLAR && tmp_lexer->next)
+	if (tmp_lexer && tmp_lexer->next && tmp_lexer->type == DOLLAR)
 	{
 		while (tmp_lexer->next->type == DOLLAR)
 		{
@@ -176,7 +176,8 @@ int	valide_lexer(t_lexer **deb_lexer)
 		while (tmp_lexer && tmp_lexer->next && tmp_lexer->type == DOLLAR)
 		{
 			tmp_lexer = replace_dollar(deb_lexer, tmp_lexer);
-			if (tmp_lexer->next->type == SPC)
+			if (tmp_lexer && tmp_lexer->next && (tmp_lexer->next->type == SPC \
+			|| tmp_lexer->next->type == QUOTE))
 				tmp_lexer = tmp_lexer->next;
 		}
 		if (tmp_lexer)
