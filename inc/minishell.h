@@ -31,6 +31,7 @@ typedef struct s_exec_data
 {
 	int			n_cmds;
 	int			ind_cmd;
+	int			*pipes;
 	int			*l_pipe;
 	int			*r_pipe;
 	char		**infile;
@@ -39,14 +40,13 @@ typedef struct s_exec_data
 	char		**redir_out;
 	pid_t		*childs;
 	t_args_exec *args_exec;
-	
 }	t_exec_data;
 
 //error.c
-void	ft_error(int error_code, char *to_print);
+void	ft_error(int error_code, char *to_print, int *pipes);
 
 //path.c
-char	*get_path_cmd(char **split_path, char *cmd);
+char	*get_path_cmd(t_exec_data *data, char *cmd);
 
 //utils.c
 char	*ft_strjoin_free(char *s1, char *s2);
@@ -55,6 +55,7 @@ void	ft_exit(void);
 
 //pipe.c
 void	ft_exec(t_args_exec args_exec, int ind_cmd);
+void	ft_close_pipes(int	*pipes);
 
 //childs.c 
 void	ft_child(t_exec_data *exec_data, int ind_cmd);

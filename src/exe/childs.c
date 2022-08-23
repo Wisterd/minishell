@@ -1,16 +1,19 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	create_outfile(t_exec_data *data, int ind_cmd)
 {
 	int	outfile;
 
-	outfile = open(data->outfile[ind_cmd], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (!ft_strncmp(data->redir_out[ind_cmd], ">>", 2))
+		outfile = open(data->outfile[ind_cmd], O_CREAT | O_RDWR | O_APPEND, 0644);
+	else
+		outfile = open(data->outfile[ind_cmd], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (outfile == -1)
 	{
 		if (access(data->outfile[ind_cmd], W_OK) == -1)
-			ft_error(ERR_PERM_DENIED, data->outfile[ind_cmd]);
+			ft_error(ERR_PERM_DENIED, data->outfile[ind_cmd], data->pipes);
 		else
-			ft_error(ERR_OPEN, data->outfile[ind_cmd]);
+			ft_error(ERR_OPEN, data->outfile[ind_cmd], data->pipes);
 	}
 	close(data->r_pipe[1]);
 	data->r_pipe[1] = outfile;
@@ -24,11 +27,11 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 	if (infile == -1)
 	{
 		if (access(data->infile[ind_cmd], F_OK) == -1)
-			ft_error(ERR_NO_FILE, data->infile[ind_cmd]);
+			ft_error(ERR_NO_FILE, data->infile[ind_cmd], data->pipes);
 		else if (access(data->infile[ind_cmd], R_OK) == -1)
-			ft_error(ERR_PERM_DENIED, data->infile[ind_cmd]);
+			ft_error(ERR_PERM_DENIED, data->infile[ind_cmd], data->pipes);
 		else 
-			ft_error(ERR_OPEN, data->infile[ind_cmd]);
+			ft_error(ERR_OPEN, data->infile[ind_cmd], data->pipes);
 	}
 	close(data->l_pipe[0]);
 	data->l_pipe[0] = infile;
@@ -79,7 +82,7 @@ void	ft_child(t_exec_data *exec_data, int ind_cmd)
 	int		fd_out;
 	char	*path_cmd;
 
-	path_cmd = get_path_cmd(exec_data->args_exec->path, \
+	path_cmd = get_path_cmd(exec_data, \
 		exec_data->args_exec->tab_args[ind_cmd][0]);
 	exec_data->args_exec->path_cmd = path_cmd;
 	fd_in = STDIN_FILENO;
