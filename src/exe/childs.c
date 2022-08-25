@@ -13,9 +13,10 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 		if (access(data->outfile[ind_cmd], W_OK) == -1)
 			ft_error(ERR_PERM_DENIED, data->outfile[ind_cmd], data->pipes);
 		else
-			ft_error(ERR_OPEN, data->outfile[ind_cmd], data->pipes);
+			ft_error(ERR_PERROR, "Open failed", data->pipes);
 	}
-	close(data->r_pipe[1]);
+	if (close(data->r_pipe[1]) == -1)
+		ft_error(ERR_PERROR, "Close failed", data->pipes);
 	data->r_pipe[1] = outfile;
 }
 
@@ -31,9 +32,10 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 		else if (access(data->infile[ind_cmd], R_OK) == -1)
 			ft_error(ERR_PERM_DENIED, data->infile[ind_cmd], data->pipes);
 		else 
-			ft_error(ERR_OPEN, data->infile[ind_cmd], data->pipes);
+			ft_error(ERR_PERROR, "Open failed", data->pipes);
 	}
-	close(data->l_pipe[0]);
+	if (close(data->l_pipe[0]) == -1)
+		ft_error(ERR_PERROR, "Close failed", data->pipes);
 	data->l_pipe[0] = infile;
 }
 
@@ -62,27 +64,13 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 		*fd_out = exec_data->r_pipe[1];
 	}
 }
-/*
-static void	close_end_pipe(t_exec_data *exec_data, int ind_cmd)
-{
-	if (ind_cmd == 0)
-		close(exec_data->r_pipe[0]);
-	else if (ind_cmd == exec_data->n_cmds - 1)
-		close(exec_data->l_pipe[1]);
-	else
-	{
-		close(exec_data->l_pipe[1]);
-		close(exec_data->r_pipe[0]);
-	}
-}
-*/
+
 void	ft_child(t_exec_data *exec_data, int ind_cmd)
 {
 	int		fd_in;
 	int		fd_out;
 	char	*path_cmd;
 
-	//kill(getpid(), 19); // STOP
 	path_cmd = get_path_cmd(exec_data, \
 		exec_data->args_exec->tab_args[ind_cmd][0]);
 	exec_data->args_exec->path_cmd = path_cmd;
@@ -90,9 +78,11 @@ void	ft_child(t_exec_data *exec_data, int ind_cmd)
 	fd_out = STDOUT_FILENO;
 	set_fds_inout(&fd_in, &fd_out, ind_cmd, exec_data);
 	if (fd_in != STDIN_FILENO)
-		dup2(fd_in, STDIN_FILENO);
+		if (dup2(fd_in, STDIN_FILENO) == -1)
+			ft_error(ERR_PERROR, "Dup2 failed", exec_data->pipes);
 	if (fd_out != STDOUT_FILENO)
-		dup2(fd_out, STDOUT_FILENO);
+		if (dup2(fd_out, STDOUT_FILENO) == -1)
+			ft_error(ERR_PERROR, "Dup2 failed", exec_data->pipes);
 	ft_close_pipes(exec_data->pipes, -1);
-	ft_exec(*exec_data->args_exec, ind_cmd);
+	ft_exec(*exec_data->args_exec, ind_cmd, exec_data->pipes);
 }

@@ -26,20 +26,10 @@ void	ft_error(int error_code, char *to_print, int *pipes)
 		exit_stat = 1;
 		error_msg = ft_strjoin(to_print, "Malloc error\n");
 	}
-	if (error_code == ERR_FORK)
+	if (error_code == ERR_PERROR)
 	{
 		exit_stat = 1;
-		error_msg = ft_strjoin(to_print, "Fork error\n");
-	}
-	if (error_code == ERR_OPEN)
-	{
-		exit_stat = 1;
-		error_msg = ft_strjoin(to_print, ": Open failed\n");
-	}
-	if (error_code == ERR_CLOSE)
-	{
-		exit_stat = 1;
-		error_msg = ft_strjoin(to_print, "Close failed\n");
+		perror(to_print);
 	}
 	if (pipes)
 		ft_close_pipes(pipes, -1);

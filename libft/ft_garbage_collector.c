@@ -1,10 +1,28 @@
 #include "libft.h"
 
+static void	free_all(t_garbage **l_garbage)
+{
+	t_garbage	*tmp_next;
+
+	while (*l_garbage)
+	{
+		tmp_next = (*l_garbage)->next;
+		free((*l_garbage)->pointer);
+		free(*l_garbage);
+		*l_garbage = tmp_next;
+	}
+}
+
 static void	add_front(t_garbage **l_garbage, void *pointer)
 {
 	t_garbage	*l_new;
 
 	l_new = malloc(sizeof(t_garbage));
+	if (!l_new)
+	{
+		free_all(l_garbage);
+		exit(1);
+	}
 	l_new->prev = NULL;
 	l_new->pointer = pointer; 
 	if (*l_garbage)
@@ -46,19 +64,6 @@ static void	rm_ele(t_garbage **l_garbage, void *pointer)
 	}
 }
 
-static void	free_all(t_garbage **l_garbage)
-{
-	t_garbage	*tmp_next;
-
-	while (*l_garbage)
-	{
-		tmp_next = (*l_garbage)->next;
-		free((*l_garbage)->pointer);
-		free(*l_garbage);
-		*l_garbage = tmp_next;
-	}
-}
-
 void	ft_garbage_collector(int mode, void *pointer)
 {
 	static t_garbage	*l_garbage = NULL;
@@ -66,6 +71,11 @@ void	ft_garbage_collector(int mode, void *pointer)
 	if (mode == INIT)
 	{
 		l_garbage = malloc(sizeof(t_garbage));
+		if (!l_garbage)
+		{
+			write(2, "Malloc error\n", 13);
+			exit(1);
+		}
 		l_garbage->prev = NULL;
 		l_garbage->next = NULL;
 		l_garbage->pointer = NULL;

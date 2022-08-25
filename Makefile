@@ -11,7 +11,10 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/pipe.c \
 	exe/error.c \
 	exe/utils.c \
-	exe/childs.c)
+	exe/childs.c \
+	exe/redirs.c \
+	exe/init.c \
+	builtins/env.c )
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c

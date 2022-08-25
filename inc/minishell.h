@@ -16,9 +16,9 @@
 #define	ERR_NOT_FOUND 13
 #define ERR_NO_FILE 14
 #define ERR_PERM_DENIED 15
-#define	ERR_FORK 16
-#define	ERR_OPEN 17
-#define	ERR_CLOSE 18
+#define	ERR_PERROR 16
+
+
 extern int exit_stat;
 
 typedef struct s_args_exec
@@ -51,6 +51,7 @@ typedef struct s_env
 	char			*var_content;
 }	t_env;
 
+//EXE
 //error.c
 void	ft_error(int error_code, char *to_print, int *pipes);
 
@@ -63,10 +64,19 @@ int		ft_wait(t_exec_data *data);
 void	ft_exit(void);
 
 //pipe.c
-void	ft_exec(t_args_exec args_exec, int ind_cmd);
+void	ft_exec(t_args_exec args_exec, int ind_cmd, int *pipes);
 void	ft_close_pipes(int	*pipes, int dont_close);
+int		*init_pipes(t_exec_data *data);
 
 //childs.c 
 void	ft_child(t_exec_data *exec_data, int ind_cmd);
+
+//init.c
+t_args_exec	*init_args_exec(void);
+void	set_inoutfies(t_exec_data *data);
+void	set_redirs(t_exec_data	*data);
+
+//BUILTINS
+t_env	*init_env(t_exec_data *data, char **envp);
 
 #endif
