@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 19:49:36 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:15:54 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 		
 
 
-	y = 0;
 	i = 0;
+	y = 0;
 	tmp_lexer = *deb_lexer;
 	while (tmp_lexer)
 	{
@@ -76,7 +76,7 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 		// MALLOC des str au bonne indices du tab struc
 	while (tab_parse->nb_cmd > y)
 	{
-		tab_parse[y].tab_args = malloc(sizeof(char **) * tab_parse->nb_cmd);
+		tab_parse[y].tab_args = malloc(sizeof(char **) * (tab_parse->nb_cmd + 1));
 		tab_parse[y].infile = malloc(sizeof(char **) * i);
 		tab_parse[y].outfile = malloc(sizeof(char **) * i);
 		tab_parse[y].inredir = malloc(sizeof(char **) * i);
@@ -91,7 +91,7 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 	{
 		while (i < tab_parse->nb_redir)
 		{
-			tab_parse[y].tab_args[i] = malloc(sizeof(char *) * tab_parse->nb_cmd);
+			tab_parse[y].tab_args[i] = malloc(sizeof(char *) * len_lexer(deb_lexer) + 1);
 			tab_parse[y].infile[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
 			tab_parse[y].outfile[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
 			tab_parse[y].inredir[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
@@ -173,7 +173,7 @@ t_tab_parse	*to_exec(t_lexer **deb_lexer)
 		if (tmp_lexer->type == MOT && (!tmp_lexer->pre || (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)))
 		{
 			tab_parse[y].tab_args[i] = ft_strdup(tmp_lexer->contenu);
-			// printf("args = %s  y = %d i = %d \n",tab_parse[y].tab_args[i], y, i);
+			printf("args = %s  y = %d i = %d \n",tab_parse[y].tab_args[i], y, i);
 			i++;
 		}
 		if (tmp_lexer->type == PIPE)

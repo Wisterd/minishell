@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/23 22:00:02 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:49:52 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int	in_quote(t_lexer **deb_lexer)
 				return(1);
 			str = tmp_lexer->contenu;
 			tmp_lexer = tmp_lexer->next;
-			while (tmp_lexer && ft_strncmp(tmp_lexer->contenu, str, 2) != 0)
+			while (tmp_lexer && ft_strncmp(tmp_lexer->contenu, str, 2))
 			{
-				if (ft_strncmp(str, "\"", 2) == 0 \
-				&& ft_strncmp(tmp_lexer->contenu, "$", 2) == 0)
+				if (!ft_strncmp(str, "\"", 2) \
+				&& !ft_strncmp(tmp_lexer->contenu, "$", 2))
 					tmp_lexer->type = DOLLAR;
 				else if (tmp_lexer->type == SPC)
-					tmp_lexer->type = SPC;
+					tmp_lexer->type = MOT;
 				else
 					tmp_lexer->type = MOT;
 				tmp_lexer = tmp_lexer->next;
@@ -122,7 +122,7 @@ void	*parse(char *prompt)
 	if (!valide_lexer(deb_lexer))
 	{
 		free_lexer(deb_lexer);
-		return (NULL);
+		return (NULL); // 2 ERROR
 	}
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
@@ -130,13 +130,16 @@ void	*parse(char *prompt)
 	//	word_or_cmd(deb_lexer);
 	while (have_type(deb_lexer, QUOTE))
 		remove_type(deb_lexer, QUOTE);
-
+	while (have_type(deb_lexer, CMD))
+		remove_type(deb_lexer, CMD);
 
 	print_lexer(deb_lexer);
 	if (*deb_lexer)
 		printf("\n");
 	while (have_type(deb_lexer, SPC))
 		remove_type(deb_lexer, SPC);
+	
+	
 	// POur marine
 	t_tab_parse	*tab_parse;
 	tab_parse = to_exec(deb_lexer);	
