@@ -59,7 +59,10 @@ static char	*get_var_content(t_exec_data *data, char *var_path)
 	while (*var_path != '=')
 		var_path++;
 	var_path++;
-	var_content = ft_strdup(var_path);
+	if (!*var_path)
+		var_content = ft_strdup("");
+	else
+		var_content = ft_strdup(var_path);
 	if (!var_content)
 		ft_error(ERR_MALLOC, NULL, data->pipes);
 	return (var_content);
