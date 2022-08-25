@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/23 20:28:25 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:48:46 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_tab_parse
 	char	**outredir;
 	char	**inredir;
 	int		nb_cmd;
-	int		len_char;
+	int		nb_redir;
 }    t_tab_parse;
 
 // utilitaires_parsing.c
