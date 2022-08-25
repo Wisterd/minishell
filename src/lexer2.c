@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 20:34:26 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/25 23:24:43 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 	new_lexer = *deb_lexer;
 	while (new_lexer && new_lexer->next && ft_strncmp(new_lexer->contenu, "/n", 2))
 	{
-		if (!ft_strncmp(new_lexer->next->contenu, "'", 1))
-		{
-			new_lexer->next->type = CMD;
-			new_lexer = new_lexer->next;
-		}		
-		else if (new_lexer->type == type && new_lexer->next->type == type)
+		// if (!ft_strncmp(new_lexer->next->contenu, "'", 1))
+		// {
+		// 	new_lexer->next->type = CMD;
+		// 	new_lexer = new_lexer->next;
+		// }		
+		if (new_lexer->type == type && new_lexer->next->type == type)
 		{
 			new_lexer->contenu = ft_strjoin_2free(\
 			new_lexer->contenu, new_lexer->next->contenu);
@@ -80,6 +80,7 @@ int	len_lexer(t_lexer **deb_lexer)
 	t_lexer	*tmp_lexer;
 	int		i;
 
+	i = 0;
 	tmp_lexer = *deb_lexer;	
 	while (tmp_lexer)
 	{

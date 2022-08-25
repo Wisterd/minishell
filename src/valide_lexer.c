@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/24 01:11:32 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/25 23:12:20 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 			tmp_lexer = *deb_lexer;
 			return (tmp_lexer);
 		}
-		if (tmp_lexer->next->type == MOT || tmp_lexer->next->type == CMD)
+		if (tmp_lexer->next->type == MOT)
 		{
 			env = getenv(tmp_lexer->next->contenu);
 			if (erase_dollar(deb_lexer, tmp_lexer, env))

@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 20:15:54 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/25 22:34:13 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	print_to_exec(t_tab_parse *tab_parse)
 		while (tab_parse->nb_redir > i)
 		{
 			if (tab_parse[y].infile[i])
-				printf("f = %s %d \n", tab_parse[y].infile[i], y);
+				printf("f = %s %d \n", tab_parse[y].infile[i], i);
 			if (tab_parse[y].inredir[i])
-				printf("r = %s %d \n", tab_parse[y].inredir[i], y);
+				printf("r = %s %d \n", tab_parse[y].inredir[i], i);
 			if (tab_parse[y].outfile[i])
-				printf("f = %s %d \n", tab_parse[y].outfile[i], y);
+				printf("f = %s %d \n", tab_parse[y].outfile[i], i);
 			if (tab_parse[y].outredir[i])
-				printf("r = %s %d \n", tab_parse[y].outredir[i], y);
+				printf("r = %s %d \n", tab_parse[y].outredir[i], i);
 			i++;
 		}
 		i = 0;
@@ -76,7 +76,7 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 		// MALLOC des str au bonne indices du tab struc
 	while (tab_parse->nb_cmd > y)
 	{
-		tab_parse[y].tab_args = malloc(sizeof(char **) * (tab_parse->nb_cmd + 1));
+		tab_parse[y].tab_args = malloc(sizeof(char **) *  len_lexer(deb_lexer) + 1);
 		tab_parse[y].infile = malloc(sizeof(char **) * i);
 		tab_parse[y].outfile = malloc(sizeof(char **) * i);
 		tab_parse[y].inredir = malloc(sizeof(char **) * i);
@@ -87,29 +87,41 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 
 	i = 0;
 	y = 0;
-	while (tab_parse->nb_cmd > y)
-	{
-		while (i < tab_parse->nb_redir)
-		{
-			tab_parse[y].tab_args[i] = malloc(sizeof(char *) * len_lexer(deb_lexer) + 1);
-			tab_parse[y].infile[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
-			tab_parse[y].outfile[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
-			tab_parse[y].inredir[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
-			tab_parse[y].outredir[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
-			i++;
-		}
-		y++;
-	}
+	// while (tab_parse->nb_cmd > y)
+	// {
+	// 	while (i < len_lexer(deb_lexer))
+	// 	{
+	// 		tab_parse[y].tab_args[i] = malloc(sizeof(char *) * len_lexer(deb_lexer) + 1);
+	// 		i++;
+	// 	}
+	// 	i = 0;	
+	// 	while (i < tab_parse->nb_redir)
+	// 	{
+	// 		//printf("la===%d", len_lexer(deb_lexer));
+	// 		tab_parse[y].infile[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
+	// 		tab_parse[y].outfile[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
+	// 		tab_parse[y].inredir[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
+	// 		tab_parse[y].outredir[i] = malloc(sizeof(char *) * tab_parse->nb_redir);
+	// 		i++;
+	// 	}
+	// 	i = 0;
+	// 	y++;
+	// }
 
 
 	i = 0;
 	y = 0;
 	while (tab_parse->nb_cmd > y)
 	{
+		// while (i < len_lexer(deb_lexer))
+		// {
+		// 	tab_parse[y].tab_args[i] = NULL;
+		// 	i++;
+		// }
 		while (i < tab_parse->nb_redir)
 		{
 			// printf(" LA ---------------i=%d   y=%d \n", i,y);
-			tab_parse[y].tab_args[i] = NULL;
+			
 			tab_parse[y].infile[i] = NULL;
 			tab_parse[y].outfile[i] = NULL;
 			tab_parse[y].inredir[i] = NULL;

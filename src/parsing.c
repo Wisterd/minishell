@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 20:49:52 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/25 23:34:40 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,15 @@ int	in_quote(t_lexer **deb_lexer)
 			tmp_lexer = tmp_lexer->next;
 			while (tmp_lexer && ft_strncmp(tmp_lexer->contenu, str, 2))
 			{
-				if (!ft_strncmp(str, "\"", 2) \
+				if (!ft_strncmp(tmp_lexer->contenu, "\"", 1))
+					tmp_lexer->type = CMD;
+				else if (!ft_strncmp(tmp_lexer->contenu, "'", 1))
+					tmp_lexer->type = CMD;
+				else if (!ft_strncmp(str, "\"", 2) \
 				&& !ft_strncmp(tmp_lexer->contenu, "$", 2))
-					tmp_lexer->type = DOLLAR;
+				 	tmp_lexer->type = DOLLAR;
 				else if (tmp_lexer->type == SPC)
-					tmp_lexer->type = MOT;
+					tmp_lexer->type = SPC;
 				else
 					tmp_lexer->type = MOT;
 				tmp_lexer = tmp_lexer->next;
@@ -130,8 +134,8 @@ void	*parse(char *prompt)
 	//	word_or_cmd(deb_lexer);
 	while (have_type(deb_lexer, QUOTE))
 		remove_type(deb_lexer, QUOTE);
-	while (have_type(deb_lexer, CMD))
-		remove_type(deb_lexer, CMD);
+	// while (have_type(deb_lexer, CMD))
+	// 	remove_type(deb_lexer, CMD);
 
 	print_lexer(deb_lexer);
 	if (*deb_lexer)
@@ -140,12 +144,12 @@ void	*parse(char *prompt)
 		remove_type(deb_lexer, SPC);
 	
 	
-	// POur marine
+	/*-------- POur marine ------------
 	t_tab_parse	*tab_parse;
 	tab_parse = to_exec(deb_lexer);	
 	print_to_exec(tab_parse);
 	
-	
+	*/
 	
 	free_lexer(deb_lexer);
 	
