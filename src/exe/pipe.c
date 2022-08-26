@@ -95,9 +95,10 @@ int	ft_fork(t_exec_data *data)
 //gestion d erreur
 //regarder d abord si je trouve la commande demandee dans le repertoire courant avant de fouiller le PATH
 //cas special si une seule commande a executer (executer dans le parent et non le child)
-//redirections multiples 
-//gerer cas special des assignements de variable qu'il faut pas execve 
+//heredocs
 //pas besoin de gerer les = sans export
+//empecher qu'on puisse mettre des arguments a env en mettant un message d'erreur
+//executer les builtins au lieu de les chercher dans le path
 
 /*
 int	main(int ac, char **av, char *envp[])

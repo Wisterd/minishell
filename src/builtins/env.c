@@ -1,36 +1,5 @@
 #include "../../inc/minishell.h"
 
-/*
-static void	rm_ele(t_garbage **l_env, void *pointer)
-{
-	t_garbage *list;
-
-	list = *l_env;
-	while (list)
-	{
-		if (list->pointer == pointer)
-		{
-			if (!list->prev && list->next)
-			{
-				list->next->prev = NULL;
-				*l_env = list->next;
-			}
-			if (!list->next && list->prev)
-				list->prev->next = NULL;
-			if (list->next && list->prev)
-			{
-				list->prev->next = list->next;
-				list->next->prev = list->prev;
-			}
-			list->pointer = NULL;
-			free(list);
-			return ;
-		}
-		list = list->next;
-	}
-}
-*/
-
 static void	l_add_back(t_env **l_env, char *var_name, \
 	char *var_content, t_exec_data *data)
 {
@@ -111,27 +80,29 @@ t_env	*init_env(t_exec_data *data, char **envp)
 	return (l_env);
 }
 
-void	print_env(t_env *l_env)
+void	ft_env(t_exec_data *data)
 {
-	while (l_env)
+	while (data->l_env)
 	{
-		if (l_env->var_name && ft_strncmp("?", l_env->var_name, 1))
-			printf("%s=%s\n", l_env->var_name, l_env->var_content);
-		l_env = l_env->next;
+		if (data->l_env->var_name && ft_strncmp("?", data->l_env->var_name, 1))
+			printf("%s=%s\n", data->l_env->var_name, data->l_env->var_content);
+		data->l_env = data->l_env->next;
 	}
 }
 
+/*
 int	main(int ac, char **av, char *envp[])
 {
 	t_exec_data	data;
-	t_env		*l_env;
 	(void)		ac;
 	(void)		av;
 
 	ft_garbage_collector(INIT, NULL);
 	data.n_cmds = 4;
 	data.pipes = init_pipes(&data);
-	l_env = init_env(&data, envp);
-	print_env(l_env);
+	data.l_env = init_env(&data, envp);
+	ft_unset(&data, "ZDOTDIR");
+	ft_env(&data);
 	ft_garbage_collector(END, NULL);
 }
+*/

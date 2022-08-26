@@ -19,8 +19,7 @@
 #define ERR_PERM_DENIED 15
 #define	ERR_PERROR 16
 
-
-extern int exit_stat;
+extern int g_exit_stat;
 
 typedef struct s_args_exec
 {
@@ -28,6 +27,14 @@ typedef struct s_args_exec
 	char	***tab_args;
 	char 	**path;
 }	t_args_exec;
+
+typedef struct s_env
+{
+	struct s_env	*prev;
+	struct s_env	*next;
+	char			*var_name;
+	char			*var_content;
+}	t_env;
 
 typedef struct s_exec_data
 {
@@ -41,16 +48,9 @@ typedef struct s_exec_data
 	char		**redir_in;
 	char		**redir_out;
 	pid_t		*childs;
+	t_env		*l_env;
 	t_args_exec *args_exec;
 }	t_exec_data;
-
-typedef struct s_env
-{
-	struct s_env	*prev;
-	struct s_env	*next;
-	char			*var_name;
-	char			*var_content;
-}	t_env;
 
 //EXE
 //error.c
@@ -81,6 +81,9 @@ void		set_redirs(t_exec_data	*data);
 //BUILTINS
 //env.c
 t_env		*init_env(t_exec_data *data, char **envp);
-void		print_env(t_env *l_env);
+void		ft_env(t_exec_data *data);
+
+//unset.c
+void	ft_unset(t_exec_data *data, char *var_name);
 
 #endif
