@@ -6,11 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 23:12:20 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:55:04 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	mult_redir(t_lexer *tmp_lexer)
 {

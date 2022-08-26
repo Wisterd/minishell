@@ -6,8 +6,6 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 LIBFT =  -L ./libft -lft
 
-	exe/error.c \
-	signal.c \
 SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/path.c \
 	exe/pipe.c \
@@ -18,15 +16,19 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/init.c \
 	builtins/env.c \
 	builtins/unset.c \
-	main.c \
-	parsing.c \
-	lexer.c error.c lexer2.c utilitaires_parsing.c valide_lexer.c \
-	parse_to_exec.c \
-	signal.c)
+	parsing/parsing.c \
+	parsing/lexer.c \
+	parsing/error.c \
+	parsing/lexer2.c \
+	parsing/utilitaires_parsing.c \
+	parsing/valide_lexer.c \
+	parsing/parse_to_exec.c \
+	parsing/signal.c)
 
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(DEPS)
+	@if [ ! -d "$(OBJ_DIR)" ]; then mkdir $(OBJ_DIR); fi
 	@if [ ! -d "$(dir $@)" ]; then mkdir $(dir $@); fi
 	gcc $(CFLAGS) -c $< -o $@
 

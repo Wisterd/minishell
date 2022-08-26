@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 16:13:46 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 19:01:03 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@
 # define REDIR2 6
 # define DOLLAR 7
 # define SPECIAL 8
-#define EXISTS 10
-#define ACCESSIBLE 11
-#define	ERR_MALLOC 12
-#define	ERR_NOT_FOUND 13
-#define ERR_NO_FILE 14
-#define ERR_PERM_DENIED 15
-#define	ERR_PERROR 16
+# define EXISTS 10
+# define ACCESSIBLE 11
+# define ERR_MALLOC 12
+# define ERR_NOT_FOUND 13
+# define ERR_NO_FILE 14
+# define ERR_PERM_DENIED 15
+# define ERR_PERROR 16
 
 extern int g_exit_stat;
 

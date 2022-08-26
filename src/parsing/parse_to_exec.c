@@ -6,11 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 22:34:13 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:55:02 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	print_to_exec(t_tab_parse *tab_parse)
 {

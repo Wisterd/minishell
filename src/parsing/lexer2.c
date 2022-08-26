@@ -6,11 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 23:24:43 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:55:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	fuz_lex(t_lexer **deb_lexer, int type)
 {

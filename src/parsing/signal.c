@@ -6,11 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 06:05:43 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 17:37:19 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:55:02 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../inc/minishell.h"
+#include  "../../inc/minishell.h"
 
 // void	sing_int()
 // {

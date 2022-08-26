@@ -6,11 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 23:58:48 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/13 17:09:45 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:55:05 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	print_error(t_pars_error error)
 {

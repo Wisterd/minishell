@@ -6,11 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 18:22:02 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:54:59 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	print_lexer(t_lexer **deb_lexer)
 {
