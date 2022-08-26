@@ -150,8 +150,8 @@ void	*parse(char *prompt, t_exec_data *data)
 	tab_parse = to_exec(deb_lexer);	
 	print_to_exec(tab_parse);
 
-	init_data(data);
 	data->tab_parse = tab_parse;
+	init_data(data);
 	ft_fork(&data);
 
 	// ---------------------------------	
