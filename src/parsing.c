@@ -6,11 +6,13 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 23:34:40 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 17:34:42 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int		g_exit_stat = 0;
 
 t_lexer	**create_deb_lexer()
 {
@@ -172,7 +174,8 @@ void	mini_exit(char *prompt)
 
 int main(){
 	char	*prompt;
-
+	
+	signals();
 	prompt = NULL;
 	mini_exit(prompt);
 }

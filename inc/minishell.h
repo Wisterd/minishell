@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/25 20:04:16 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 16:13:46 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include "../libft/libft.h"
 
 # define MOT 0
@@ -30,6 +31,7 @@
 # define DOLLAR 7
 # define SPECIAL 8
 
+extern int g_exit_stat;
 typedef struct s_lexer
 {
 	int				id;
@@ -56,6 +58,9 @@ typedef struct s_tab_parse
 	int		nb_cmd;
 	int		nb_redir;
 }    t_tab_parse;
+
+//paring.c
+void	mini_exit(char *prompt);
 
 // utilitaires_parsing.c
 char	*chartostr(char c);
@@ -86,7 +91,8 @@ int		in_quote(t_lexer **deb_lexer);
 t_tab_parse	*to_exec(t_lexer **deb_lexer);
 void		print_to_exec(t_tab_parse *tab_parse);
 
-
+//signal.c
+void		signals();
 // error
 # define ERROR_MALLOC 42
 
