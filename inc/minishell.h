@@ -117,6 +117,7 @@ char		*ft_getcwd(t_exec_data *data);
 void		ft_exec(t_args_exec args_exec, int ind_cmd, int *pipes);
 void		ft_close_pipes(int	*pipes, int dont_close);
 int			*init_pipes(t_exec_data *data);
+void		init_data(t_exec_data *data);
 
 //childs.c 
 void		ft_child(t_exec_data *exec_data, int ind_cmd);

@@ -91,6 +91,11 @@ int	ft_fork(t_exec_data *data)
 	return (ft_wait(data));
 }
 
+void	init_data(t_exec_data *data)
+{
+	data->n_cmds = data->tab_parse->nb_cmd;
+}
+
 //TODO :
 //gestion d erreur
 //regarder d abord si je trouve la commande demandee dans le repertoire courant avant de fouiller le PATH
