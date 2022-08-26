@@ -7,6 +7,7 @@ OBJ_DIR = obj/
 LIBFT =  -L ./libft -lft
 
 SRC_FILES = $(addprefix $(SRC_DIR), \
+	main.c \
 	exe/path.c \
 	exe/pipe.c \
 	exe/error.c \

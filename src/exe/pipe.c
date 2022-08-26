@@ -114,14 +114,5 @@ int	main(int ac, char **av, char *envp[])
 	set_redirs(&data);
 	ft_fork(&data);
 	ft_garbage_collector(END, NULL);
-
-	t_env	*l_env;
-	(void)	av;
-
-	if (ac == 1)
-	{
-		l_env = init_env(envp);
-		printf(l_env->var_content);
-	}
 }
 */

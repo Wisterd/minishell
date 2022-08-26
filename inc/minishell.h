@@ -45,6 +45,33 @@
 
 extern int g_exit_stat;
 
+typedef struct s_lexer
+{
+	int				id;
+	char			*contenu;
+	int				type;
+	struct s_lexer	*next;
+	struct s_lexer	*pre;
+}			t_lexer;
+
+typedef struct s_pars_error
+{
+	int		i;
+	char	c;
+	char	*str;
+}	t_pars_error;
+
+typedef struct s_tab_parse
+{
+	char    **tab_args; //tableau des commandes avec leurs arguments
+	char    **infile; //si il y a redirection '<' le nom du fichier d'entree, sinon NULL
+	char    **outfile; //si il y a redirection '>' le nom du fichier de sortie, sinon NULL
+	char	**outredir;
+	char	**inredir;
+	int		nb_cmd;
+	int		nb_redir;
+}    t_tab_parse;
+
 typedef struct s_args_exec
 {
 	char	*path_cmd;
@@ -67,10 +94,7 @@ typedef struct s_exec_data
 	int			*pipes;
 	int			*l_pipe;
 	int			*r_pipe;
-	char		**infile;
-	char		**outfile;
-	char		**redir_in;
-	char		**redir_out;
+	t_tab_parse	*tab_parse;
 	pid_t		*childs;
 	t_env		*l_env;
 	t_args_exec *args_exec;
@@ -110,35 +134,9 @@ void		ft_env(t_exec_data *data);
 //unset.c
 void	ft_unset(t_exec_data *data, char *var_name);
 
-typedef struct s_lexer
-{
-	int				id;
-	char			*contenu;
-	int				type;
-	struct s_lexer	*next;
-	struct s_lexer	*pre;
-}			t_lexer;
-
-typedef struct s_pars_error
-{
-	int		i;
-	char	c;
-	char	*str;
-}	t_pars_error;
-
-typedef struct s_tab_parse
-{
-	char    **tab_args; //tableau des commandes avec leurs arguments
-	char    **infile; //si il y a redirection '<' le nom du fichier d'entree, sinon NULL
-	char    **outfile; //si il y a redirection '>' le nom du fichier de sortie, sinon NULL
-	char	**outredir;
-	char	**inredir;
-	int		nb_cmd;
-	int		nb_redir;
-}    t_tab_parse;
 
 //paring.c
-void	mini_exit(char *prompt);
+void	mini_exit(char *prompt, t_exec_data *data);
 
 // utilitaires_parsing.c
 char	*chartostr(char c);

@@ -103,7 +103,7 @@ void	remove_type(t_lexer **deb_lexer, int type)
 	}
 }
 
-void	*parse(char *prompt)
+void	*parse(char *prompt, t_exec_data *data)
 {
 	t_lexer	**deb_lexer;
 
@@ -144,13 +144,17 @@ void	*parse(char *prompt)
 		remove_type(deb_lexer, SPC);
 	
 	
-	/*-------- POur marine ------------
+	// -------- POur marine ------------
+
 	t_tab_parse	*tab_parse;
 	tab_parse = to_exec(deb_lexer);	
 	print_to_exec(tab_parse);
-	
-	*/
-	
+
+	init_data(data);
+	data->tab_parse = tab_parse;
+	ft_fork(&data);
+
+	// ---------------------------------	
 	free_lexer(deb_lexer);
 	
 	//test_lexer(tab_lexer);
@@ -158,22 +162,26 @@ void	*parse(char *prompt)
 	return (NULL);
 }
 
-void	mini_exit(char *prompt)
+void	mini_exit(char *prompt, t_exec_data *data)
 {
 	while (ft_strncmp(prompt, "exit", 4) != 0)
 	{
 		prompt = readline("minishell> ");
 		if (prompt)
-			parse(prompt);
+			parse(prompt, data);
 	}
 	rl_clear_history();
+	ft_garbage_collector(END, NULL);
 	exit(EXIT_SUCCESS);
 }
 
-int main(){
-	char	*prompt;
+int	main(int ac, char **av, char *envp[])
+{
+	t_args_exec	*args_exec;
 	
-	signals();
-	prompt = NULL;
-	mini_exit(prompt);
+
+	// set_inoutfiles(&data);
+	// set_redirs(&data);
+	
+	
 }
