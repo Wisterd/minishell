@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 18:57:46 by mvue              #+#    #+#             */
-/*   Updated: 2021/12/02 23:21:37 by mvue             ###   ########.fr       */
+/*   Updated: 2022/08/08 22:35:06 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,11 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 void	ft_garbage_collector(int mode, void *pointer);
 void	*ft_malloc(int size);
 void	ft_free(void *pointer);
+
+// Nouvelle fct ajouter lors de minishell
+
+char	*ft_strldup(const char *s1, size_t size);
+char	*ft_strjoin_2free(char *s1, char *s2);
+char	*ft_strjoin_1free(char *s1, char *s2);
 
 #endif

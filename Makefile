@@ -6,6 +6,8 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 LIBFT =  -L ./libft -lft
 
+	exe/error.c \
+	signal.c \
 SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/path.c \
 	exe/pipe.c \
@@ -15,16 +17,22 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/redirs.c \
 	exe/init.c \
 	builtins/env.c \
-	builtins/unset.c)
+	builtins/unset.c \
+	main.c \
+	parsing.c \
+	lexer.c error.c lexer2.c utilitaires_parsing.c valide_lexer.c \
+	parse_to_exec.c \
+	signal.c)
+
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@if [ ! -d "$(dir $@)" ]; then mkdir -p $(dir $@); fi
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(DEPS)
+	@if [ ! -d "$(dir $@)" ]; then mkdir $(dir $@); fi
 	gcc $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(DEPS)
 	$(MAKE) -C libft/
-	gcc $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	gcc $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 all : $(NAME)
 
@@ -39,4 +47,3 @@ fclean : clean
 re : fclean all
 
 .PHONY : all clean fclean re
-

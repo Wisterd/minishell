@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strldup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/28 19:05:42 by mvue              #+#    #+#             */
-/*   Updated: 2022/07/28 02:24:15 by vbarbier         ###   ########.fr       */
+/*   Created: 2022/07/25 18:27:40 by vbarbier          #+#    #+#             */
+/*   Updated: 2022/07/25 18:31:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strldup(const char *s1, size_t size)
 {
-	size_t	i;
+	int		len;
+	char	*cp;
+	int		i;
 
+	if (!size)
+		return (NULL);
+	len = ft_strlen(s1);
+	cp = (char *)malloc(len + 1);
 	i = 0;
-	if (n == 0)
-		return (0);
-	if (!s1 || !s2)
-		return (-1);
+	if (!cp)
+		return (NULL);
 	else
 	{
-		while (s1[i] == s2[i] && s1[i] && s2[i] && n - 1 > i)
-			i ++;
-		if (s1[i] == '\0' && s2[i] == '\0')
-			return (0);
-		else
-			return (((unsigned char)s1[i] - (unsigned char)s2[i]));
+		while (i < len + 1 && i < size)
+		{
+			cp[i] = s1[i];
+			i++;
+		}
 	}
+	return (cp);
 }
