@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valide_lexer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 18:55:04 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 18:58:05 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	valide_pipe(t_lexer *tmp_lexer)
 		while (pre_lexer->pre && pre_lexer->pre->type == SPC)
 			pre_lexer = pre_lexer->pre;
 		if (!tmp_lexer->next || !pre_lexer->pre || \
-		tmp_lexer->next->type == PIPE || tmp_lexer->next->type == REDIR \
+		tmp_lexer->next->type == PIPE \
 		|| pre_lexer->pre->type == PIPE || pre_lexer->pre->type == REDIR)
 		{
 			error.str = "|";

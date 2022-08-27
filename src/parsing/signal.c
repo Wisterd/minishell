@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 06:05:43 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 18:55:02 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 21:04:22 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	signals()
 	fail = sigaction(SIGQUIT, &sa, NULL);
 	if (fail == -1)
 		exit(EXIT_FAILURE);
-	printf("fail = %d\n", fail);
+	//printf("fail = %d\n", fail);
 
 	//sigaction(SIGMINE, &sa, NULL); CTRL-D ???
 }

@@ -1,6 +1,7 @@
 #include "../inc/minishell.h"
 
-int main(){
+int main()
+{
 	char		*prompt;
 	t_exec_data	data;
 

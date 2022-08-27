@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 19:01:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 19:30:34 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_tab_parse
 typedef struct s_args_exec
 {
 	char	*path_cmd;
-	char	***tab_args;
+	char	**tab_args;
 	char 	**path;
 }	t_args_exec;
 
@@ -114,18 +114,15 @@ void		ft_exit(void);
 char		*ft_getcwd(t_exec_data *data);
 
 //pipe.c
-void		ft_exec(t_args_exec args_exec, int ind_cmd, int *pipes);
+void		ft_exec(t_args_exec args_exec);
 void		ft_close_pipes(int	*pipes, int dont_close);
-int			*init_pipes(t_exec_data *data);
-void		init_data(t_exec_data *data);
-
+int			ft_fork(t_exec_data *data);
 //childs.c 
 void		ft_child(t_exec_data *exec_data, int ind_cmd);
 
 //init.c
-t_args_exec	*init_args_exec(void);
-void		set_inoutfies(t_exec_data *data);
-void		set_redirs(t_exec_data	*data);
+void		init_data(t_exec_data *data);
+int			*init_pipes(t_exec_data *data);
 
 //BUILTINS
 //env.c
