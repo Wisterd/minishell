@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 19:01:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/26 21:08:54 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,43 +100,43 @@ typedef struct s_exec_data
 	t_args_exec *args_exec;
 }	t_exec_data;
 
-//EXE
-//error.c
-void		ft_error(int error_code, char *to_print, int *pipes);
+// //EXE
+// //error.c
+// void		ft_error(int error_code, char *to_print, int *pipes);
 
-//path.c
-char		*get_path_cmd(t_exec_data *data, char *cmd);
+// //path.c
+// char		*get_path_cmd(t_exec_data *data, char *cmd);
 
-//utils.c
-char		*ft_strjoin_free(char *s1, char *s2);
-int			ft_wait(t_exec_data *data);
-void		ft_exit(void);
-char		*ft_getcwd(t_exec_data *data);
+// //utils.c
+// char		*ft_strjoin_free(char *s1, char *s2);
+// int			ft_wait(t_exec_data *data);
+// void		ft_exit(void);
+// char		*ft_getcwd(t_exec_data *data);
 
-//pipe.c
-void		ft_exec(t_args_exec args_exec, int ind_cmd, int *pipes);
-void		ft_close_pipes(int	*pipes, int dont_close);
-int			*init_pipes(t_exec_data *data);
+// //pipe.c
+// void		ft_exec(t_args_exec args_exec, int ind_cmd, int *pipes);
+// void		ft_close_pipes(int	*pipes, int dont_close);
+// int			*init_pipes(t_exec_data *data);
 
-//childs.c 
-void		ft_child(t_exec_data *exec_data, int ind_cmd);
+// //childs.c 
+// void		ft_child(t_exec_data *exec_data, int ind_cmd);
 
-//init.c
-t_args_exec	*init_args_exec(void);
-void		set_inoutfies(t_exec_data *data);
-void		set_redirs(t_exec_data	*data);
+// //init.c
+// t_args_exec	*init_args_exec(void);
+// void		set_inoutfies(t_exec_data *data);
+// void		set_redirs(t_exec_data	*data);
 
-//BUILTINS
-//env.c
-t_env		*init_env(t_exec_data *data, char **envp);
-void		ft_env(t_exec_data *data);
+// //BUILTINS
+// //env.c
+// t_env		*init_env(t_exec_data *data, char **envp);
+// void		ft_env(t_exec_data *data);
 
-//unset.c
-void	ft_unset(t_exec_data *data, char *var_name);
+// //unset.c
+// void	ft_unset(t_exec_data *data, char *var_name);
 
 
-//paring.c
-void	mini_exit(char *prompt, t_exec_data *data);
+//parsing.c
+void	mini_exit(char *prompt);
 
 // utilitaires_parsing.c
 char	*chartostr(char c);
