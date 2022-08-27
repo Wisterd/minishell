@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 18:55:02 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 20:33:04 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,17 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 			i++;
 		tmp_lexer = tmp_lexer->next;
 	}
-	tab_parse->nb_redir = i;
+	tab_parse->nb_redir = i + 1;
 	//printf("lenCHAR = %d \n", tab_parse->nb_redir);
 	y = 0;
 		// MALLOC des str au bonne indices du tab struc
 	while (tab_parse->nb_cmd > y)
 	{
 		tab_parse[y].tab_args = malloc(sizeof(char **) *  len_lexer(deb_lexer) + 1);
-		tab_parse[y].infile = malloc(sizeof(char **) * i);
-		tab_parse[y].outfile = malloc(sizeof(char **) * i);
-		tab_parse[y].inredir = malloc(sizeof(char **) * i);
-		tab_parse[y].outredir = malloc(sizeof(char **) * i);
+		tab_parse[y].infile = malloc(sizeof(char **) * tab_parse->nb_redir);
+		tab_parse[y].outfile = malloc(sizeof(char **) * tab_parse->nb_redir);
+		tab_parse[y].inredir = malloc(sizeof(char **) * tab_parse->nb_redir);
+		tab_parse[y].outredir = malloc(sizeof(char **) * tab_parse->nb_redir);
 		y++;
 	}
 
@@ -113,11 +113,11 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 	y = 0;
 	while (tab_parse->nb_cmd > y)
 	{
-		// while (i < len_lexer(deb_lexer))
-		// {
-		// 	tab_parse[y].tab_args[i] = NULL;
-		// 	i++;
-		// }
+		while (i + 1 < len_lexer(deb_lexer))
+		{
+			tab_parse[y].tab_args[i] = NULL;
+			i++;
+		}
 		while (i < tab_parse->nb_redir)
 		{
 			// printf(" LA ---------------i=%d   y=%d \n", i,y);
@@ -185,7 +185,7 @@ t_tab_parse	*to_exec(t_lexer **deb_lexer)
 		if (tmp_lexer->type == MOT && (!tmp_lexer->pre || (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)))
 		{
 			tab_parse[y].tab_args[i] = ft_strdup(tmp_lexer->contenu);
-			printf("args = %s  y = %d i = %d \n",tab_parse[y].tab_args[i], y, i);
+			// printf("args = %s  y = %d i = %d \n",tab_parse[y].tab_args[i], y, i);
 			i++;
 		}
 		if (tmp_lexer->type == PIPE)

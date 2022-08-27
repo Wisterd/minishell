@@ -6,11 +6,22 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 21:09:57 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 17:03:16 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+t_lexer	**create_deb_lexer(void)
+{
+	t_lexer	**deb_lexer;
+
+	deb_lexer = malloc(sizeof(*deb_lexer));
+	*deb_lexer = NULL;
+	if (!deb_lexer)
+		error_malloc("lexing");
+	return (deb_lexer);
+}
 
 void	fuz_lex(t_lexer **deb_lexer, int type)
 {

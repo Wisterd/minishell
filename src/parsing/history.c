@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 21:01:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 23:04:13 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 18:09:24 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_add_history(char *history)
 		ancient = ft_strdup(history);
 		add_history(history);
 	}
-	else if (strncmp(ancient, history, ft_strlen(ancient)))
+	else if (strncmp(ancient, history, ft_strlen(ancient) + 1))
 	{
 		free(ancient);
 		add_history(history);
