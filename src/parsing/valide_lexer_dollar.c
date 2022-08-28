@@ -21,7 +21,7 @@ char	*erase_one(char *str)
 	if (!str)
 		cp = ft_strdup("\0");
 	else
-		cp = malloc(sizeof(char) * ft_strlen(str));
+		cp =ft_malloc(sizeof(char) * ft_strlen(str));
 	if (!cp)
 		error_malloc("erase one");
 	while (str[i])
@@ -30,7 +30,7 @@ char	*erase_one(char *str)
 		i++;
 	}
 	cp[i - 1] = '\0';
-	free(str);
+	ft_free(str);
 	return (cp);
 }
 

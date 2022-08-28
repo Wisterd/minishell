@@ -124,6 +124,8 @@ void		ft_child(t_exec_data *exec_data, int ind_cmd);
 void		init_data(t_exec_data *data);
 int			*init_pipes(t_exec_data *data);
 
+//one_cmd.c
+int			exe_one_cmd(t_exec_data *data);
 ///BUILTINS
 //env.c
 t_env		*init_env(t_exec_data *data, char **envp);

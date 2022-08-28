@@ -43,62 +43,6 @@ void	ft_close_pipes(int	*pipes, int dont_close)
 	ft_free(pipes);
 }
 
-int	exe_one_cmd(t_exec_data *data)
-{
-	int		fd_in;
-	int		fd_out;
-	pid_t	child;
-	int		status;
-
-	status = 0;
-	child = fork();
-	if (child < 0)
-		ft_error(ERR_PERROR, "Fork failed", data->pipes);
-	if (child == 0)
-	{
-		data->args_exec->path_cmd = get_path_cmd(data, data->tab_parse[0].tab_args[0]);
-		data->args_exec->tab_args = data->tab_parse[0].tab_args;
-		fd_in = STDIN_FILENO;
-		fd_out = STDOUT_FILENO;
-		if (data->tab_parse[0].infile[0])
-		{
-			fd_in = open(data->tab_parse[0].infile[0], O_RDONLY);
-			if (fd_in == -1)
-			{
-				if (access(data->tab_parse[0].infile[0], F_OK) == -1)
-					ft_error(ERR_NO_FILE, data->tab_parse[0].infile[0], data->pipes);
-				else if (access(data->tab_parse[0].infile[0], R_OK) == -1)
-					ft_error(ERR_PERM_DENIED, data->tab_parse[0].infile[0], data->pipes);
-				else 
-					ft_error(ERR_PERROR, "Open failed", data->pipes);
-			}
-		}
-		if (data->tab_parse[0].outfile[0])
-		{
-			if (!ft_strncmp(data->tab_parse[0].outredir[0], ">>", 2))
-				fd_out = open(data->tab_parse[0].outfile[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
-			else
-				fd_out = open(data->tab_parse[0].outfile[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			if (fd_out == -1)
-			{
-				if (access(data->tab_parse[0].outfile[0], W_OK) == -1)
-					ft_error(ERR_PERM_DENIED, data->tab_parse[0].outfile[0], data->pipes);
-				else
-					ft_error(ERR_PERROR, "Open failed", data->pipes);
-			}
-		}
-		if (data->pipes)
-			ft_close_pipes(data->pipes, -1);
-		ft_exec(*data->args_exec);
-	}
-	waitpid(child, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (WTERMSIG(128 + status));
-	return (0);
-}
-
 int	ft_fork(t_exec_data *data)
 {
 	int		i;
