@@ -21,15 +21,15 @@ void	print_lexer(t_lexer **deb_lexer)
 	{
 		// printf("-----------------------\n");
 		// printf("lexer n = %d \n", new_lexer->id);
-		// printf("contenu = %s \n", new_lexer->contenu);
-		// printf("type = %d \n", new_lexer->type);
+		printf("contenu = %s \n", new_lexer->contenu);
+		printf("type = %d \n", new_lexer->type);
 		
 		// if (new_lexer->next)
 		// 	printf("id next n = %d \n", new_lexer->next->id);
 		// if (new_lexer->pre)
 		// 	printf("id pre n = %d \n", new_lexer->pre->id);
 		// 
-		printf("%s", new_lexer->contenu);
+		//printf("%s", new_lexer->contenu);
 		new_lexer = new_lexer->next;
 	}
 }

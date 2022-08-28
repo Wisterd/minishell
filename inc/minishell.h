@@ -126,6 +126,12 @@ int			*init_pipes(t_exec_data *data);
 
 //one_cmd.c
 int			exe_one_cmd(t_exec_data *data);
+
+//redirs.c
+int			get_ind_last_redir(char **redirs);
+void		create_all_out(t_exec_data *data, char **outfiles);
+void		open_all_in(t_exec_data *data, char **infiles);
+
 ///BUILTINS
 //env.c
 t_env		*init_env(t_exec_data *data, char **envp);
