@@ -16,7 +16,7 @@ t_lexer	**create_deb_lexer(void)
 {
 	t_lexer	**deb_lexer;
 
-	deb_lexer = malloc(sizeof(*deb_lexer));
+	deb_lexer =ft_malloc(sizeof(*deb_lexer));
 	*deb_lexer = NULL;
 	if (!deb_lexer)
 		error_malloc("lexing");
@@ -39,7 +39,7 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 			if (!new_lexer->contenu)
 				error_malloc("fuz_lex");
 			tmp_lexer = new_lexer->next->next;
-			free(new_lexer->next);
+			ft_free(new_lexer->next);
 			new_lexer->next = tmp_lexer;
 			if (tmp_lexer)
 				tmp_lexer->pre = new_lexer;
@@ -60,8 +60,8 @@ void	free_one_ele(t_lexer *tmp_lexer, t_lexer *to_free)
 	}
 	else
 		tmp_lexer->pre->next = NULL;
-	free(to_free->contenu);
-	free(to_free);
+	ft_free(to_free->contenu);
+	ft_free(to_free);
 }
 
 void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer)
@@ -77,8 +77,8 @@ void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 		*deb_lexer = tmp_lexer;
 		if (!to_free->pre && tmp_lexer)
 			tmp_lexer->pre = NULL;
-		free(to_free->contenu);
-		free(to_free);
+		ft_free(to_free->contenu);
+		ft_free(to_free);
 	}
 	else
 		free_one_ele(tmp_lexer, to_free);

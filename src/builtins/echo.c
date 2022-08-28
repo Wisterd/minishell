@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 18:40:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/28 17:02:57 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/28 20:15:53 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	option_n(char *str)
 		return (0);
 }
 
-void	ft_echo(char	**tab_args, int ac)
+void	ft_echo(char	**tab_args)//, int ac)
 {
 	int	y;
 	int opt_n;
 
 	y = 1;
 	opt_n = 0;
-	while (tab_args[y] || y < ac)
+	while (tab_args[y])// || y < ac)
 	{
 		if (y == 1 && option_n(tab_args[y]))
 		{
@@ -52,7 +52,7 @@ void	ft_echo(char	**tab_args, int ac)
 		printf("\n");
 }
 
-int main (int ac , char **av)
-{
-	ft_echo(av, ac);
-}
+// int main (int ac , char **av)
+// {
+// 	ft_echo(av, ac);
+// }

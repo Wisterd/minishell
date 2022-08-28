@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 21:26:17 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/28 22:08:01 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	*parsing(char *prompt, t_exec_data *data)
 	deb_lexer = create_deb_lexer();
 	if (!parse(deb_lexer, prompt))
 		return (NULL); // error
-	print_lexer(deb_lexer);
-	if (*deb_lexer)
-		printf("\n");
+	//print_lexer(deb_lexer);
+	//if (*deb_lexer)
+	//	printf("\n");
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
 	while (have_type(deb_lexer, SPC))
@@ -62,7 +62,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	// -------- POur marine ------------
 
 	tab_parse = to_exec(deb_lexer);	
-	print_to_exec(tab_parse);
+	//print_to_exec(tab_parse);
 	if (*deb_lexer)
 	{
 		data->tab_parse = tab_parse;
