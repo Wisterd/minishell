@@ -1,22 +1,13 @@
 #include "../../inc/minishell.h"
 
-int	get_ind_last_redir(char **redirs)
-{
-	int	i;
-
-	i = 0;
-	while (redirs[i])
-		i++;
-	return (i);
-}
-
 void	create_outfile(t_exec_data *data, int ind_cmd)
 {
 	int		outfile;
 	int		ind_last;
 	char	*outname;
 	
-	ind_last = get_ind_last_redir(data->tab_parse->outredir);
+	create_all_out(data, data->tab_parse[ind_cmd].outfile);
+	ind_last = get_ind_last_redir(data->tab_parse[ind_cmd].outredir);
 	outname = data->tab_parse[ind_cmd].outfile[ind_last];
 	if (!ft_strncmp(data->tab_parse[ind_cmd].outredir[ind_last], ">>", 2))
 		outfile = open(outname, O_CREAT | O_WRONLY | O_APPEND, 0644);
@@ -40,7 +31,8 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 	int		ind_last;
 	char	*inname;
 	
-	ind_last = get_ind_last_redir(data->tab_parse->inredir);
+	open_all_in(data, data->tab_parse[ind_cmd].infile);
+	ind_last = get_ind_last_redir(data->tab_parse[ind_cmd].inredir);
 	inname = data->tab_parse[ind_cmd].infile[ind_last];
 	infile = open(inname, O_RDONLY);
 	if (infile == -1)

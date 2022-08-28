@@ -56,13 +56,13 @@ void	*parsing(char *prompt, t_exec_data *data)
 		fuz_lex(deb_lexer, MOT);
 	while (have_type(deb_lexer, SPC))
 		remove_type(deb_lexer, SPC);
-	
+	fuz_lex(deb_lexer, REDIR);
 	
 	// print_lexer(deb_lexer);
 	// -------- POur marine ------------
 
 	tab_parse = to_exec(deb_lexer);	
-	//print_to_exec(tab_parse);
+	// print_to_exec(tab_parse);
 	if (*deb_lexer)
 	{
 		data->tab_parse = tab_parse;
