@@ -61,7 +61,6 @@ void	*parsing(char *prompt, t_exec_data *data)
 	// print_lexer(deb_lexer);
 	// -------- POur marine ------------
 
-	t_tab_parse	*tab_parse;
 	tab_parse = to_exec(deb_lexer);	
 	print_to_exec(tab_parse);
 	if (*deb_lexer)

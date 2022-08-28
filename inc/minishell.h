@@ -176,7 +176,7 @@ void		print_to_exec(t_tab_parse *tab_parse);
 void		signals();
 
 //parsing.c
-void	mini_exit(char *prompt);
+void	mini_exit(char *prompt, t_exec_data *data);
 
 // error
 # define ERROR_MALLOC 42

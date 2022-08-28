@@ -40,21 +40,36 @@ void	print_to_exec(t_tab_parse *tab_parse)
 
 }
 
-int	nb_arg_cmd(t_lexer **deb_lexer)
+char	**init_arg_cmd(t_lexer **deb_lexer, t_tab_parse *tab_parse)
 {
 	int			i;
+	int			y;
 	t_lexer		*tmp_lexer;
 
 	tmp_lexer = *deb_lexer;
+	y = 0;
 	i = 0;
+	
 	while (tmp_lexer)
 	{
+		printf("i =%d  Y = %d\n", i, y);
 		if (tmp_lexer->type == MOT && (!tmp_lexer->pre || (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)))
 			i++;
-		
+		if (tmp_lexer->type == PIPE || !tmp_lexer->next)
+		{
+			tab_parse[y].tab_args = malloc(sizeof(char **) * (i + 1));
+			while (i > -1)
+			{
+				tab_parse[y].tab_args[i] = NULL;
+				// printf("----------%p, i =%d  Y = %d\n", tab_parse[y].tab_args[i], i, y);
+				i--;
+			}
+			y++;
+			i = 0;
+		}
 		tmp_lexer = tmp_lexer->next;
 	}
-	return (i);
+	return (tab_parse->tab_args);
 }
 
 t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
@@ -92,17 +107,16 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 	//printf("lenCHAR = %d \n", tab_parse->nb_redir);
 	y = 0;
 		// MALLOC des str au bonne indices du tab struc
+	tab_parse[y].tab_args = init_arg_cmd(deb_lexer, tab_parse);
 	while (tab_parse->nb_cmd > y)
 	{
-		
-		tab_parse[y].tab_args = malloc(sizeof(char **) *  nb_arg_cmd(deb_lexer) + 1);
 		tab_parse[y].infile = malloc(sizeof(char **) * tab_parse->nb_redir);
 		tab_parse[y].outfile = malloc(sizeof(char **) * tab_parse->nb_redir);
 		tab_parse[y].inredir = malloc(sizeof(char **) * tab_parse->nb_redir);
 		tab_parse[y].outredir = malloc(sizeof(char **) * tab_parse->nb_redir);
 		y++;
 	}
-	// printf("len lex = %d\n", nb_arg_cmd(deb_lexer));
+	// printf("nb arg cmd = %d\n", nb_arg_cmd(deb_lexer));
 	// printf("nb_cmd = %d\n", tab_parse->nb_cmd);
 
 	i = 0;
@@ -134,12 +148,12 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 	while (tab_parse->nb_cmd > y)
 	{
 		// printf("----------- Y =%d\n", y);
-		while (i < nb_arg_cmd(deb_lexer))
-		{
-			tab_parse[y].tab_args[i] = NULL;
-			// printf("----------%p, i =%d\n", tab_parse[y].tab_args[i], i);
-			i++;
-		}
+		// while (i < nb_arg_cmd(deb_lexer) + 1)
+		// {
+		// 	tab_parse[y].tab_args[i] = NULL;
+		// 	printf("----------%p, i =%d\n", tab_parse[y].tab_args[i], i);
+		// 	i++;
+		// }
 		i = 0;
 		while (i < tab_parse->nb_redir)
 		{

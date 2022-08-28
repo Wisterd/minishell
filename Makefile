@@ -6,18 +6,17 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 LIBFT =  -L ./libft -lft
 
-	# exe/path.c \
-	# exe/pipe.c \
-	# exe/error.c \
-	# exe/utils.c \
-	# exe/childs.c \
-	# exe/redirs.c \
-	# exe/init.c \
-	# builtins/env.c \
-	# builtins/unset.c \
-
 SRC_FILES = $(addprefix $(SRC_DIR), \
 	main.c \
+	exe/path.c \
+	exe/pipe.c \
+	exe/error.c \
+	exe/utils.c \
+	exe/childs.c \
+	exe/redirs.c \
+	exe/init.c \
+	builtins/env.c \
+	builtins/unset.c \
 	parsing/parsing.c \
 	parsing/lexer.c \
 	parsing/error.c \
