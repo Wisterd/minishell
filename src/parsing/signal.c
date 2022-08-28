@@ -6,19 +6,11 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 06:05:43 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 21:04:22 by mvue             ###   ########.fr       */
+/*   Updated: 2022/08/27 18:59:10 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "../../inc/minishell.h"
-
-// void	sing_int()
-// {
-// 	char *prompt;
-
-// 	prompt = NULL;
-// 	mini_exit(prompt);
-// }
 
 void	catch_signals(int signum)
 {
@@ -39,7 +31,6 @@ void	catch_signals(int signum)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	// if (CTRL-D)
 }
 
 void	signals()
@@ -60,7 +51,7 @@ void	signals()
 	fail = sigaction(SIGQUIT, &sa, NULL);
 	if (fail == -1)
 		exit(EXIT_FAILURE);
-	//printf("fail = %d\n", fail);
+	// printf("fail = %d\n", fail);
 
 	//sigaction(SIGMINE, &sa, NULL); CTRL-D ???
 }

@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 19:30:34 by mvue             ###   ########.fr       */
+/*   Updated: 2022/08/27 17:49:01 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void		ft_child(t_exec_data *exec_data, int ind_cmd);
 void		init_data(t_exec_data *data);
 int			*init_pipes(t_exec_data *data);
 
-//BUILTINS
+///BUILTINS
 //env.c
 t_env		*init_env(t_exec_data *data, char **envp);
 void		ft_env(t_exec_data *data);
@@ -133,27 +133,34 @@ void		ft_env(t_exec_data *data);
 void	ft_unset(t_exec_data *data, char *var_name);
 
 
-//paring.c
-void	mini_exit(char *prompt, t_exec_data *data);
-
 // utilitaires_parsing.c
 char	*chartostr(char c);
 int		special_c(char *str);
 
 // lexer.c
 void	print_lexer(t_lexer **deb_lexer);
-void	lexing(t_lexer **deb_lexer, char *prompt);
 void	free_lexer(t_lexer **deb_lexer);
 void	create_lexer(t_lexer **deb_lexer, char *str, int type);
 void	history(t_lexer **deb_lexer);
+void	lexing(t_lexer **deb_lexer, char *prompt);
 
 //lexer2.c
+t_lexer	**create_deb_lexer(void);
 void	fuz_lex(t_lexer **deb_lexer, int type);
-//void	word_or_cmd(t_lexer **deb_lexer);
 void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer);
 int		len_lexer(t_lexer **deb_lexer);
+
+// fuz_and_remove_lexer.c
+int		near_mot(t_lexer **deb_lexer);
+int		in_quote(t_lexer **deb_lexer);
+int		have_type(t_lexer **deb_lexer, int type);
+void	remove_type(t_lexer **deb_lexer, int type);
+
 //valide_lexer.c
 int		valide_lexer(t_lexer **deb_lexer);
+
+//valide_lexer_dollar.c
+t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer);
 
 // error.c
 void	print_error(t_pars_error error);
@@ -167,6 +174,10 @@ void		print_to_exec(t_tab_parse *tab_parse);
 
 //signal.c
 void		signals();
+
+//parsing.c
+void	mini_exit(char *prompt);
+
 // error
 # define ERROR_MALLOC 42
 

@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 18:54:59 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 19:49:15 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	print_lexer(t_lexer **deb_lexer)
 	new_lexer = *deb_lexer;
 	while (new_lexer)
 	{
-		//  printf("-----------------------\n");
+		// printf("-----------------------\n");
 		// printf("lexer n = %d \n", new_lexer->id);
-		//  printf("contenu = %s \n", new_lexer->contenu);
-		//  printf("type = %d \n", new_lexer->type);
+		// printf("contenu = %s \n", new_lexer->contenu);
+		// printf("type = %d \n", new_lexer->type);
 		
 		// if (new_lexer->next)
 		// 	printf("id next n = %d \n", new_lexer->next->id);
@@ -32,36 +32,6 @@ void	print_lexer(t_lexer **deb_lexer)
 		printf("%s", new_lexer->contenu);
 		new_lexer = new_lexer->next;
 	}
-}
-
-void	history(t_lexer **deb_lexer)
-{
-	t_lexer	*new_lexer;
-	char	*history;
-	static char	*ancient = NULL;
-
-	history = ft_strdup("");
-	if (!history)
-		error_malloc("history");
-	new_lexer = *deb_lexer;
-	while (new_lexer)
-	{
-		history = ft_strjoin_1free(history, new_lexer->contenu);
-		new_lexer = new_lexer->next;
-	}
-	if (!ancient)
-	{
-		ancient = ft_strdup(history);
-		add_history(history);
-	}
-	if (strncmp(ancient, history, ft_strlen(ancient)))
-	{
-		free(ancient);
-		add_history(history);
-		ancient = ft_strdup(history);
-		// A free a la fin du programme !
-	}
-	free(history);
 }
 
 void	add_lexer(t_lexer **deb_lexer, t_lexer *lexer)
