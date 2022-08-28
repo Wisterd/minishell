@@ -34,5 +34,5 @@ void	ft_error(int error_code, char *to_print, int *pipes)
 	if (pipes)
 		ft_close_pipes(pipes, -1);
 	write(2, error_msg, ft_strlen(error_msg));
-	ft_exit();
+	ft_exit_error();
 }

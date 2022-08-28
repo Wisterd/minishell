@@ -110,7 +110,7 @@ char		*get_path_cmd(t_exec_data *data, char *cmd);
 //utils.c
 char		*ft_strjoin_free(char *s1, char *s2);
 int			ft_wait(t_exec_data *data);
-void		ft_exit(void);
+void		ft_exit_error(void);
 char		*ft_getcwd(t_exec_data *data);
 
 //pipe.c

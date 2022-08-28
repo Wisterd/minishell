@@ -56,7 +56,7 @@ char	*ft_getcwd(t_exec_data *data)
 	return (str_cwd);
 }
 
-void	ft_exit(void)
+void	ft_exit_error(void)
 {
 	ft_garbage_collector(END, NULL);
 	exit(1);
