@@ -51,7 +51,7 @@ int	ft_atoi_exit(char *str)
 	return (1);
 }
 
-void	ft_exit1(char	**tab_args)//, int ac)
+void	ft_exit(char	**tab_args)//, int ac)
 {
 	int	y;
 	int retour_error;
