@@ -52,12 +52,12 @@ char	**init_arg_cmd(t_lexer **deb_lexer, t_tab_parse *tab_parse)
 	
 	while (tmp_lexer)
 	{
-		printf("i =%d  Y = %d\n", i, y);
+		// printf("i =%d  Y = %d\n", i, y);
 		if (tmp_lexer->type == MOT && (!tmp_lexer->pre || (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)))
 			i++;
 		if (tmp_lexer->type == PIPE || !tmp_lexer->next)
 		{
-			tab_parse[y].tab_args = malloc(sizeof(char **) * (i + 1));
+			tab_parse[y].tab_args =ft_malloc(sizeof(char **) * (i + 1));
 			while (i > -1)
 			{
 				tab_parse[y].tab_args[i] = NULL;
@@ -88,7 +88,7 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 			i++;
 		tmp_lexer = tmp_lexer->next;
 	}
-	tab_parse = malloc(sizeof(t_tab_parse) * i);
+	tab_parse = ft_malloc(sizeof(t_tab_parse) * i);
 	tab_parse->nb_cmd = i;
 	//printf("nb cmd = %d \n", tab_parse->nb_cmd);
 		
@@ -110,10 +110,10 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 	tab_parse[y].tab_args = init_arg_cmd(deb_lexer, tab_parse);
 	while (tab_parse->nb_cmd > y)
 	{
-		tab_parse[y].infile = malloc(sizeof(char **) * tab_parse->nb_redir);
-		tab_parse[y].outfile = malloc(sizeof(char **) * tab_parse->nb_redir);
-		tab_parse[y].inredir = malloc(sizeof(char **) * tab_parse->nb_redir);
-		tab_parse[y].outredir = malloc(sizeof(char **) * tab_parse->nb_redir);
+		tab_parse[y].infile = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
+		tab_parse[y].outfile = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
+		tab_parse[y].inredir = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
+		tab_parse[y].outredir = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
 		y++;
 	}
 	// printf("nb arg cmd = %d\n", nb_arg_cmd(deb_lexer));
@@ -125,7 +125,7 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 	// {
 	// 	while (i < len_lexer(deb_lexer))
 	// 	{
-	// 		tab_parse[y].tab_args[i] = malloc(sizeof(char *) * len_lexer(deb_lexer) + 1);
+	// 		tab_parse[y].tab_args[i] =ft_malloc(sizeof(char *) * len_lexer(deb_lexer) + 1);
 	// 		i++;
 	// 	}
 	// 	i = 0;	

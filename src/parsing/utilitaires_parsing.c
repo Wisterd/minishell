@@ -16,7 +16,7 @@ char	*chartostr(char c)
 {
 	char	*str;
 
-	str = malloc(2 * sizeof(char));
+	str =ft_malloc(2 * sizeof(char));
 	if (!str)
 		error_malloc("chartostr");
 	str[0] = c;

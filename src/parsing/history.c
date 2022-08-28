@@ -23,7 +23,7 @@ void	ft_add_history(char *history)
 	}
 	else if (strncmp(ancient, history, ft_strlen(ancient) + 1))
 	{
-		free(ancient);
+		ft_free(ancient);
 		add_history(history);
 		ancient = ft_strdup(history);
 		// A free a la fin du programme !
@@ -45,5 +45,5 @@ void	history(t_lexer **deb_lexer)
 		new_lexer = new_lexer->next;
 	}
 	ft_add_history(history);
-	free(history);
+	ft_free(history);
 }

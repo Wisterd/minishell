@@ -29,6 +29,8 @@ int	exe_one_cmd(t_exec_data *data)
 				else 
 					ft_error(ERR_PERROR, "Open failed", data->pipes);
 			}
+			if (dup2(fd_in, STDIN_FILENO) == -1)
+				ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
 		}
 		if (data->tab_parse[0].outfile[0])
 		{
@@ -43,6 +45,8 @@ int	exe_one_cmd(t_exec_data *data)
 				else
 					ft_error(ERR_PERROR, "Open failed", data->pipes);
 			}
+			if (dup2(fd_out, STDOUT_FILENO) == -1)
+				ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
 		}
 		if (data->pipes)
 			ft_close_pipes(data->pipes, -1);

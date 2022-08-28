@@ -15,6 +15,7 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/childs.c \
 	exe/redirs.c \
 	exe/init.c \
+	exe/one_cmd.c \
 	builtins/env.c \
 	builtins/unset.c \
 	parsing/parsing.c \
