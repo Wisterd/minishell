@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 18:24:31 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/28 22:20:12 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ char	*erase_one(char *str)
 	return (cp);
 }
 
+int	is_question(t_lexer *tmp_lexer)
+{
+	if (!ft_strncmp(tmp_lexer->next->contenu, "?", 1))
+	{
+		ft_free(tmp_lexer->next->contenu);
+		tmp_lexer->next->contenu = ft_itoa(g_exit_stat);
+		return (1);
+	}
+	return (0);
+}
+
 int erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 {
 	if (!env)
@@ -54,6 +65,8 @@ int erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 			}
 			tmp_lexer->next->contenu = erase_one(tmp_lexer->next->contenu);
 		}
+		else if (is_question(tmp_lexer))
+			return (1);
 		else
 			free_one_element(deb_lexer, tmp_lexer->next);
 		return (1);
