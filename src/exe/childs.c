@@ -1,17 +1,31 @@
 #include "../../inc/minishell.h"
 
+int	get_ind_last_redir(char **redirs)
+{
+	int	i;
+
+	i = 0;
+	while (redirs[i])
+		i++;
+	return (i);
+}
+
 void	create_outfile(t_exec_data *data, int ind_cmd)
 {
-	int	outfile;
-
-	if (!ft_strncmp(data->redir_out[ind_cmd], ">>", 2))
-		outfile = open(data->outfile[ind_cmd], O_CREAT | O_WRONLY | O_APPEND, 0644);
+	int		outfile;
+	int		ind_last;
+	char	*outname;
+	
+	ind_last = get_ind_last_redir(data->tab_parse->outredir);
+	outname = data->tab_parse[ind_cmd].outfile[ind_last];
+	if (!ft_strncmp(data->tab_parse[ind_cmd].outredir[ind_last], ">>", 2))
+		outfile = open(outname, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else
-		outfile = open(data->outfile[ind_cmd], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		outfile = open(outname, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (outfile == -1)
 	{
-		if (access(data->outfile[ind_cmd], W_OK) == -1)
-			ft_error(ERR_PERM_DENIED, data->outfile[ind_cmd], data->pipes);
+		if (access(outname, W_OK) == -1)
+			ft_error(ERR_PERM_DENIED, outname, data->pipes);
 		else
 			ft_error(ERR_PERROR, "Open failed", data->pipes);
 	}
@@ -22,15 +36,19 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 
 void	open_infile(t_exec_data *data, int ind_cmd)
 {
-	int	infile;
-
-	infile = open(data->infile[ind_cmd], O_RDONLY);
+	int		infile;
+	int		ind_last;
+	char	*inname;
+	
+	ind_last = get_ind_last_redir(data->tab_parse->inredir);
+	inname = data->tab_parse[ind_cmd].infile[ind_last];
+	infile = open(inname, O_RDONLY);
 	if (infile == -1)
 	{
-		if (access(data->infile[ind_cmd], F_OK) == -1)
-			ft_error(ERR_NO_FILE, data->infile[ind_cmd], data->pipes);
-		else if (access(data->infile[ind_cmd], R_OK) == -1)
-			ft_error(ERR_PERM_DENIED, data->infile[ind_cmd], data->pipes);
+		if (access(inname, F_OK) == -1)
+			ft_error(ERR_NO_FILE, inname, data->pipes);
+		else if (access(inname, R_OK) == -1)
+			ft_error(ERR_PERM_DENIED, inname, data->pipes);
 		else 
 			ft_error(ERR_PERROR, "Open failed", data->pipes);
 	}
@@ -42,19 +60,19 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	t_exec_data *exec_data)
 {
-	if (exec_data->outfile[ind_cmd])
+	if (exec_data->tab_parse[ind_cmd].outfile[0])
 		create_outfile(exec_data, ind_cmd);
-	if (exec_data->infile[ind_cmd])
+	if (exec_data->tab_parse[ind_cmd].infile[0])
 		open_infile(exec_data, ind_cmd);
 	if (ind_cmd == 0)
 	{
-		if (exec_data->infile[ind_cmd])
+		if (exec_data->tab_parse[ind_cmd].infile[0])
 			*fd_in = exec_data->l_pipe[0];
 		*fd_out = exec_data->r_pipe[1];
 	}
 	else if (ind_cmd == exec_data->n_cmds - 1)
 	{
-		if (exec_data->outfile[ind_cmd])
+		if (exec_data->tab_parse[ind_cmd].outfile[0])
 			*fd_out = exec_data->r_pipe[1];
 		*fd_in = exec_data->l_pipe[0];
 	}
@@ -71,8 +89,9 @@ void	ft_child(t_exec_data *exec_data, int ind_cmd)
 	int		fd_out;
 	char	*path_cmd;
 
+	exec_data->args_exec->tab_args = exec_data->tab_parse[ind_cmd].tab_args;
 	path_cmd = get_path_cmd(exec_data, \
-		exec_data->args_exec->tab_args[ind_cmd][0]);
+		exec_data->args_exec->tab_args[0]);
 	exec_data->args_exec->path_cmd = path_cmd;
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
@@ -84,5 +103,5 @@ void	ft_child(t_exec_data *exec_data, int ind_cmd)
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
 			ft_error(ERR_PERROR, "Dup2 failed", exec_data->pipes);
 	ft_close_pipes(exec_data->pipes, -1);
-	ft_exec(*exec_data->args_exec, ind_cmd, exec_data->pipes);
+	ft_exec(*exec_data->args_exec);
 }

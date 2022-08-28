@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 19:09:57 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/27 21:18:27 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,9 @@ void	*parse(char *prompt, t_exec_data *data)
 	// while (have_type(deb_lexer, CMD))
 	// 	remove_type(deb_lexer, CMD);
 
-	print_lexer(deb_lexer);
-	if (*deb_lexer)
-		printf("\n");
+	//print_lexer(deb_lexer);
+	// if (*deb_lexer)
+	// 	printf("\n");
 	while (have_type(deb_lexer, SPC))
 		remove_type(deb_lexer, SPC);
 	
@@ -149,11 +149,12 @@ void	*parse(char *prompt, t_exec_data *data)
 	t_tab_parse	*tab_parse;
 	tab_parse = to_exec(deb_lexer);	
 	print_to_exec(tab_parse);
-
-	init_data(data);
-	data->tab_parse = tab_parse;
-	ft_fork(&data);
-
+	if (*deb_lexer)
+	{
+		data->tab_parse = tab_parse;
+		init_data(data);
+		ft_fork(data);
+	}
 	// ---------------------------------	
 	free_lexer(deb_lexer);
 	
@@ -173,15 +174,4 @@ void	mini_exit(char *prompt, t_exec_data *data)
 	rl_clear_history();
 	ft_garbage_collector(END, NULL);
 	exit(EXIT_SUCCESS);
-}
-
-int	main(int ac, char **av, char *envp[])
-{
-	t_args_exec	*args_exec;
-	
-
-	// set_inoutfiles(&data);
-	// set_redirs(&data);
-	
-	
 }
