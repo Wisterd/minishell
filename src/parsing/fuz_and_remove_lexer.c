@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:04:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 23:17:40 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 23:24:53 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ t_lexer	*change_in_quote(t_lexer *tmp_lexer, char *str)
 		else if (!ft_strncmp(str, "\"", 2) \
 		&& !ft_strncmp(tmp_lexer->contenu, "$", 2))
 			tmp_lexer->type = DOLLAR;
-		else if (tmp_lexer->type == SPC)
-			tmp_lexer->type = SPC;
 		else
 			tmp_lexer->type = MOT;
 		tmp_lexer = tmp_lexer->next;
