@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:52:46 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:18:33 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	parse(t_lexer **deb_lexer, char *prompt)
 	if (special_c(prompt) == SPECIAL)
 	{
 		free_lexer(deb_lexer);
-		return (0); //error
+		return (0);
 	}
 	if (!valide_lexer(deb_lexer))
 	{
 		free_lexer(deb_lexer);
-		return (0); // 2 ERROR
+		return (0);
 	}
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
@@ -48,7 +48,10 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 	deb_lexer = create_deb_lexer();
 	if (!parse(deb_lexer, prompt))
-		return (NULL); // error
+	{
+		g_exit_stat = 2;
+		return (NULL); 
+	}
 	//print_lexer(deb_lexer);
 	//if (*deb_lexer)
 	//	printf("\n");
@@ -59,8 +62,9 @@ void	*parsing(char *prompt, t_exec_data *data)
 	fuz_lex(deb_lexer, REDIR);
 	
 	// print_lexer(deb_lexer);
-	// -------- POur marine ------------
+	//// -------- POur marine ------------
 
+	// prb solo $ ou char "";
 	tab_parse = to_exec(deb_lexer);	
 	// print_to_exec(tab_parse);
 	if (*deb_lexer)
@@ -76,14 +80,13 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 void	mini_exit(char *prompt, t_exec_data *data)
 {
-	// ft_garbage_collector(INIT, NULL);
 	while (ft_strncmp(prompt, "exit", 4) != 0)
 	{
 		prompt = readline("minishell> ");
 		if (!prompt)
 		{
 			printf("exit\n");
-			exit(EXIT_SUCCESS); // return Error ctrl -d
+			exit(EXIT_SUCCESS);
 		}
 		else
 			parsing(prompt, data);

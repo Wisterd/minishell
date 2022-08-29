@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 06:05:43 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:50:50 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 21:51:40 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	catch_signals(int signum)
 {
 	if (signum == SIGINT)
 	{
-	
 		g_exit_stat = 130;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
@@ -33,7 +32,7 @@ void	catch_signals(int signum)
 	}
 }
 
-void	signals()
+void	signals(void)
 {
 	struct sigaction	sa;
 	int					fail;
@@ -51,9 +50,4 @@ void	signals()
 	fail = sigaction(SIGQUIT, &sa, NULL);
 	if (fail == -1)
 		exit(EXIT_FAILURE);
-	// printf("fail = %d\n", fail);
-
-	//sigaction(SIGMINE, &sa, NULL); CTRL-D ???
 }
-// int sigaction(int signum, const struct sigaction *act,
-// struct sigaction *oldact);

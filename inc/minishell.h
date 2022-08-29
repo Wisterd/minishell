@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:20:10 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 21:23:51 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,14 +176,17 @@ void	error_malloc(char *str, void *not_null);
 
 int		in_quote(t_lexer **deb_lexer);
 
-//parse_to_exec.c
+//	init_tab_to_exec.c
+t_tab_parse	*init_tab_parse(t_lexer **deb_lexer);
+
+// parse_to_exec.c
 t_tab_parse	*to_exec(t_lexer **deb_lexer);
 void		print_to_exec(t_tab_parse *tab_parse);
 
-//signal.c
+// signal.c
 void		signals();
 
-//parsing.c
+// parsing.c
 void	mini_exit(char *prompt, t_exec_data *data);
 
 // error

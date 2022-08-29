@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 21:01:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:22:26 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:58:59 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	ft_add_history(char *history)
 		add_history(history);
 		ancient = ft_strdup(history);
 		error_malloc("add_history ft_strdup2", ancient);
-		// A free a la fin du programme !
 	}
 }
 

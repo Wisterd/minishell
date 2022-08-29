@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:27:21 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 21:28:52 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 		{
 			new_lexer->contenu = ft_strjoin_2free(\
 			new_lexer->contenu, new_lexer->next->contenu);
-			error_malloc("fuz_lex",new_lexer->contenu);
+			error_malloc("fuz_lex", new_lexer->contenu);
 			tmp_lexer = new_lexer->next->next;
 			ft_free(new_lexer->next);
 			new_lexer->next = tmp_lexer;

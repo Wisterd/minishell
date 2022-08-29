@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:53:18 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:10:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*erase_one(char *str)
 {
-	int	i;
-	char *cp;
+	int		i;
+	char	*cp;
 
 	i = 1;
 	if (!str)
@@ -45,7 +45,7 @@ int	is_question(t_lexer *tmp_lexer)
 	return (0);
 }
 
-int erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
+int	erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 {
 	if (!env)
 	{
@@ -73,6 +73,8 @@ int erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 	}
 	return (0);
 }
+
+// t_lexer	*multiple_dollar
 
 t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 {

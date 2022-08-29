@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valide_lexer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 18:57:45 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 21:52:26 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ int	valide_lexer(t_lexer **deb_lexer)
 		if (tmp_lexer)
 		{
 			if (!valide_pipe(tmp_lexer))
-			return (0);
+				return (0);
 			if (!valide_redir(tmp_lexer))
-			return(0);
+				return (0);
 			tmp_lexer = tmp_lexer->next;
 		}
 	}

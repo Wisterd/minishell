@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 23:58:48 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:38:11 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 21:21:36 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_error(t_pars_error error)
 		ft_garbage_collector(END, NULL);
 		exit(EXIT_FAILURE);
 		g_exit_stat = 1;
-	} 
+	}
 }
 
 void	error_malloc(char *str, void *not_null)
