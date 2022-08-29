@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parse_to_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 20:33:04 by vbarbier         ###   ########.fr       */
-/*   Updated: 2022/08/27 21:19:44 by mvue             ###   ########.fr       */
+/*   Updated: 2022/08/29 20:46:20 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/minishell.h"
 
@@ -57,7 +57,8 @@ char	**init_arg_cmd(t_lexer **deb_lexer, t_tab_parse *tab_parse)
 			i++;
 		if (tmp_lexer->type == PIPE || !tmp_lexer->next)
 		{
-			tab_parse[y].tab_args =ft_malloc(sizeof(char **) * (i + 1));
+			tab_parse[y].tab_args = ft_malloc(sizeof(char **) * (i + 1));
+			error_malloc("init_arg_cmd", tab_parse[y].tab_args);
 			while (i > -1)
 			{
 				tab_parse[y].tab_args[i] = NULL;
@@ -89,6 +90,7 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 		tmp_lexer = tmp_lexer->next;
 	}
 	tab_parse = ft_malloc(sizeof(t_tab_parse) * i);
+	error_malloc("init_tab_parse", tab_parse);
 	tab_parse->nb_cmd = i;
 	//printf("nb cmd = %d \n", tab_parse->nb_cmd);
 		
@@ -111,9 +113,13 @@ t_tab_parse *init_tab_parse(t_lexer **deb_lexer)
 	while (tab_parse->nb_cmd > y)
 	{
 		tab_parse[y].infile = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
+		error_malloc("init_tab_infile", tab_parse[y].infile );
 		tab_parse[y].outfile = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
+		error_malloc("init_tab_outfile", tab_parse[y].outfile);
 		tab_parse[y].inredir = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
+		error_malloc("init_tab_inredir", tab_parse[y].inredir);
 		tab_parse[y].outredir = ft_malloc(sizeof(char **) * tab_parse->nb_redir);
+		error_malloc("init_tab_outredir", tab_parse[y].outredir);
 		y++;
 	}
 	// printf("nb arg cmd = %d\n", nb_arg_cmd(deb_lexer));
@@ -189,14 +195,18 @@ t_tab_parse	*exec_redir(t_lexer *tmp_lexer, t_tab_parse	*tab_parse, int y)
 		!ft_strncmp(tmp_lexer->contenu, "<", 1))
 		{
 			tab_parse[y].inredir[i] = ft_strdup(tmp_lexer->contenu);
+			error_malloc("exec inredir", tab_parse[y].inredir[i]);
 			tab_parse[y].infile[i] = ft_strdup(tmp_lexer->next->contenu);
+			error_malloc("exec inrdile", tab_parse[y].infile[i]);
 			// printf("bla = %s  y = %d i = %d \n", tab_parse[y].infile[i], y, i);
 			i++;
 		}
 		else
 		{
 			tab_parse[y].outredir[z] = ft_strdup(tmp_lexer->contenu);
+			error_malloc("exec outredir", tab_parse[y].outredir[z]);
 			tab_parse[y].outfile[z] = ft_strdup(tmp_lexer->next->contenu);
+			error_malloc("exec outfile", tab_parse[y].outfile[z]);
 			// printf("bla = %s  y = %d i = %d \n", tab_parse[y].outfile[z], y, z);		
 			z++;
 		}
@@ -222,6 +232,7 @@ t_tab_parse	*to_exec(t_lexer **deb_lexer)
 		if (tmp_lexer->type == MOT && (!tmp_lexer->pre || (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)))
 		{
 			tab_parse[y].tab_args[i] = ft_strdup(tmp_lexer->contenu);
+			error_malloc("to_exec", tab_parse[y].tab_args[i]);
 			// printf("args = %s  y = %d i = %d \n",tab_parse[y].tab_args[i], y, i);
 			i++;
 		}

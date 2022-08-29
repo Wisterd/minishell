@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 17:02:20 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:52:46 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	parse(t_lexer **deb_lexer, char *prompt)
 {
-
 	lexing(deb_lexer, prompt);
 	while (in_quote(deb_lexer))
 	{
@@ -82,7 +81,10 @@ void	mini_exit(char *prompt, t_exec_data *data)
 	{
 		prompt = readline("minishell> ");
 		if (!prompt)
+		{
+			printf("exit\n");
 			exit(EXIT_SUCCESS); // return Error ctrl -d
+		}
 		else
 			parsing(prompt, data);
 	}

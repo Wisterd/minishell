@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 17:49:01 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:20:10 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer);
 
 // error.c
 void	print_error(t_pars_error error);
-void	error_malloc(char *str);
+void	error_malloc(char *str, void *not_null);
 
 int		in_quote(t_lexer **deb_lexer);
 

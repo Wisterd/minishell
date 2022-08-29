@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 21:01:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 18:09:24 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:22:26 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_add_history(char *history)
 	if (!ancient)
 	{
 		ancient = ft_strdup(history);
+		error_malloc("add_history ft_strdup1", ancient);
 		add_history(history);
 	}
 	else if (strncmp(ancient, history, ft_strlen(ancient) + 1))
@@ -26,6 +27,7 @@ void	ft_add_history(char *history)
 		ft_free(ancient);
 		add_history(history);
 		ancient = ft_strdup(history);
+		error_malloc("add_history ft_strdup2", ancient);
 		// A free a la fin du programme !
 	}
 }
@@ -36,12 +38,12 @@ void	history(t_lexer **deb_lexer)
 	char		*history;
 
 	history = ft_strdup("");
-	if (!history)
-		error_malloc("history");
+	error_malloc("history", history);
 	new_lexer = *deb_lexer;
 	while (new_lexer)
 	{
 		history = ft_strjoin_1free(history, new_lexer->contenu);
+		error_malloc("history ft_strjoin_1free", history);
 		new_lexer = new_lexer->next;
 	}
 	ft_add_history(history);
