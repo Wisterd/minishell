@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/28 22:08:01 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 17:02:20 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 int	parse(t_lexer **deb_lexer, char *prompt)
 {
-	if (special_c(prompt) == SPECIAL)
-	{
-		free_lexer(deb_lexer);
-		return (0); //error
-	}
+
 	lexing(deb_lexer, prompt);
 	while (in_quote(deb_lexer))
 	{
@@ -28,6 +24,11 @@ int	parse(t_lexer **deb_lexer, char *prompt)
 	}
 	fuz_lex(deb_lexer, MOT);
 	history(deb_lexer);
+	if (special_c(prompt) == SPECIAL)
+	{
+		free_lexer(deb_lexer);
+		return (0); //error
+	}
 	if (!valide_lexer(deb_lexer))
 	{
 		free_lexer(deb_lexer);

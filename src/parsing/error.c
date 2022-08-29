@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 23:58:48 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 18:55:05 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:07:31 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ void	print_error(t_pars_error error)
 		ft_putstr_fd(error.str, 2);
 		ft_putstr_fd(" »\n", 2);
 	}
+	g_exit_stat = 2;
 	if (error.i == ERROR_MALLOC)
 	{
 		ft_putstr_fd("erreur d'allocation de memoire, fonction ", 2);
 		ft_putstr_fd(error.str, 2);
 		ft_putstr_fd("\n", 2);
 		exit(EXIT_FAILURE);
+	g_exit_stat = 1;
 	}
 }
 
