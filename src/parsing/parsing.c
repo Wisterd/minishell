@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 22:18:33 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:44:28 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,19 @@ int	parse(t_lexer **deb_lexer, char *prompt)
 	{
 		create_lexer(deb_lexer, chartostr('\n'), SPC);
 		prompt = readline("> ");
+		if (!prompt)
+		{
+			ft_putstr_fd("syntax error: unexpected end of file\n", 2);
+			return (0);
+		}
 		lexing(deb_lexer, prompt);
 	}
 	fuz_lex(deb_lexer, MOT);
 	history(deb_lexer);
 	if (special_c(prompt) == SPECIAL)
-	{
-		free_lexer(deb_lexer);
 		return (0);
-	}
 	if (!valide_lexer(deb_lexer))
-	{
-		free_lexer(deb_lexer);
 		return (0);
-	}
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
 	fuz_lex(deb_lexer, SPC);
@@ -49,6 +48,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	deb_lexer = create_deb_lexer();
 	if (!parse(deb_lexer, prompt))
 	{
+		free_lexer(deb_lexer);
 		g_exit_stat = 2;
 		return (NULL); 
 	}
