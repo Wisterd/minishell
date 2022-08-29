@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 17:49:01 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/30 00:14:53 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,14 @@ char		*get_path_cmd(t_exec_data *data, char *cmd);
 char		*ft_strjoin_free(char *s1, char *s2);
 int			ft_wait(t_exec_data *data);
 void		ft_exit_error(void);
-char		*ft_getcwd(t_exec_data *data);
+char		*ft_getcwd();
 
 //pipe.c
 void		ft_exec(t_args_exec args_exec);
 void		ft_close_pipes(int	*pipes, int dont_close);
 int			ft_fork(t_exec_data *data);
 //childs.c 
-void		ft_child(t_exec_data *exec_data, int ind_cmd);
+void		ft_child(t_exec_data *data);
 
 //init.c
 void		init_data(t_exec_data *data);
@@ -133,13 +133,24 @@ void		create_all_out(t_exec_data *data, char **outfiles);
 void		open_all_in(t_exec_data *data, char **infiles);
 
 ///BUILTINS
+//exe_builtins.c
+void		launch_builtin(t_exec_data *data, char *cmd);
+
 //env.c
-t_env		*init_env(t_exec_data *data, char **envp);
+t_env		*init_env(char **envp);
 void		ft_env(t_exec_data *data);
-
+char		*ft_getenv(char *to_get, t_exec_data *data);
+char		**ft_get_total_env(t_exec_data *data);
 //unset.c
-void	ft_unset(t_exec_data *data, char *var_name);
+void		ft_unset(t_exec_data *data);
 
+//echo.c
+void		ft_echo(char	**tab_args);
+//utils_env.c
+void	l_add_back(t_env **l_env, char *var_name, \
+	char *var_content);
+char	*get_var_content(char *var_path);
+char	*get_var_name(char *var_path);
 
 // utilitaires_parsing.c
 char	*chartostr(char c);

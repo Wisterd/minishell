@@ -75,25 +75,25 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	}
 }
 
-void	ft_child(t_exec_data *exec_data, int ind_cmd)
+void	ft_child(t_exec_data *data)
 {
 	int		fd_in;
 	int		fd_out;
 	char	*path_cmd;
 
-	exec_data->args_exec->tab_args = exec_data->tab_parse[ind_cmd].tab_args;
-	path_cmd = get_path_cmd(exec_data, \
-		exec_data->args_exec->tab_args[0]);
-	exec_data->args_exec->path_cmd = path_cmd;
+	data->args_exec->tab_args = data->tab_parse[data->ind_cmd].tab_args;
+	path_cmd = get_path_cmd(data, \
+		data->args_exec->tab_args[0]);
+	data->args_exec->path_cmd = path_cmd;
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
-	set_fds_inout(&fd_in, &fd_out, ind_cmd, exec_data);
+	set_fds_inout(&fd_in, &fd_out, data->ind_cmd, data);
 	if (fd_in != STDIN_FILENO)
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", exec_data->pipes);
+			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
 	if (fd_out != STDOUT_FILENO)
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", exec_data->pipes);
-	ft_close_pipes(exec_data->pipes, -1);
-	ft_exec(*exec_data->args_exec);
+			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+	ft_close_pipes(data->pipes, -1);
+	ft_exec(*data->args_exec);
 }
