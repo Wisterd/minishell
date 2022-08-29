@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 22:44:28 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:49:37 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	// prb solo $ ou char "";
 	tab_parse = to_exec(deb_lexer);	
 	// print_to_exec(tab_parse);
+	// print_lexer(deb_lexer);
 	if (*deb_lexer)
 	{
 		data->tab_parse = tab_parse;

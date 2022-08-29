@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 18:40:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 22:32:02 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:46:43 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_echo(char	**tab_args)//, int ac)
 		printf("\n");
 }
 
-int main (int ac , char **av)
-{
-	ft_echo(av, ac);
-}
+// int main (int ac , char **av)
+// {
+// 	ft_echo(av, ac);
+// }
