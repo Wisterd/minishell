@@ -113,6 +113,7 @@ char		*ft_strjoin_free(char *s1, char *s2);
 int			ft_wait(t_exec_data *data);
 void		ft_exit_error(void);
 char		*ft_getcwd();
+char		*ft_getcwd_perm();
 
 //pipe.c
 void		ft_exec(t_args_exec args_exec);

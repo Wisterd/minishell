@@ -9,7 +9,7 @@ t_env	*init_env(char **envp)
 	l_env = malloc(sizeof(t_env));
 	if (!l_env)
 		ft_error(ERR_MALLOC, NULL, NULL);
-	l_env->var_content = ft_strdup_perm(ft_getcwd());
+	l_env->var_content = ft_strdup_perm(ft_getcwd_perm());
 	l_env->var_name = ft_strdup_perm("?PWD");
 	l_env->next = NULL;
 	l_env->prev = NULL;

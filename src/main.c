@@ -7,7 +7,6 @@ int main(int ac, char **av, char **envp)
 	(void)		ac;
 	(void)		av;
 	
-	ft_garbage_collector(INIT, NULL);
 	data.l_env = init_env(envp);
 	signals();
 	prompt = NULL;

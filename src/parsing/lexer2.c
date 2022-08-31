@@ -16,7 +16,7 @@ t_lexer	**create_deb_lexer(void)
 {
 	t_lexer	**deb_lexer;
 
-	deb_lexer =ft_malloc(sizeof(*deb_lexer));
+	deb_lexer = ft_malloc(sizeof(*deb_lexer));
 	*deb_lexer = NULL;
 	if (!deb_lexer)
 		error_malloc("lexing");

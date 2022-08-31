@@ -83,9 +83,12 @@ void	mini_exit(char *prompt, t_exec_data *data)
 		if (!prompt)
 			exit(EXIT_SUCCESS); // return Error ctrl -d
 		else
+		{
+			ft_garbage_collector(INIT, NULL);
 			parsing(prompt, data);
+			ft_garbage_collector(END, NULL);
+		}
 	}
 	rl_clear_history();
-	ft_garbage_collector(END, NULL);
 	exit(EXIT_SUCCESS);
 }

@@ -46,6 +46,16 @@ int	ft_wait(t_exec_data *data)
 	return (res);
 }
 
+char	*ft_getcwd_perm()
+{
+	char	*str_cwd;
+
+	str_cwd = malloc(sizeof(char) * PATH_MAX);
+	if (!getcwd(str_cwd, sizeof(char) * PATH_MAX))
+		ft_error(ERR_PERROR, "Getcwd failed", NULL);
+	return (str_cwd);
+}
+
 char	*ft_getcwd()
 {
 	char	*str_cwd;
