@@ -18,15 +18,15 @@ void	ft_add_history(char *history)
 
 	if (!ancient)
 	{
-		ancient = ft_strdup(history);
+		ancient = ft_strdup_perm(history);
 		error_malloc("add_history ft_strdup1", ancient);
 		add_history(history);
 	}
 	else if (strncmp(ancient, history, ft_strlen(ancient) + 1))
 	{
-		ft_free(ancient);
+		free(ancient);
 		add_history(history);
-		ancient = ft_strdup(history);
+		ancient = ft_strdup_perm(history);
 		error_malloc("add_history ft_strdup2", ancient);
 	}
 }
@@ -36,15 +36,15 @@ void	history(t_lexer **deb_lexer)
 	t_lexer		*new_lexer;
 	char		*history;
 
-	history = ft_strdup("");
+	history = ft_strdup_perm("");
 	error_malloc("history", history);
 	new_lexer = *deb_lexer;
 	while (new_lexer)
 	{
-		history = ft_strjoin_1free(history, new_lexer->contenu);
+		history = ft_strjoin_1free_perm(history, new_lexer->contenu);
 		error_malloc("history ft_strjoin_1free", history);
 		new_lexer = new_lexer->next;
 	}
 	ft_add_history(history);
-	ft_free(history);
+	free(history);
 }

@@ -90,5 +90,6 @@ void	ft_free(void *pointer);
 char	*ft_strldup(const char *s1, size_t size);
 char	*ft_strjoin_2free(char *s1, char *s2);
 char	*ft_strjoin_1free(char *s1, char *s2);
+char	*ft_strjoin_1free_perm(char *s1, char *s2);
 
 #endif

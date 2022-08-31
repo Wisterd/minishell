@@ -43,8 +43,10 @@ void	ft_echo(char	**tab_args)//, int ac)
 			y++;
 		}
 		if (tab_args[y + 1])
+		{
 			ft_putstr_fd(tab_args[y], 1);
 			ft_putstr_fd(" ", 1);
+		}
 		if (!tab_args[y + 1])	
 			ft_putstr_fd(tab_args[y], 1);
 		y++;
