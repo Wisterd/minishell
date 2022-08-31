@@ -6,11 +6,11 @@ t_env	*init_env(char **envp)
 	int		i;
 
 	i = 0;
-	l_env = ft_malloc(sizeof(t_env));
+	l_env = malloc(sizeof(t_env));
 	if (!l_env)
 		ft_error(ERR_MALLOC, NULL, NULL);
-	l_env->var_content = ft_strdup(ft_getcwd());
-	l_env->var_name = ft_strdup("?PWD");
+	l_env->var_content = ft_strdup_perm(ft_getcwd());
+	l_env->var_name = ft_strdup_perm("?PWD");
 	l_env->next = NULL;
 	l_env->prev = NULL;
 	while (envp[i++])
@@ -48,7 +48,7 @@ char	**ft_get_total_env(t_exec_data *data)
 	tab_env = ft_malloc(sizeof(char *) * (i + 1));
 	list = data->l_env;
 	i = 0;
-	while (list)
+	while (list->next)
 	{
 		tab_env[i] = ft_strjoin(list->var_name, "=");
 		if (!tab_env[i])

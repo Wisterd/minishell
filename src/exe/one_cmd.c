@@ -72,7 +72,11 @@ int	exe_one_cmd(t_exec_data *data)
 			one_cmd_out(data);
 		if (data->pipes)
 			ft_close_pipes(data->pipes, -1);
-		ft_exec(*data->args_exec);
+		if (!exe_builtin(data, -1, -1))
+		{
+			data->args_exec->tab_env = ft_get_total_env(data);
+			ft_exec(*data->args_exec);
+		}
 	}
 	waitpid(child, &status, 0);
 	if (WIFEXITED(status))

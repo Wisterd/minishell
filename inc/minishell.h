@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <linux/limits.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
@@ -76,7 +77,7 @@ typedef struct s_args_exec
 {
 	char	*path_cmd;
 	char	**tab_args;
-	char 	**path;
+	char 	**tab_env;
 }	t_args_exec;
 
 typedef struct s_env
@@ -134,7 +135,7 @@ void		open_all_in(t_exec_data *data, char **infiles);
 
 ///BUILTINS
 //exe_builtins.c
-void		launch_builtin(t_exec_data *data, char *cmd);
+int			exe_builtin(t_exec_data *data, int fd_in, int fd_out);
 
 //env.c
 t_env		*init_env(char **envp);

@@ -10,9 +10,9 @@ char	*get_var_content(char *var_path)
 		var_path++;
 	var_path++;
 	if (!*var_path)
-		var_content = ft_strdup("");
+		var_content = ft_strdup_perm("");
 	else
-		var_content = ft_strdup(var_path);
+		var_content = ft_strdup_perm(var_path);
 	if (!var_content)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	return (var_content);
@@ -26,14 +26,14 @@ char	*get_var_name(char *var_path)
 
 	if (!var_path)
 		return (NULL);
-	str_cpy = ft_strdup(var_path);
+	str_cpy = ft_strdup_perm(var_path);
 	if (!str_cpy)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	i = 0;
 	while (str_cpy[i] != '=')
 		i++;
 	str_cpy[i] = '\0';
-	var_name = ft_strdup(str_cpy);
+	var_name = ft_strdup_perm(str_cpy);
 	if (!var_name)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	ft_free(str_cpy);
@@ -49,7 +49,7 @@ void	l_add_back(t_env **l_env, char *var_name, \
 	list = *l_env;
 	while (list->next)
 		list = list->next;
-	new_list = ft_malloc(sizeof(t_env));
+	new_list = malloc(sizeof(t_env));
 	if (!new_list)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	new_list->next = NULL;

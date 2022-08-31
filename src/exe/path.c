@@ -4,14 +4,16 @@ static char	*search_path_cmd(t_exec_data *data, char *cmd, int *path_state)
 {
 	int		i;
 	char	*path_cmd;
+	char	**path;
 
 	i = 0;
 	path_cmd = NULL;
-	while (data->args_exec->path[i] && *path_state != ACCESSIBLE)
+	path = ft_split(ft_getenv("PATH", data), ':');
+	while (path[i] && *path_state != ACCESSIBLE)
 	{
 		if (path_cmd)
 			ft_free(path_cmd);
-		path_cmd = ft_strjoin(data->args_exec->path[i], "/");
+		path_cmd = ft_strjoin(path[i], "/");
 		if (!path_cmd)
 			ft_error(ERR_MALLOC, NULL, data->pipes);
 		path_cmd = ft_strjoin_free(path_cmd, cmd);

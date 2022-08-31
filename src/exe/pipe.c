@@ -3,7 +3,7 @@
 void	ft_exec(t_args_exec args_exec)
 {
 	if (execve(args_exec.path_cmd, args_exec.tab_args, \
-		args_exec.path) == -1)
+		args_exec.tab_env) == -1)
 		ft_error(ERR_PERROR, "Execve failed", NULL);
 }
 
@@ -83,6 +83,5 @@ int	ft_fork(t_exec_data *data)
 //executer les builtins au lieu de les chercher dans le path
 //env -i
 //write error: No space left on device pour tous les buitins qui ecrivent
-//recuperer le envp pour le execve l'ait !!!
 //enlever les ft_malloc et ft_free du builtin env
 //attention quand on exec un builtin dans le parent on doit free les variables permanantes en cas d'erreur, on le fait pas 

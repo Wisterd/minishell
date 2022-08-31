@@ -95,5 +95,9 @@ void	ft_child(t_exec_data *data)
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
 			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
 	ft_close_pipes(data->pipes, -1);
-	ft_exec(*data->args_exec);
+	if (!exe_builtin(data, fd_in, fd_out))
+	{
+		data->args_exec->tab_env = ft_get_total_env(data);
+		ft_exec(*data->args_exec);
+	}
 }
