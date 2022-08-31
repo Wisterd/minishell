@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
 /*   Updated: 2022/08/29 23:49:03 by vbarbier         ###   ########.fr       */
@@ -90,9 +90,12 @@ void	mini_exit(char *prompt, t_exec_data *data)
 			exit(EXIT_SUCCESS);
 		}
 		else
+		{
+			ft_garbage_collector(INIT, NULL);
 			parsing(prompt, data);
+			ft_garbage_collector(END, NULL);
+		}
 	}
 	rl_clear_history();
-	ft_garbage_collector(END, NULL);
 	exit(EXIT_SUCCESS);
 }

@@ -37,8 +37,13 @@ void	check_valid_unset(t_exec_data *data)
 }
 */
 
-void	ft_unset(t_exec_data *data, char *var_name)
+void	ft_unset(t_exec_data *data)
 {
+	char	*var_name;
+
+	var_name = NULL;
+	if (!data->tab_parse[data->ind_cmd].tab_args[1])
+		return ;
 	//check_valid_unset();
 	rm_ele(&data->l_env, var_name);
 }

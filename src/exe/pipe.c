@@ -3,17 +3,17 @@
 void	ft_exec(t_args_exec args_exec)
 {
 	if (execve(args_exec.path_cmd, args_exec.tab_args, \
-		args_exec.path) == -1)
+		args_exec.tab_env) == -1)
 		ft_error(ERR_PERROR, "Execve failed", NULL);
 }
 
-void	fill_pipes(t_exec_data *data, int *pipes, int ind_cmd)
+void	fill_pipes(t_exec_data *data, int *pipes)
 {
 	static int	mem_l_pipe = 0;
 	static int	mem_r_pipe = 2;
 	int			temp;
 
-	if (ind_cmd == 0 || ind_cmd == data->n_cmds - 1)
+	if (data->ind_cmd == 0 || data->ind_cmd == data->n_cmds - 1)
 	{
 		data->l_pipe = pipes + mem_l_pipe;
 		data->r_pipe = pipes;
@@ -58,12 +58,13 @@ int	ft_fork(t_exec_data *data)
 		i = -1;
 		while (++i < data->n_cmds)
 		{
-			fill_pipes(data, data->pipes, i);
+			data->ind_cmd = i;
+			fill_pipes(data, data->pipes);
 			childs[i] = fork();
 			if (childs[i] < 0)
 				ft_error(ERR_PERROR, "Fork failed", data->pipes);
 			if (childs[i] == 0)
-				ft_child(data, i);
+				ft_child(data);
 		}
 		data->childs = childs;
 		ft_close_pipes(data->pipes, -1);
@@ -80,20 +81,7 @@ int	ft_fork(t_exec_data *data)
 //pas besoin de gerer les = sans export
 //empecher qu'on puisse mettre des arguments a env en mettant un message d'erreur
 //executer les builtins au lieu de les chercher dans le path
-
-/*
-int	main(int ac, char **av, char *envp[])
-{
-	t_args_exec	*args_exec;
-	t_exec_data	data;
-
-	ft_garbage_collector(INIT, NULL);
-	args_exec = init_args_exec();
-	data.n_cmds = 4;
-	data.args_exec = args_exec;
-	set_inoutfies(&data);
-	set_redirs(&data);
-	ft_fork(&data);
-	ft_garbage_collector(END, NULL);
-}
-*/
+//env -i
+//write error: No space left on device pour tous les buitins qui ecrivent
+//enlever les ft_malloc et ft_free du builtin env
+//attention quand on exec un builtin dans le parent on doit free les variables permanantes en cas d'erreur, on le fait pas 

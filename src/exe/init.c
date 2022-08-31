@@ -29,7 +29,6 @@ void	init_data(t_exec_data *data)
 
 	args_exec = ft_malloc(sizeof(t_args_exec));
 	data->args_exec = args_exec;
-	data->args_exec->path = ft_split(getenv("PATH"), ':');
 	data->n_cmds = data->tab_parse->nb_cmd;
 	pipes = init_pipes(data);
 	data->pipes = pipes;
