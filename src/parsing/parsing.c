@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/28 22:08:01 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 23:49:03 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 int	parse(t_lexer **deb_lexer, char *prompt)
 {
-	if (special_c(prompt) == SPECIAL)
-	{
-		free_lexer(deb_lexer);
-		return (0); //error
-	}
 	lexing(deb_lexer, prompt);
 	while (in_quote(deb_lexer))
 	{
 		create_lexer(deb_lexer, chartostr('\n'), SPC);
 		prompt = readline("> ");
+		if (!prompt)
+		{
+			ft_putstr_fd("syntax error: unexpected end of file\n", 2);
+			return (0);
+		}
 		lexing(deb_lexer, prompt);
 	}
 	fuz_lex(deb_lexer, MOT);
 	history(deb_lexer);
+	if (special_c(prompt) == SPECIAL)
+		return (0);
 	if (!valide_lexer(deb_lexer))
-	{
-		free_lexer(deb_lexer);
-		return (0); // 2 ERROR
-	}
+		return (0);
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
 	fuz_lex(deb_lexer, SPC);
@@ -48,7 +47,11 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 	deb_lexer = create_deb_lexer();
 	if (!parse(deb_lexer, prompt))
-		return (NULL); // error
+	{
+		free_lexer(deb_lexer);
+		g_exit_stat = 2;
+		return (NULL); 
+	}
 	//print_lexer(deb_lexer);
 	//if (*deb_lexer)
 	//	printf("\n");
@@ -59,10 +62,12 @@ void	*parsing(char *prompt, t_exec_data *data)
 	fuz_lex(deb_lexer, REDIR);
 	
 	// print_lexer(deb_lexer);
-	// -------- POur marine ------------
+	//// -------- POur marine ------------
 
+	// prb solo $ ou char "";
 	tab_parse = to_exec(deb_lexer);	
 	// print_to_exec(tab_parse);
+	// print_lexer(deb_lexer);
 	if (*deb_lexer)
 	{
 		data->tab_parse = tab_parse;
@@ -76,12 +81,14 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 void	mini_exit(char *prompt, t_exec_data *data)
 {
-	// ft_garbage_collector(INIT, NULL);
 	while (ft_strncmp(prompt, "exit", 4) != 0)
 	{
 		prompt = readline("minishell> ");
 		if (!prompt)
-			exit(EXIT_SUCCESS); // return Error ctrl -d
+		{
+			printf("exit\n");
+			exit(EXIT_SUCCESS);
+		}
 		else
 			parsing(prompt, data);
 	}

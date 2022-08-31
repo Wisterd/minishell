@@ -24,6 +24,7 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	parsing/lexer2.c \
 	parsing/utilitaires_parsing.c \
 	parsing/valide_lexer.c \
+	parsing/init_tab_to_exec.c \
 	parsing/parse_to_exec.c \
 	parsing/signal.c \
 	parsing/history.c \

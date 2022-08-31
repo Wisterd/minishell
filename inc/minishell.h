@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 17:49:01 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:31:37 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <limits.h>
 # include "../libft/libft.h"
 
 # define MOT 0
@@ -172,18 +173,21 @@ t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer);
 
 // error.c
 void	print_error(t_pars_error error);
-void	error_malloc(char *str);
+void	error_malloc(char *str, void *not_null);
 
 int		in_quote(t_lexer **deb_lexer);
 
-//parse_to_exec.c
+//	init_tab_to_exec.c
+t_tab_parse	*init_tab_parse(t_lexer **deb_lexer);
+
+// parse_to_exec.c
 t_tab_parse	*to_exec(t_lexer **deb_lexer);
 void		print_to_exec(t_tab_parse *tab_parse);
 
-//signal.c
+// signal.c
 void		signals();
 
-//parsing.c
+// parsing.c
 void	mini_exit(char *prompt, t_exec_data *data);
 
 // error

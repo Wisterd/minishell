@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 20:08:46 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/28 22:06:01 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:40:50 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_atoi_exit(char *str)
 	return (1);
 }
 
-void	ft_exit1(char	**tab_args)//, int ac)
+void	ft_exit(char	**tab_args)//, int ac)
 {
 	int	y;
 	int retour_error;

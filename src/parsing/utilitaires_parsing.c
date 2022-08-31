@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 23:56:59 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/26 18:55:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:28:01 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ char	*chartostr(char c)
 {
 	char	*str;
 
-	str =ft_malloc(2 * sizeof(char));
-	if (!str)
-		error_malloc("chartostr");
+	str = ft_malloc(2 * sizeof(char));
+	error_malloc("chartostr", str);
 	str[0] = c;
 	str[1] = '\0';
 	return (str);

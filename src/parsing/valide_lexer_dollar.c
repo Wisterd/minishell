@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/28 22:20:12 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 22:20:35 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 char	*erase_one(char *str)
 {
-	int	i;
-	char *cp;
+	int		i;
+	char	*cp;
 
 	i = 1;
 	if (!str)
 		cp = ft_strdup("\0");
 	else
-		cp =ft_malloc(sizeof(char) * ft_strlen(str));
-	if (!cp)
-		error_malloc("erase one");
+		cp = ft_malloc(sizeof(char) * ft_strlen(str));
+	error_malloc("erase_one", cp);
 	while (str[i])
 	{
 		cp[i - 1] = str[i];
@@ -40,12 +39,13 @@ int	is_question(t_lexer *tmp_lexer)
 	{
 		ft_free(tmp_lexer->next->contenu);
 		tmp_lexer->next->contenu = ft_itoa(g_exit_stat);
+		error_malloc("is_question", tmp_lexer->next->contenu);
 		return (1);
 	}
 	return (0);
 }
 
-int erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
+int	erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 {
 	if (!env)
 	{
@@ -74,6 +74,8 @@ int erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 	return (0);
 }
 
+//  t_lexer	*multiple_dollar
+
 t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 {
 	char	*env;
@@ -95,14 +97,12 @@ t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 				tmp_lexer = *deb_lexer;
 				return (tmp_lexer);
 			}
-			free(tmp_lexer->next->contenu);
+			ft_free(tmp_lexer->next->contenu);
 			tmp_lexer->next->contenu = ft_strdup(env);
-			if (!tmp_lexer->next->contenu)
-				error_malloc("replace dollar");
+			error_malloc("replace dollar", tmp_lexer->next->contenu);
 			free_one_element(deb_lexer, tmp_lexer);
 			tmp_lexer = *deb_lexer;
 		}
-		
 	}
 	return (tmp_lexer);
 }

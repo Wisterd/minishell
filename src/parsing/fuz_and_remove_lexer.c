@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:04:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/27 17:57:55 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/08/29 23:24:53 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ t_lexer	*change_in_quote(t_lexer *tmp_lexer, char *str)
 		else if (!ft_strncmp(str, "\"", 2) \
 		&& !ft_strncmp(tmp_lexer->contenu, "$", 2))
 			tmp_lexer->type = DOLLAR;
-		else if (tmp_lexer->type == SPC)
-			tmp_lexer->type = SPC;
 		else
 			tmp_lexer->type = MOT;
 		tmp_lexer = tmp_lexer->next;
@@ -58,11 +56,18 @@ int	in_quote(t_lexer **deb_lexer)
 	{
 		if (tmp_lexer->type == QUOTE)
 		{
+			str = tmp_lexer->contenu;
 			if (!tmp_lexer->next)
 				return (1);
-			str = tmp_lexer->contenu;
 			tmp_lexer = tmp_lexer->next;
-			if (!change_in_quote(tmp_lexer, str))
+			if(!strncmp(tmp_lexer->contenu, str , 1))
+			{
+				ft_free(tmp_lexer->contenu);
+				tmp_lexer->contenu = ft_strdup("");
+				tmp_lexer->type = MOT;
+				free_one_element(deb_lexer, tmp_lexer->pre);
+			}
+			else if (!change_in_quote(tmp_lexer, str))
 				return (1);
 			else
 				tmp_lexer = change_in_quote(tmp_lexer, str);
