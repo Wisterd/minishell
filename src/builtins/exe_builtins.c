@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-static void	builtin_in(t_exec_data *data)
+static void	builtin_in(t_exec_data *data, int mode)
 {
 	int	fd_in;
 	int	ind_last;
@@ -20,11 +20,17 @@ static void	builtin_in(t_exec_data *data)
 			else 
 				ft_error(ERR_PERROR, "Open failed", data->pipes);
 		}
-		close(fd_in);
+		if (mode == 1)
+			close(fd_in);
+	}
+	if (mode == 0)
+	{
+		if (dup2(fd_in, STDIN_FILENO) == -1)
+			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
 	}
 }
 
-static void	builtin_out(t_exec_data *data)
+static void	builtin_out(t_exec_data *data, int mode)
 {
 	int	fd_out;
 	int	ind_last;
@@ -46,7 +52,13 @@ static void	builtin_out(t_exec_data *data)
 				ft_error(ERR_PERROR, "Open failed", data->pipes);
 		}
 	}
-	data->fd_out_builtin = fd_out;
+	if (mode == 1)
+		data->fd_out_builtin = fd_out;
+	else
+	{
+		if (dup2(fd_out, STDOUT_FILENO) == -1)
+			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+	}
 }
 
 int	is_builtin(char *cmd)
@@ -72,13 +84,13 @@ void	exe_builtin(t_exec_data *data)
 	char	*cmd;
 
 	cmd = data->args_exec->tab_args[0];
+	data->fd_out_builtin = 1;
 	if (data->n_cmds == 1)
 	{
-		data->fd_out_builtin = 1;
 		if (*data->tab_parse[0].infile)
-			builtin_in(data);
+			builtin_in(data, 1);
 		if (*data->tab_parse[0].outfile)
-			builtin_out(data);
+			builtin_out(data, 1);
 		if (data->pipes)
 			ft_close_pipes(data->pipes, -1);
 		launch_builtin(data, cmd);
