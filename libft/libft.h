@@ -81,9 +81,15 @@ void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
+void	free_all(t_garbage **l_garbage);
+void	add_front(t_garbage **l_garbage, void *pointer);
+void	rm_ele(t_garbage **l_garbage, void *pointer);
 void	ft_garbage_collector(int mode, void *pointer);
+void	ft_garbage_collector_perm(int mode, void *pointer);
 void	*ft_malloc(int size);
+void	*ft_malloc_perm(int size);
 void	ft_free(void *pointer);
+void	ft_free_perm(void *pointer);
 
 // Nouvelle fct ajouter lors de minishell
 

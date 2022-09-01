@@ -6,7 +6,7 @@ t_env	*init_env(char **envp)
 	int		i;
 
 	i = 0;
-	l_env = malloc(sizeof(t_env));
+	l_env = ft_malloc_perm(sizeof(t_env));
 	if (!l_env)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	l_env->var_content = ft_strdup_perm(ft_getcwd_perm());
@@ -65,11 +65,21 @@ char	**ft_get_total_env(t_exec_data *data)
 
 void	ft_env(t_exec_data *data)
 {
-	while (data->l_env)
+	if (data->args_exec->tab_args[1])
+		write(2, "env: too many arguments\n", 24);
+	else
 	{
-		if (data->l_env->var_name && ft_strncmp("?", data->l_env->var_name, 1))
-			printf("%s=%s\n", data->l_env->var_name, data->l_env->var_content);
-		data->l_env = data->l_env->next;
+		while (data->l_env)
+		{
+			if (data->l_env->var_name && ft_strncmp("?", data->l_env->var_name, 1))
+			{
+				protected_putstr(data->l_env->var_name, "env", data);
+				protected_putstr("=", "env", data);
+				protected_putstr(data->l_env->var_content, "env", data);
+				protected_putstr("\n", "env", data);
+			}
+			data->l_env = data->l_env->next;
+		}
 	}
 }
 

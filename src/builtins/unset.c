@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-static void	rm_ele(t_env **l_env, char *var_name)
+static void	rm_var(t_env **l_env, char *var_name)
 {
 	t_env *list;
 
@@ -45,5 +45,5 @@ void	ft_unset(t_exec_data *data)
 	if (!data->tab_parse[data->ind_cmd].tab_args[1])
 		return ;
 	//check_valid_unset();
-	rm_ele(&data->l_env, var_name);
+	rm_var(&data->l_env, var_name);
 }

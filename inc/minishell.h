@@ -96,6 +96,7 @@ typedef struct s_exec_data
 	int			*pipes;
 	int			*l_pipe;
 	int			*r_pipe;
+	int			fd_out_builtin;
 	t_tab_parse	*tab_parse;
 	pid_t		*childs;
 	t_env		*l_env;
@@ -137,8 +138,8 @@ void		open_all_in(t_exec_data *data, char **infiles);
 
 ///BUILTINS
 //exe_builtins.c
-int			exe_builtin(t_exec_data *data, int fd_in, int fd_out);
-
+void		exe_builtin(t_exec_data *data);
+int			is_builtin(char *cmd);
 //env.c
 t_env		*init_env(char **envp);
 void		ft_env(t_exec_data *data);
@@ -150,10 +151,11 @@ void		ft_unset(t_exec_data *data);
 //echo.c
 void		ft_echo(char	**tab_args);
 //utils_env.c
-void	l_add_back(t_env **l_env, char *var_name, \
+void		l_add_back(t_env **l_env, char *var_name, \
 	char *var_content);
-char	*get_var_content(char *var_path);
-char	*get_var_name(char *var_path);
+char		*get_var_content(char *var_path);
+char		*get_var_name(char *var_path);
+void		protected_putstr(char *str, char *builtin, t_exec_data *data);
 
 // utilitaires_parsing.c
 char	*chartostr(char c);

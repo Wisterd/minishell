@@ -6,7 +6,7 @@ static void	one_cmd_in(t_exec_data *data)
 	int	ind_last;
 
 	fd_in = STDIN_FILENO;
-	create_all_out(data, data->tab_parse[0].outfile);
+	open_all_in(data, data->tab_parse[0].infile);
 	ind_last = get_ind_last_redir(data->tab_parse[0].inredir);
 	if (data->tab_parse[0].infile[0])
 	{
@@ -32,7 +32,7 @@ static void	one_cmd_out(t_exec_data *data)
 	int	ind_last;
 
 	fd_out = STDOUT_FILENO;
-	open_all_in(data, data->tab_parse[0].infile);
+	create_all_out(data, data->tab_parse[0].outfile);
 	ind_last = get_ind_last_redir(data->tab_parse[0].outredir);
 	if (data->tab_parse[0].outfile[0])
 	{
@@ -65,18 +65,14 @@ int	exe_one_cmd(t_exec_data *data)
 	if (child == 0)
 	{
 		data->args_exec->path_cmd = get_path_cmd(data, data->tab_parse[0].tab_args[0]);
-		data->args_exec->tab_args = data->tab_parse[0].tab_args;
 		if (*data->tab_parse[0].infile)
 			one_cmd_in(data);
 		if (*data->tab_parse[0].outfile)
 			one_cmd_out(data);
 		if (data->pipes)
 			ft_close_pipes(data->pipes, -1);
-		if (!exe_builtin(data, -1, -1))
-		{
-			data->args_exec->tab_env = ft_get_total_env(data);
-			ft_exec(*data->args_exec);
-		}
+		data->args_exec->tab_env = ft_get_total_env(data);
+		ft_exec(*data->args_exec);
 	}
 	waitpid(child, &status, 0);
 	if (WIFEXITED(status))

@@ -79,7 +79,8 @@ t_tab_parse	*exec_redir(t_lexer *tmp_lexer, t_tab_parse	*tab_parse, int y)
 
 int	conditon(t_lexer *tmp_lexer)
 {
-	return (tmp_lexer->type == MOT && (!tmp_lexer->pre || \
+	return ((tmp_lexer->type == MOT || tmp_lexer->type == DOLLAR)\
+	&& (!tmp_lexer->pre || \
 	(tmp_lexer->pre && tmp_lexer->pre->type != REDIR)));
 }
 

@@ -75,7 +75,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 		ft_fork(data);
 	}
 	// ---------------------------------	
-	free_lexer(deb_lexer);
+	//free_lexer(deb_lexer);
 	return (NULL);
 }
 
@@ -87,6 +87,7 @@ void	mini_exit(char *prompt, t_exec_data *data)
 		if (!prompt)
 		{
 			printf("exit\n");
+			ft_garbage_collector_perm(END, NULL);
 			exit(EXIT_SUCCESS);
 		}
 		else
@@ -96,6 +97,7 @@ void	mini_exit(char *prompt, t_exec_data *data)
 			ft_garbage_collector(END, NULL);
 		}
 	}
+	ft_garbage_collector_perm(END, NULL);
 	rl_clear_history();
 	exit(EXIT_SUCCESS);
 }

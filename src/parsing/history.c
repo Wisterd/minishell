@@ -24,7 +24,7 @@ void	ft_add_history(char *history)
 	}
 	else if (strncmp(ancient, history, ft_strlen(ancient) + 1))
 	{
-		free(ancient);
+		ft_free_perm(ancient);
 		add_history(history);
 		ancient = ft_strdup_perm(history);
 		error_malloc("add_history ft_strdup2", ancient);
@@ -46,5 +46,5 @@ void	history(t_lexer **deb_lexer)
 		new_lexer = new_lexer->next;
 	}
 	ft_add_history(history);
-	free(history);
+	ft_free_perm(history);
 }
