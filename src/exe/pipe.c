@@ -49,7 +49,14 @@ int	ft_fork(t_exec_data *data)
 	pid_t	*childs;
 	
 	if (data->n_cmds == 1)
-		exe_one_cmd(data);
+	{
+		data->args_exec->tab_args = data->tab_parse[0].tab_args;
+		data->ind_cmd = 0;
+		if (!is_builtin(data->args_exec->tab_args[0]))
+			exe_one_cmd(data);
+		else
+			exe_builtin(data);
+	}
 	else
 	{
 		childs = ft_malloc(sizeof(pid_t) * data->n_cmds);
@@ -79,7 +86,6 @@ int	ft_fork(t_exec_data *data)
 //cas special si une seule commande a executer (executer dans le parent et non le child)
 //heredocs
 //pas besoin de gerer les = sans export
-//empecher qu'on puisse mettre des arguments a env en mettant un message d'erreur
 //executer les builtins au lieu de les chercher dans le path
 //env -i
 //write error: No space left on device pour tous les buitins qui ecrivent

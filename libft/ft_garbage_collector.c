@@ -1,6 +1,6 @@
 #include "libft.h"
 
-static void	free_all(t_garbage **l_garbage)
+void	free_all(t_garbage **l_garbage)
 {
 	t_garbage	*tmp_next;
 
@@ -13,7 +13,7 @@ static void	free_all(t_garbage **l_garbage)
 	}
 }
 
-static void	add_front(t_garbage **l_garbage, void *pointer)
+void	add_front(t_garbage **l_garbage, void *pointer)
 {
 	t_garbage	*l_new;
 
@@ -35,7 +35,7 @@ static void	add_front(t_garbage **l_garbage, void *pointer)
 		*l_garbage = l_new;
 }
 
-static void	rm_ele(t_garbage **l_garbage, void *pointer)
+void	rm_ele(t_garbage **l_garbage, void *pointer)
 {
 	t_garbage *list;
 

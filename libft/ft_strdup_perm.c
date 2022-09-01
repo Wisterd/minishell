@@ -7,7 +7,7 @@ char	*ft_strdup_perm(const char *s1)
 	int		i;
 
 	len = ft_strlen(s1);
-	cp = malloc(len + 1);
+	cp = ft_malloc_perm(len + 1);
 	i = 0;
 	if (!cp)
 		return (NULL);

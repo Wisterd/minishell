@@ -50,7 +50,7 @@ char	*ft_getcwd_perm()
 {
 	char	*str_cwd;
 
-	str_cwd = malloc(sizeof(char) * PATH_MAX);
+	str_cwd = ft_malloc_perm(sizeof(char) * PATH_MAX);
 	if (!getcwd(str_cwd, sizeof(char) * PATH_MAX))
 		ft_error(ERR_PERROR, "Getcwd failed", NULL);
 	return (str_cwd);
@@ -69,5 +69,6 @@ char	*ft_getcwd()
 void	ft_exit_error(void)
 {
 	ft_garbage_collector(END, NULL);
+	ft_garbage_collector_perm(END, NULL);
 	exit(1);
 }

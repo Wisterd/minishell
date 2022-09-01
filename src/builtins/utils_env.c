@@ -1,5 +1,15 @@
 #include "../../inc/minishell.h"
 
+void	protected_putstr(char *str, char *builtin, t_exec_data *data)
+{
+	char *msg;
+
+	if (write(data->fd_out_builtin, str, ft_strlen(str)) == -1)
+	{
+		msg = ft_strjoin(builtin, ": write error: no space left on device");
+		write(2, msg, ft_strlen(msg));
+	}
+}
 char	*get_var_content(char *var_path)
 {
 	char	*var_content;
@@ -36,7 +46,7 @@ char	*get_var_name(char *var_path)
 	var_name = ft_strdup_perm(str_cpy);
 	if (!var_name)
 		ft_error(ERR_MALLOC, NULL, NULL);
-	ft_free(str_cpy);
+	ft_free_perm(str_cpy);
 	return (var_name);
 }
 
@@ -49,7 +59,7 @@ void	l_add_back(t_env **l_env, char *var_name, \
 	list = *l_env;
 	while (list->next)
 		list = list->next;
-	new_list = malloc(sizeof(t_env));
+	new_list = ft_malloc_perm(sizeof(t_env));
 	if (!new_list)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	new_list->next = NULL;
