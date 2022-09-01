@@ -74,6 +74,7 @@ void	exe_builtin(t_exec_data *data)
 	cmd = data->args_exec->tab_args[0];
 	if (data->n_cmds == 1)
 	{
+		data->fd_out_builtin = 1;
 		if (*data->tab_parse[0].infile)
 			builtin_in(data);
 		if (*data->tab_parse[0].outfile)

@@ -65,10 +65,13 @@ char	**ft_get_total_env(t_exec_data *data)
 
 void	ft_env(t_exec_data *data)
 {
+	t_env	*start_list;
+
 	if (data->args_exec->tab_args[1])
 		write(2, "env: too many arguments\n", 24);
 	else
 	{
+		start_list = data->l_env;
 		while (data->l_env)
 		{
 			if (data->l_env->var_name && ft_strncmp("?", data->l_env->var_name, 1))
@@ -80,6 +83,7 @@ void	ft_env(t_exec_data *data)
 			}
 			data->l_env = data->l_env->next;
 		}
+		data->l_env = start_list;
 	}
 }
 
