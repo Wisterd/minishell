@@ -84,7 +84,7 @@ int	valide_pipe(t_lexer *tmp_lexer)
 	return (1);
 }
 
-int	valide_lexer(t_lexer **deb_lexer)
+int	valide_lexer(t_lexer **deb_lexer, t_exec_data *data)
 {
 	t_lexer	*tmp_lexer;
 
@@ -93,7 +93,7 @@ int	valide_lexer(t_lexer **deb_lexer)
 	{
 		while (tmp_lexer && tmp_lexer->next && tmp_lexer->type == DOLLAR)
 		{
-			tmp_lexer = replace_dollar(deb_lexer, tmp_lexer);
+			tmp_lexer = replace_dollar(deb_lexer, tmp_lexer, data);
 			if (tmp_lexer && tmp_lexer->next && (tmp_lexer->next->type == SPC \
 			|| tmp_lexer->next->type == QUOTE))
 				tmp_lexer = tmp_lexer->next;

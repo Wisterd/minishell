@@ -13,21 +13,25 @@ t_env	*init_env(char **envp)
 	l_env->var_name = ft_strdup_perm("?PWD");
 	l_env->next = NULL;
 	l_env->prev = NULL;
-	while (envp[i++])
+	while (envp[i])
 	{
 		l_add_back(&l_env, get_var_name(envp[i]), \
 			get_var_content(envp[i]));
+		i++;
 	}
 	return (l_env);
 }
 
 char	*ft_getenv(char *to_get, t_exec_data *data)
 {
-	while (data->l_env)
+	t_env	*list;
+
+	list = data->l_env;
+	while (list)
 	{
-		if (!ft_strcmp(data->l_env->var_name, to_get))
-			return (data->l_env->var_content);
-		data->l_env = data->l_env->next;
+		if (!ft_strcmp(list->var_name, to_get))
+			return (list->var_content);
+		list = list->next;
 	}
 	return (NULL);
 }
@@ -68,7 +72,10 @@ void	ft_env(t_exec_data *data)
 	t_env	*start_list;
 
 	if (data->args_exec->tab_args[1])
+	{
+		g_exit_stat = 1;
 		write(2, "env: too many arguments\n", 24);
+	}
 	else
 	{
 		start_list = data->l_env;
@@ -76,7 +83,8 @@ void	ft_env(t_exec_data *data)
 		{
 			if (data->l_env->var_name && ft_strncmp("?", data->l_env->var_name, 1))
 			{
-				protected_putstr(data->l_env->var_name, "env", data);
+				if (protected_putstr(data->l_env->var_name, "env", data) == -1)
+					return ;
 				protected_putstr("=", "env", data);
 				protected_putstr(data->l_env->var_content, "env", data);
 				protected_putstr("\n", "env", data);
@@ -84,6 +92,7 @@ void	ft_env(t_exec_data *data)
 			data->l_env = data->l_env->next;
 		}
 		data->l_env = start_list;
+		g_exit_stat = 0;
 	}
 }
 

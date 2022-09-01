@@ -113,7 +113,7 @@ char		*get_path_cmd(t_exec_data *data, char *cmd);
 //utils.c
 char		*ft_strjoin_free(char *s1, char *s2);
 int			ft_wait(t_exec_data *data);
-void		ft_exit_error(void);
+void		ft_exit_error(int exit_stat);
 char		*ft_getcwd();
 char		*ft_getcwd_perm();
 
@@ -149,13 +149,13 @@ char		**ft_get_total_env(t_exec_data *data);
 void		ft_unset(t_exec_data *data);
 
 //echo.c
-void		ft_echo(char	**tab_args);
+void		ft_echo(char **tab_args);
 //utils_env.c
 void		l_add_back(t_env **l_env, char *var_name, \
 	char *var_content);
 char		*get_var_content(char *var_path);
 char		*get_var_name(char *var_path);
-void		protected_putstr(char *str, char *builtin, t_exec_data *data);
+int			protected_putstr(char *str, char *builtin, t_exec_data *data);
 
 // utilitaires_parsing.c
 char	*chartostr(char c);
@@ -181,10 +181,10 @@ int		have_type(t_lexer **deb_lexer, int type);
 void	remove_type(t_lexer **deb_lexer, int type);
 
 //valide_lexer.c
-int		valide_lexer(t_lexer **deb_lexer);
+int		valide_lexer(t_lexer **deb_lexer, t_exec_data *data);
 
 //valide_lexer_dollar.c
-t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer);
+t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *data);
 
 // error.c
 void	print_error(t_pars_error error);

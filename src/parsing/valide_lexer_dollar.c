@@ -76,7 +76,7 @@ int	erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 
 //  t_lexer	*multiple_dollar
 
-t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
+t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *data)
 {
 	char	*env;
 
@@ -90,7 +90,7 @@ t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 		}
 		if (tmp_lexer->next->type == MOT)
 		{
-			env = getenv(tmp_lexer->next->contenu); // Recup  env marine
+			env = ft_getenv(tmp_lexer->next->contenu, data); // Recup  env marine
 			if (erase_dollar(deb_lexer, tmp_lexer, env))
 			{
 				free_one_element(deb_lexer, tmp_lexer);
