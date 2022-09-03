@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 18:40:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/30 11:10:08 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/03 19:05:39 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,31 @@ int	option_n(char *str)
 		return (0);
 }
 
-void	ft_echo(char	**tab_args)//, int ac)
+void	ft_echo(t_exec_data	*data)//**tab_args)//, int ac)
 {
 	int	y;
 	int opt_n;
 
 	y = 1;
 	opt_n = 0;
-	while (tab_args[y])// || y < ac)
+	while (data->tab_parse->tab_args[y])// || y < ac)
 	{
-		if (y == 1 && option_n(tab_args[y]))
+		if (y == 1 && option_n(data->tab_parse->tab_args[y]))
 		{
 			opt_n = 1;
 			y++;
 		}
-		if (tab_args[y + 1])
+		if (data->tab_parse->tab_args[y + 1])
 		{
-			ft_putstr_fd(tab_args[y], 1);
-			ft_putstr_fd(" ", 1);
+			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
+			protected_putstr(" ", "ft_echo", data);
 		}
-		if (!tab_args[y + 1])	
-			ft_putstr_fd(tab_args[y], 1);
+		if (!data->tab_parse->tab_args[y + 1])	
+			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
 		y++;
 	}
-	if (!opt_n && tab_args[1])
-		ft_putstr_fd("\n", 1);
+	if (!opt_n && data->tab_parse->tab_args[1])
+		protected_putstr("\n", "ft_echo", data);
 }
 
 // int main (int ac , char **av)

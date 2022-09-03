@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/30 00:14:53 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/03 19:06:25 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char		**ft_get_total_env(t_exec_data *data);
 void		ft_unset(t_exec_data *data);
 
 //echo.c
-void		ft_echo(char **tab_args);
+void		ft_echo(t_exec_data *data);
 //utils_env.c
 void		l_add_back(t_env **l_env, char *var_name, \
 	char *var_content);

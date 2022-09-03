@@ -72,7 +72,7 @@ int	is_builtin(char *cmd)
 static void	launch_builtin(t_exec_data *data, char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo"))
-		ft_echo(data->tab_parse[data->ind_cmd].tab_args);
+		ft_echo(data);
 	if (!ft_strcmp(cmd, "env"))
 		ft_env(data);
 	if (!ft_strcmp(cmd, "unset"))
