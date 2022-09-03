@@ -99,6 +99,9 @@ void	ft_child(t_exec_data *data)
 	{
 		exe_builtin(data);
 		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
+		close(0);
+		close(1);
 		exit (g_exit_stat);
 	}
 	data->args_exec->tab_env = ft_get_total_env(data);

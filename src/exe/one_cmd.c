@@ -79,5 +79,5 @@ int	exe_one_cmd(t_exec_data *data)
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		return (WTERMSIG(128 + status));
-	return (0);
+	return (status);
 }

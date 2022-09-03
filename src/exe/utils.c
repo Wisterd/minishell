@@ -65,10 +65,3 @@ char	*ft_getcwd()
 		ft_error(ERR_PERROR, "Getcwd failed", NULL);
 	return (str_cwd);
 }
-
-void	ft_exit_error(void)
-{
-	ft_garbage_collector(END, NULL);
-	ft_garbage_collector_perm(END, NULL);
-	exit(1);
-}

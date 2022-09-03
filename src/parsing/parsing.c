@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-int	parse(t_lexer **deb_lexer, char *prompt)
+int	parse(t_lexer **deb_lexer, char *prompt, t_exec_data *data)
 {
 	lexing(deb_lexer, prompt);
 	while (in_quote(deb_lexer))
@@ -30,7 +30,7 @@ int	parse(t_lexer **deb_lexer, char *prompt)
 	history(deb_lexer);
 	if (special_c(prompt) == SPECIAL)
 		return (0);
-	if (!valide_lexer(deb_lexer))
+	if (!valide_lexer(deb_lexer, data))
 		return (0);
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
@@ -46,7 +46,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	t_tab_parse	*tab_parse;
 
 	deb_lexer = create_deb_lexer();
-	if (!parse(deb_lexer, prompt))
+	if (!parse(deb_lexer, prompt, data))
 	{
 		free_lexer(deb_lexer);
 		g_exit_stat = 2;
@@ -72,7 +72,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	{
 		data->tab_parse = tab_parse;
 		init_data(data);
-		ft_fork(data);
+		g_exit_stat = ft_fork(data);
 	}
 	// ---------------------------------	
 	//free_lexer(deb_lexer);

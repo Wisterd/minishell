@@ -27,6 +27,7 @@
 # include <signal.h>
 # include <limits.h>
 # include "../libft/libft.h"
+# include "structures.h"
 
 # define MOT 0
 # define CMD 1
@@ -47,62 +48,6 @@
 
 extern int g_exit_stat;
 
-typedef struct s_lexer
-{
-	int				id;
-	char			*contenu;
-	int				type;
-	struct s_lexer	*next;
-	struct s_lexer	*pre;
-}			t_lexer;
-
-typedef struct s_pars_error
-{
-	int		i;
-	char	c;
-	char	*str;
-}	t_pars_error;
-
-typedef struct s_tab_parse
-{
-	char    **tab_args; //tableau des commandes avec leurs arguments
-	char    **infile; //si il y a redirection '<' le nom du fichier d'entree, sinon NULL
-	char    **outfile; //si il y a redirection '>' le nom du fichier de sortie, sinon NULL
-	char	**outredir;
-	char	**inredir;
-	int		nb_cmd;
-	int		nb_redir;
-}    t_tab_parse;
-
-typedef struct s_args_exec
-{
-	char	*path_cmd;
-	char	**tab_args;
-	char 	**tab_env;
-}	t_args_exec;
-
-typedef struct s_env
-{
-	struct s_env	*prev;
-	struct s_env	*next;
-	char			*var_name;
-	char			*var_content;
-}	t_env;
-
-typedef struct s_exec_data
-{
-	int			n_cmds;
-	int			ind_cmd;
-	int			*pipes;
-	int			*l_pipe;
-	int			*r_pipe;
-	int			fd_out_builtin;
-	t_tab_parse	*tab_parse;
-	pid_t		*childs;
-	t_env		*l_env;
-	t_args_exec *args_exec;
-}	t_exec_data;
-
 //EXE
 //error.c
 void		ft_error(int error_code, char *to_print, int *pipes);
@@ -113,7 +58,7 @@ char		*get_path_cmd(t_exec_data *data, char *cmd);
 //utils.c
 char		*ft_strjoin_free(char *s1, char *s2);
 int			ft_wait(t_exec_data *data);
-void		ft_exit_error(void);
+void		ft_exit_error(int exit_stat);
 char		*ft_getcwd();
 char		*ft_getcwd_perm();
 
@@ -149,13 +94,13 @@ char		**ft_get_total_env(t_exec_data *data);
 void		ft_unset(t_exec_data *data);
 
 //echo.c
-void		ft_echo(char	**tab_args);
+void		ft_echo(char **tab_args);
 //utils_env.c
 void		l_add_back(t_env **l_env, char *var_name, \
 	char *var_content);
 char		*get_var_content(char *var_path);
 char		*get_var_name(char *var_path);
-void		protected_putstr(char *str, char *builtin, t_exec_data *data);
+int			protected_putstr(char *str, char *builtin, t_exec_data *data);
 
 // utilitaires_parsing.c
 char	*chartostr(char c);
@@ -181,10 +126,10 @@ int		have_type(t_lexer **deb_lexer, int type);
 void	remove_type(t_lexer **deb_lexer, int type);
 
 //valide_lexer.c
-int		valide_lexer(t_lexer **deb_lexer);
+int		valide_lexer(t_lexer **deb_lexer, t_exec_data *data);
 
 //valide_lexer_dollar.c
-t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer);
+t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *data);
 
 // error.c
 void	print_error(t_pars_error error);

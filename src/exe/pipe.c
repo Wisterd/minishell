@@ -53,9 +53,13 @@ int	ft_fork(t_exec_data *data)
 		data->args_exec->tab_args = data->tab_parse[0].tab_args;
 		data->ind_cmd = 0;
 		if (!is_builtin(data->args_exec->tab_args[0]))
-			exe_one_cmd(data);
+			return (exe_one_cmd(data));
 		else
+		{
+			g_exit_stat = 0;
 			exe_builtin(data);
+			return (g_exit_stat);
+		}
 	}
 	else
 	{
@@ -82,12 +86,9 @@ int	ft_fork(t_exec_data *data)
 
 //TODO :
 //gestion d erreur
-//regarder d abord si je trouve la commande demandee dans le repertoire courant avant de fouiller le PATH
-//cas special si une seule commande a executer (executer dans le parent et non le child)
 //heredocs
 //pas besoin de gerer les = sans export
 //executer les builtins au lieu de les chercher dans le path
 //env -i
 //write error: No space left on device pour tous les buitins qui ecrivent
-//enlever les ft_malloc et ft_free du builtin env
 //attention quand on exec un builtin dans le parent on doit free les variables permanantes en cas d'erreur, on le fait pas 
