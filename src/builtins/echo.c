@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 18:40:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/03 19:05:39 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/04 00:00:54 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,15 @@ int	option_n(char *str)
 		return (0);
 }
 
-void	ft_echo(t_exec_data	*data)//**tab_args)//, int ac)
+void	ft_echo(t_exec_data	*data)
 {
 	int	y;
-	int opt_n;
 
 	y = 1;
-	opt_n = 0;
-	while (data->tab_parse->tab_args[y])// || y < ac)
+	while (data->tab_parse->tab_args[y])
 	{
 		if (y == 1 && option_n(data->tab_parse->tab_args[y]))
-		{
-			opt_n = 1;
 			y++;
-		}
 		if (data->tab_parse->tab_args[y + 1])
 		{
 			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
@@ -51,11 +46,5 @@ void	ft_echo(t_exec_data	*data)//**tab_args)//, int ac)
 			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
 		y++;
 	}
-	if (!opt_n && data->tab_parse->tab_args[1])
-		protected_putstr("\n", "ft_echo", data);
+	protected_putstr("\n", "ft_echo", data);
 }
-
-// int main (int ac , char **av)
-// {
-// 	ft_echo(av, ac);
-// }
