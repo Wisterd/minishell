@@ -83,6 +83,8 @@ void	mini_exit(char *prompt, t_exec_data *data)
 {
 	while (ft_strncmp(prompt, "exit", 4) != 0)
 	{
+		if (prompt)
+			free(prompt);
 		prompt = readline("minishell> ");
 		if (!prompt)
 		{

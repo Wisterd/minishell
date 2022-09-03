@@ -66,6 +66,7 @@ char		*ft_getcwd_perm();
 void		ft_exec(t_args_exec args_exec);
 void		ft_close_pipes(int	*pipes, int dont_close);
 int			ft_fork(t_exec_data *data);
+
 //childs.c 
 void		ft_child(t_exec_data *data);
 
@@ -80,6 +81,9 @@ int			exe_one_cmd(t_exec_data *data);
 int			get_ind_last_redir(char **redirs);
 void		create_all_out(t_exec_data *data, char **outfiles);
 void		open_all_in(t_exec_data *data, char **infiles);
+
+//heredocs.c
+void		look_for_heredocs(t_exec_data *data);
 
 ///BUILTINS
 //exe_builtins.c

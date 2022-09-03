@@ -42,7 +42,7 @@ void	open_all_in(t_exec_data *data, char **infiles)
 	i = 0;
 	if (!infiles[1])
 		return ;
-	while (infiles[i - 1])
+	while (infiles[i])
 	{
 		infile = open(infiles[i], O_RDONLY);
 		if (infile == -1)
