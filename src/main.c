@@ -1,6 +1,5 @@
 #include "../inc/minishell.h"
 
-/*
 int main(int ac, char **av, char **envp)
 {
 	char		*prompt;
@@ -15,7 +14,7 @@ int main(int ac, char **av, char **envp)
 	mini_exit(prompt, &data);
 }
 
-
+/*
 int main(int ac, char **av, char **envp)
 {
 	t_exec_data	data;
