@@ -1,19 +1,22 @@
 #include "../../inc/minishell.h"
 
+//filename limit = 255 char
+/*
 char	*create_temp_file_name()
 {
 	char	*alpha;
-	int		fd;
+	int		available;
 	char	*file_name;
 	int		i;
 	int		j;
 
 	alpha = "abcdefghijklmnopqrstuvwxyz";
-	fd = -1;
-	
-	while (fd == -1)
+	available = -1;
+	file_name = alpha[i];
+	while (available == 1)
 	{
-		fd = access(file_name, F_OK);
-
+		available = access(file_name, F_OK);
+		
 	}
 }
+*/
