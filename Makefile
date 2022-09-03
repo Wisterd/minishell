@@ -16,6 +16,7 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/redirs.c \
 	exe/init.c \
 	exe/one_cmd.c \
+	exe/heredocs.c \
 	builtins/env.c \
 	builtins/echo.c \
 	builtins/unset.c \

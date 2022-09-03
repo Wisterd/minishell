@@ -58,6 +58,7 @@ int	ft_fork(t_exec_data *data)
 		{
 			g_exit_stat = 0;
 			exe_builtin(data);
+			ft_garbage_collector(END, NULL);
 			return (g_exit_stat);
 		}
 	}
@@ -85,10 +86,7 @@ int	ft_fork(t_exec_data *data)
 }
 
 //TODO :
-//gestion d erreur
+//ft_error avec data->pipes, bien initialiser data->pipes a NULL et le remettre a nul apres avoir close les pipes
 //heredocs
-//pas besoin de gerer les = sans export
-//executer les builtins au lieu de les chercher dans le path
 //env -i
 //write error: No space left on device pour tous les buitins qui ecrivent
-//attention quand on exec un builtin dans le parent on doit free les variables permanantes en cas d'erreur, on le fait pas 
