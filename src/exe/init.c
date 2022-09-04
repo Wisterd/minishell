@@ -33,4 +33,5 @@ void	init_data(t_exec_data *data)
 	look_for_heredocs(data);
 	pipes = init_pipes(data);
 	data->pipes = pipes;
+	fill_pipes(data, data->pipes, 0);
 }
