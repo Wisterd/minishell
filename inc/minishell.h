@@ -81,6 +81,7 @@ int			exe_one_cmd(t_exec_data *data);
 int			get_ind_last_redir(char **redirs);
 void		create_all_out(t_exec_data *data, char **outfiles);
 void		open_all_in(t_exec_data *data, char **infiles);
+void		unlink_heredocs(t_exec_data *data);
 
 //heredocs.c
 void		look_for_heredocs(t_exec_data *data);

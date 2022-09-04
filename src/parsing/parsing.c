@@ -73,6 +73,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 		data->tab_parse = tab_parse;
 		init_data(data);
 		g_exit_stat = ft_fork(data);
+		unlink_heredocs(data);
 	}
 	// ---------------------------------	
 	//free_lexer(deb_lexer);
