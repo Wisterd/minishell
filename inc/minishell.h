@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/03 19:06:25 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/04 22:44:35 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char		*ft_getcwd_perm();
 void		ft_exec(t_args_exec args_exec);
 void		ft_close_pipes(int	*pipes, int dont_close);
 int			ft_fork(t_exec_data *data);
+
 //childs.c 
 void		ft_child(t_exec_data *data);
 
@@ -95,6 +96,13 @@ void		ft_unset(t_exec_data *data);
 
 //echo.c
 void		ft_echo(t_exec_data *data);
+
+//pwd.c
+int	ft_pwd(t_exec_data *data);
+
+//cd.c
+void	ft_cd(t_exec_data *data);
+
 //utils_env.c
 void		l_add_back(t_env **l_env, char *var_name, \
 	char *var_content);

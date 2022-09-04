@@ -71,6 +71,10 @@ int	is_builtin(char *cmd)
 
 static void	launch_builtin(t_exec_data *data, char *cmd)
 {
+	if (!ft_strcmp(cmd, "pwd"))
+		ft_pwd(data);
+	if (!ft_strcmp(cmd, "cd"))
+		ft_pwd(data);
 	if (!ft_strcmp(cmd, "echo"))
 		ft_echo(data);
 	if (!ft_strcmp(cmd, "env"))

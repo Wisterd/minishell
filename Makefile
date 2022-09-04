@@ -19,6 +19,7 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	builtins/env.c \
 	builtins/echo.c \
 	builtins/unset.c \
+	builtins/pwd.c \
 	builtins/exe_builtins.c \
 	builtins/utils_env.c \
 	parsing/parsing.c \
