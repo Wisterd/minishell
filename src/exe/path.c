@@ -16,7 +16,7 @@ static char	*search_path_cmd(t_exec_data *data, char *cmd, int *path_state)
 		path_cmd = ft_strjoin(path[i], "/");
 		if (!path_cmd)
 			ft_error(ERR_MALLOC, NULL, data->pipes);
-		path_cmd = ft_strjoin_free(path_cmd, cmd);
+		path_cmd = ft_strjoin_1free(path_cmd, cmd);
 		if (!path_cmd)
 			ft_error(ERR_MALLOC, NULL, data->pipes);
 		if (access(path_cmd, F_OK) != -1)

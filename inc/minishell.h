@@ -66,7 +66,7 @@ char		*ft_getcwd_perm();
 void		ft_exec(t_args_exec args_exec);
 void		ft_close_pipes(int	*pipes, int dont_close);
 int			ft_fork(t_exec_data *data);
-
+void		fill_pipes(t_exec_data *data, int *pipes, int mode);
 //childs.c 
 void		ft_child(t_exec_data *data);
 

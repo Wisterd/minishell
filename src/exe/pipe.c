@@ -7,12 +7,18 @@ void	ft_exec(t_args_exec args_exec)
 		ft_error(ERR_PERROR, "Execve failed", NULL);
 }
 
-void	fill_pipes(t_exec_data *data, int *pipes)
+void	fill_pipes(t_exec_data *data, int *pipes, int mode)
 {
 	static int	mem_l_pipe = 0;
 	static int	mem_r_pipe = 2;
 	int			temp;
 
+	if (mode == 0)
+	{
+		mem_l_pipe = 0;
+		mem_r_pipe = 2;
+		return ;
+	}
 	if (data->ind_cmd == 0 || data->ind_cmd == data->n_cmds - 1)
 	{
 		data->l_pipe = pipes + mem_l_pipe;
@@ -70,7 +76,7 @@ int	ft_fork(t_exec_data *data)
 		while (++i < data->n_cmds)
 		{
 			data->ind_cmd = i;
-			fill_pipes(data, data->pipes);
+			fill_pipes(data, data->pipes, 1);
 			childs[i] = fork();
 			if (childs[i] < 0)
 				ft_error(ERR_PERROR, "Fork failed", data->pipes);
@@ -85,14 +91,11 @@ int	ft_fork(t_exec_data *data)
 }
 
 //TODO :
-//heredocs casse quand on en fait 2 a la suite seuls
 //ft_error avec data->pipes, bien initialiser data->pipes a NULL et le remettre a nul apres avoir close les pipes
 //env -i
 //write error: No space left on device pour tous les buitins qui ecrivent
 //tous types de redirs sans commandes associees dans un pipe a tester
 //signaux heredocs
-//invalid free quand on essaie d'executer une commande apres un unset PATH
 //---LEAKS---
 //heredocs et redirs seules dans un pipe
 //heredocs et redirs seules
-//infiles multiples pour une commande avec un qui fail
