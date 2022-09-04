@@ -96,6 +96,8 @@ int	ft_fork(t_exec_data *data)
 //write error: No space left on device pour tous les buitins qui ecrivent
 //tous types de redirs sans commandes associees dans un pipe a tester
 //signaux heredocs
+//chercher tous les ft_malloc pour verifier qu'ils sont proteges
+//check qu'on remet bien g_exit_stat a 0 quand builtins, pipes, cmds simples etc
 //---LEAKS---
 //heredocs et redirs seules dans un pipe
 //heredocs et redirs seules

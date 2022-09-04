@@ -1,5 +1,8 @@
 #include "../../inc/minishell.h"
 
+//unset et export : que des chiffres, des lettres ou underscore 
+//dans les noms de variables, pas de chiffre comme premier char
+
 static void	rm_var(t_exec_data *data, char *var_name)
 {
 	t_env *list;
@@ -30,17 +33,51 @@ static void	rm_var(t_exec_data *data, char *var_name)
 	}
 }
 
-/*
-void	check_valid_unset(t_exec_data *data)
+static int	check_valid_unset(char *var_name)
 {
+	int	i;
 
+	i = 0;
+	if (!(ft_isalpha(var_name[i]) || var_name[i] == '_'))
+		return (0);
+	i++;
+	while (var_name[i])
+	{
+		if (!(ft_isalnum(var_name[i]) || var_name[i] == '_'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
-*/
 
-void	ft_unset(t_exec_data *data, char *var_name)
+static void	print_unset_error(char *arg)
 {
-	if (!data->tab_parse[data->ind_cmd].tab_args[1])
+	char	*to_write;
+
+	write(2, "unset: '", 8);
+	to_write = ft_strjoin_1free(arg, "': not a valid identifier\n");
+	write(2, to_write, ft_strlen(to_write));
+}
+
+void	ft_unset(t_exec_data *data)
+{
+	char	**tab_args;
+	int		i;
+
+	tab_args = data->tab_parse[data->ind_cmd].tab_args;
+	g_exit_stat = 0;
+	if (!tab_args[1])
 		return ;
-	//check_valid_unset();
-	rm_var(data, var_name);
+	i = 0;
+	while (tab_args[i])
+	{
+		if (!check_valid_unset(tab_args[i]))
+		{
+			print_unset_error(tab_args[i]);
+			g_exit_stat = 1;
+		}
+		else
+			rm_var(data, tab_args[i]);
+		i++;
+	}
 }

@@ -96,7 +96,7 @@ void		ft_env(t_exec_data *data);
 char		*ft_getenv(char *to_get, t_exec_data *data);
 char		**ft_get_total_env(t_exec_data *data);
 //unset.c
-void		ft_unset(t_exec_data *data, char *var_name);
+void		ft_unset(t_exec_data *data);
 
 //echo.c
 void		ft_echo(char **tab_args);
