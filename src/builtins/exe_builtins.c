@@ -76,7 +76,7 @@ static void	launch_builtin(t_exec_data *data, char *cmd)
 	if (!ft_strcmp(cmd, "env"))
 		ft_env(data);
 	if (!ft_strcmp(cmd, "unset"))
-		ft_unset(data);
+		ft_unset(data, data->tab_parse[data->ind_cmd].tab_args[1]);
 }
 
 void	exe_builtin(t_exec_data *data)

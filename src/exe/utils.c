@@ -21,7 +21,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 			s3[i++] = s2[j++];
 		s3[i] = '\0';
 	}
-	ft_free(s1);
+	free(s1);
 	return (s3);
 }
 

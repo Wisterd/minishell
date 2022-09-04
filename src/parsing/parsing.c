@@ -73,6 +73,9 @@ void	*parsing(char *prompt, t_exec_data *data)
 		data->tab_parse = tab_parse;
 		init_data(data);
 		g_exit_stat = ft_fork(data);
+		unlink_heredocs(data);
+		if (data->n_cmds == 1 && is_builtin(data->args_exec->tab_args[0]))
+			ft_garbage_collector(END, NULL);
 	}
 	// ---------------------------------	
 	//free_lexer(deb_lexer);
@@ -83,6 +86,8 @@ void	mini_exit(char *prompt, t_exec_data *data)
 {
 	while (ft_strncmp(prompt, "exit", 4) != 0)
 	{
+		if (prompt)
+			free(prompt);
 		prompt = readline("minishell> ");
 		if (!prompt)
 		{

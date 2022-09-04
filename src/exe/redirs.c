@@ -42,7 +42,7 @@ void	open_all_in(t_exec_data *data, char **infiles)
 	i = 0;
 	if (!infiles[1])
 		return ;
-	while (infiles[i - 1])
+	while (infiles[i])
 	{
 		infile = open(infiles[i], O_RDONLY);
 		if (infile == -1)
@@ -57,5 +57,25 @@ void	open_all_in(t_exec_data *data, char **infiles)
 		if (close(infile) == -1)
 			ft_error(ERR_PERROR, "Close failed", data->pipes);
 		i++;
+	}
+}
+
+void	unlink_heredocs(t_exec_data *data)
+{
+	int	ind_cmd;
+	int	ind_redir;
+
+	ind_cmd = 0;
+	while (ind_cmd < data->n_cmds)
+	{
+		ind_redir = 0;
+		while (data->tab_parse[ind_cmd].inredir[ind_redir])
+		{
+			if (ft_strcmp(data->tab_parse[ind_cmd].inredir[ind_redir], "<<") == 0)
+				if (unlink(data->tab_parse[ind_cmd].infile[ind_redir]) == -1)
+					ft_error(ERR_PERROR, "Unlink failed", NULL);
+			ind_redir++;
+		}
+		ind_cmd++;
 	}
 }

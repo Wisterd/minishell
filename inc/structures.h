@@ -10,7 +10,7 @@ typedef struct s_lexer
 	int				type;
 	struct s_lexer	*next;
 	struct s_lexer	*pre;
-}			t_lexer;
+}	t_lexer;
 
 typedef struct s_pars_error
 {
@@ -21,9 +21,9 @@ typedef struct s_pars_error
 
 typedef struct s_tab_parse
 {
-	char    **tab_args; //tableau des commandes avec leurs arguments
-	char    **infile; //si il y a redirection '<' le nom du fichier d'entree, sinon NULL
-	char    **outfile; //si il y a redirection '>' le nom du fichier de sortie, sinon NULL
+	char    **tab_args;
+	char    **infile;
+	char    **outfile;
 	char	**outredir;
 	char	**inredir;
 	int		nb_cmd;
