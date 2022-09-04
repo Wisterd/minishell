@@ -58,7 +58,6 @@ int	ft_fork(t_exec_data *data)
 		{
 			g_exit_stat = 0;
 			exe_builtin(data);
-			ft_garbage_collector(END, NULL);
 			return (g_exit_stat);
 		}
 	}
@@ -86,12 +85,13 @@ int	ft_fork(t_exec_data *data)
 }
 
 //TODO :
+//heredocs casse quand on en fait 2 a la suite seuls
 //ft_error avec data->pipes, bien initialiser data->pipes a NULL et le remettre a nul apres avoir close les pipes
-//heredocs
 //env -i
 //write error: No space left on device pour tous les buitins qui ecrivent
 //tous types de redirs sans commandes associees dans un pipe a tester
 //signaux heredocs
+//invalid free quand on essaie d'executer une commande apres un unset PATH
 //---LEAKS---
 //heredocs et redirs seules dans un pipe
 //heredocs et redirs seules

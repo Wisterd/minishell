@@ -74,6 +74,8 @@ void	*parsing(char *prompt, t_exec_data *data)
 		init_data(data);
 		g_exit_stat = ft_fork(data);
 		unlink_heredocs(data);
+		if (data->n_cmds == 1 && is_builtin(data->args_exec->tab_args[0]))
+			ft_garbage_collector(END, NULL);
 	}
 	// ---------------------------------	
 	//free_lexer(deb_lexer);

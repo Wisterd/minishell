@@ -48,67 +48,67 @@ t_lexer *tmp_lexer, int y, int i)
 	return (tab_parse);
 }
 
-t_tab_parse	*exec_redir(t_lexer *tmp_lexer, t_tab_parse	*tab_parse, int y)
+t_tab_parse    *exec_redir(t_lexer *tmp_lexer, t_tab_parse    *tab_parse, int y, int x)
 {
-	static int	cpy = 0;
-	static int	i = 0;
-	static int	z = 0;
+    static int    cpy = 0;
+    static int    i = 0;
+    static int    z = 0;
 
-	if (cpy != y)
-	{
-		i = 0;
-		z = 0;
-	}
-	if (tmp_lexer->type == REDIR)
-	{
-		if (!ft_strncmp(tmp_lexer->contenu, "<<", 2) || \
-		!ft_strncmp(tmp_lexer->contenu, "<", 1))
-			tab_parse = fill_tab_inredir(tab_parse, tmp_lexer, y, i++);
-		else
-		{
-			tab_parse[y].outredir[z] = ft_strdup(tmp_lexer->contenu);
-			error_malloc("exec outredir", tab_parse[y].outredir[z]);
-			tab_parse[y].outfile[z] = ft_strdup(tmp_lexer->next->contenu);
-			error_malloc("exec outfile", tab_parse[y].outfile[z]);
-			z++;
-		}
-	}
-	cpy = y;
-	return (tab_parse);
+    if (cpy != y || (x == 0 && y == 0))
+    {
+        i = 0;
+        z = 0;
+    }
+    if (tmp_lexer->type == REDIR)
+    {
+        if (!ft_strncmp(tmp_lexer->contenu, "<<", 2) || \
+        !ft_strncmp(tmp_lexer->contenu, "<", 1))
+            tab_parse = fill_tab_inredir(tab_parse, tmp_lexer, y, i++);
+        else
+        {
+            tab_parse[y].outredir[z] = ft_strdup(tmp_lexer->contenu);
+            error_malloc("exec outredir", tab_parse[y].outredir[z]);
+            tab_parse[y].outfile[z] = ft_strdup(tmp_lexer->next->contenu);
+            error_malloc("exec outfile", tab_parse[y].outfile[z]);
+            z++;
+        }
+    }
+    cpy = y;
+    return (tab_parse);
 }
 
-int	conditon(t_lexer *tmp_lexer)
+int    conditon(t_lexer *tmp_lexer)
 {
-	return ((tmp_lexer->type == MOT || tmp_lexer->type == DOLLAR)\
-	&& (!tmp_lexer->pre || \
-	(tmp_lexer->pre && tmp_lexer->pre->type != REDIR)));
+    return ((tmp_lexer->type == MOT || tmp_lexer->type == DOLLAR)\
+    && (!tmp_lexer->pre || \
+    (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)));
 }
 
-t_tab_parse	*to_exec(t_lexer **deb_lexer)
+t_tab_parse    *to_exec(t_lexer **deb_lexer)
 {
-	int			i;
-	int			y;
-	t_lexer		*tmp_lexer;
-	t_tab_parse	*tab_parse;
+    int            i;
+    int            y;
+    t_lexer        *tmp_lexer;
+    t_tab_parse    *tab_parse;
 
-	tmp_lexer = *deb_lexer;
-	i = 0;
-	y = 0;
-	tab_parse = init_tab_parse(deb_lexer);
-	while (tmp_lexer)
-	{
-		tab_parse = exec_redir(tmp_lexer, tab_parse, y);
-		if (conditon(tmp_lexer))
-		{
-			tab_parse[y].tab_args[i] = ft_strdup(tmp_lexer->contenu);
-			error_malloc("to_exec", tab_parse[y].tab_args[i++]);
-		}
-		if (tmp_lexer->type == PIPE)
-		{
-			y++;
-			i = 0;
-		}
-		tmp_lexer = tmp_lexer->next;
-	}
-	return (tab_parse);
+    tmp_lexer = *deb_lexer;
+    i = 0;
+    y = 0;
+    tab_parse = init_tab_parse(deb_lexer);
+    while (tmp_lexer)
+    {
+        tab_parse = exec_redir(tmp_lexer, tab_parse, y, i);
+        if (conditon(tmp_lexer))
+        {
+            tab_parse[y].tab_args[i] = ft_strdup(tmp_lexer->contenu);
+            error_malloc("to_exec", tab_parse[y].tab_args[i++]);
+        }
+        if (tmp_lexer->type == PIPE)
+        {
+            y++;
+            i = 0;
+        }
+        tmp_lexer = tmp_lexer->next;
+    }
+    return (tab_parse);
 }

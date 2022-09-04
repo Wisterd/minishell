@@ -56,6 +56,11 @@ char	*get_path_cmd(t_exec_data *data, char *cmd)
 		path_cmd = direct_path(data, cmd);
 	else
 	{
+		if (!ft_getenv("PATH", data))
+		{
+			path_cmd = direct_path(data, cmd);
+			return (path_cmd);
+		}
 		path_cmd = search_path_cmd(data, cmd, &path_state);
 		if (path_state == ACCESSIBLE)
 			return (path_cmd);
