@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 23:49:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/06 00:37:08 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 void	mini_exit(char *prompt, t_exec_data *data)
 {
-	while (ft_strncmp(prompt, "exit", 4) != 0)
+	while (1)//ft_strncmp(prompt, "exit", 4) != 0)
 	{
 		prompt = readline("minishell> ");
 		if (!prompt)

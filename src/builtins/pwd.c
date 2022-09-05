@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/04 21:42:06 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/04 22:26:55 by vbarbier         ###   ########.fr       */
+/*   Created: 2022/09/05 00:28:48 by vbarbier          #+#    #+#             */
+/*   Updated: 2022/09/06 00:42:59 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 int	ft_pwd(t_exec_data *data)
 {
-	char	*path;
-	
-	path = ft_getenv("PATH", data);
-	if (!path)
-		return (1);
-	if (getcwd(path, ft_strlen(path)))
+	if (ft_getcwd())
 	{
-		protected_putstr(path, "ft_pwd", data);
+		protected_putstr(ft_getcwd(), "ft_pwd", data);
+		protected_putstr("\n", "ft_pwd", data);
 		return (0);
 	}
 	return (1);
