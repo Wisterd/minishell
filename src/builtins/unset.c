@@ -8,7 +8,7 @@ static void	rm_var(t_exec_data *data, char *var_name)
 	t_env *list;
 
 	list = data->l_env;
-	while (list->next)
+	while (list)
 	{
 		if (!ft_strncmp(list->var_name, var_name, ft_strlen(var_name)))
 		{
@@ -33,7 +33,7 @@ static void	rm_var(t_exec_data *data, char *var_name)
 	}
 }
 
-static int	check_valid_unset(char *var_name)
+int	check_valid_unset(char *var_name)
 {
 	int	i;
 

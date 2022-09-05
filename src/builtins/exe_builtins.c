@@ -64,7 +64,7 @@ static void	builtin_out(t_exec_data *data, int mode)
 int	is_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "env") \
-		|| !ft_strcmp(cmd, "unset"))
+		|| !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "export"))
 		return (1);
 	return (0);
 }
@@ -77,6 +77,8 @@ static void	launch_builtin(t_exec_data *data, char *cmd)
 		ft_env(data);
 	if (!ft_strcmp(cmd, "unset"))
 		ft_unset(data);
+	if (!ft_strcmp(cmd, "export"))
+		ft_export(data);
 }
 
 void	exe_builtin(t_exec_data *data)

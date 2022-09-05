@@ -98,6 +98,12 @@ char		**ft_get_total_env(t_exec_data *data);
 //unset.c
 void		ft_unset(t_exec_data *data);
 
+//export.c
+void		ft_export(t_exec_data *data);
+
+//export2.c
+int			search_replace_var_name(t_env *l_env, char *var_name, char *var_content);
+
 //echo.c
 void		ft_echo(char **tab_args);
 //utils_env.c
