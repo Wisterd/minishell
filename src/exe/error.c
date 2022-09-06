@@ -14,6 +14,7 @@ void	ft_error(int error_code, char *to_print, int *pipes)
 	int		exit_stat;
 	char	*error_msg;
 
+	error_msg = "";
 	if (error_code == ERR_NOT_FOUND)
 	{
 		exit_stat = 127;
