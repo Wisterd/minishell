@@ -53,6 +53,30 @@ static void	one_cmd_out(t_exec_data *data)
 	}
 }
 
+static void	child_one_cmd(t_exec_data *data)
+{
+	if (*data->tab_parse[0].infile)
+		one_cmd_in(data);
+	if (*data->tab_parse[0].outfile)
+		one_cmd_out(data);
+	if (data->pipes)
+		ft_close_pipes(data->pipes, -1);
+	if (!data->args_exec[0].tab_args[0])
+	{
+		close(0);
+		close(1);
+		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
+		exit(0);
+	}
+	else
+	{
+		data->args_exec->path_cmd = get_path_cmd(data, data->tab_parse[0].tab_args[0]);
+		data->args_exec->tab_env = ft_get_total_env(data);
+		ft_exec(*data->args_exec);
+	}
+}
+
 int	exe_one_cmd(t_exec_data *data)
 {
 	pid_t	child;
@@ -63,17 +87,7 @@ int	exe_one_cmd(t_exec_data *data)
 	if (child < 0)
 		ft_error(ERR_PERROR, "Fork failed", data->pipes);
 	if (child == 0)
-	{
-		data->args_exec->path_cmd = get_path_cmd(data, data->tab_parse[0].tab_args[0]);
-		if (*data->tab_parse[0].infile)
-			one_cmd_in(data);
-		if (*data->tab_parse[0].outfile)
-			one_cmd_out(data);
-		if (data->pipes)
-			ft_close_pipes(data->pipes, -1);
-		data->args_exec->tab_env = ft_get_total_env(data);
-		ft_exec(*data->args_exec);
-	}
+		child_one_cmd(data);
 	waitpid(child, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));

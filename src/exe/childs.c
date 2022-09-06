@@ -82,9 +82,6 @@ void	ft_child(t_exec_data *data)
 	char	*path_cmd;
 
 	data->args_exec->tab_args = data->tab_parse[data->ind_cmd].tab_args;
-	path_cmd = get_path_cmd(data, \
-		data->args_exec->tab_args[0]);
-	data->args_exec->path_cmd = path_cmd;
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
 	set_fds_inout(&fd_in, &fd_out, data->ind_cmd, data);
@@ -104,6 +101,17 @@ void	ft_child(t_exec_data *data)
 		close(1);
 		exit (g_exit_stat);
 	}
+	if (!data->tab_parse[data->ind_cmd].tab_args[0])
+	{
+		close(0);
+		close(1);
+		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
+		exit(0);
+	}
+	path_cmd = get_path_cmd(data, \
+		data->args_exec->tab_args[0]);
+	data->args_exec->path_cmd = path_cmd;
 	data->args_exec->tab_env = ft_get_total_env(data);
 	ft_exec(*data->args_exec);
 }
