@@ -14,11 +14,11 @@ static void	builtin_in(t_exec_data *data, int mode)
 		if (fd_in == -1)
 		{
 			if (access(data->tab_parse[data->ind_cmd].infile[ind_last], F_OK) == -1)
-				ft_error(ERR_NO_FILE, data->tab_parse[data->ind_cmd].infile[ind_last], data->pipes);
+				ft_error(ERR_NO_FILE, data->tab_parse[data->ind_cmd].infile[ind_last], data);
 			else if (access(data->tab_parse[data->ind_cmd].infile[ind_last], R_OK) == -1)
-				ft_error(ERR_PERM_DENIED, data->tab_parse[data->ind_cmd].infile[ind_last], data->pipes);
+				ft_error(ERR_PERM_DENIED, data->tab_parse[data->ind_cmd].infile[ind_last], data);
 			else 
-				ft_error(ERR_PERROR, "Open failed", data->pipes);
+				ft_error(ERR_PERROR, "Open failed", data);
 		}
 		if (mode == 1)
 			close(fd_in);
@@ -26,7 +26,7 @@ static void	builtin_in(t_exec_data *data, int mode)
 	if (mode == 0)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+			ft_error(ERR_PERROR, "Dup2 failed", data);
 	}
 }
 
@@ -47,9 +47,9 @@ static void	builtin_out(t_exec_data *data, int mode)
 		if (fd_out == -1)
 		{
 			if (access(data->tab_parse[data->ind_cmd].outfile[0], W_OK) == -1)
-				ft_error(ERR_PERM_DENIED, data->tab_parse[data->ind_cmd].outfile[ind_last], data->pipes);
+				ft_error(ERR_PERM_DENIED, data->tab_parse[data->ind_cmd].outfile[ind_last], data);
 			else
-				ft_error(ERR_PERROR, "Open failed", data->pipes);
+				ft_error(ERR_PERROR, "Open failed", data);
 		}
 	}
 	if (mode == 1)
@@ -57,7 +57,7 @@ static void	builtin_out(t_exec_data *data, int mode)
 	else
 	{
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+			ft_error(ERR_PERROR, "Dup2 failed", data);
 	}
 }
 
@@ -94,7 +94,7 @@ void	exe_builtin(t_exec_data *data)
 		if (*data->tab_parse[0].outfile)
 			builtin_out(data, 1);
 		if (data->pipes)
-			ft_close_pipes(data->pipes, -1);
+			ft_close_pipes(data);
 		launch_builtin(data, cmd);
 		if (*data->tab_parse[0].outfile)
 			close(data->fd_out_builtin);

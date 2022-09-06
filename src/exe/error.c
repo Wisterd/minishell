@@ -9,7 +9,7 @@ void	ft_exit_error(int exit_stat)
 	exit(exit_stat);
 }
 
-void	ft_error(int error_code, char *to_print, int *pipes)
+void	ft_error(int error_code, char *to_print, t_exec_data *data)
 {
 	int		exit_stat;
 	char	*error_msg;
@@ -40,8 +40,9 @@ void	ft_error(int error_code, char *to_print, int *pipes)
 		exit_stat = 1;
 		perror(to_print);
 	}
-	if (pipes)
-		ft_close_pipes(pipes, -1);
+	if (data)
+		if (data->pipes)
+			ft_close_pipes(data);
 	write(2, error_msg, ft_strlen(error_msg));
 	ft_exit_error(exit_stat);
 }

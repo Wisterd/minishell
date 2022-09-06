@@ -29,11 +29,11 @@ void	init_data(t_exec_data *data)
 
 	args_exec = ft_malloc(sizeof(t_args_exec));
 	if (!args_exec)
-		ft_error(ERR_MALLOC, NULL, data->pipes);
+		ft_error(ERR_MALLOC, NULL, data);
 	data->args_exec = args_exec;
 	data->n_cmds = data->tab_parse->nb_cmd;
 	look_for_heredocs(data);
 	pipes = init_pipes(data);
 	data->pipes = pipes;
-	fill_pipes(data, data->pipes, 0);
+	fill_pipes(data, 0);
 }

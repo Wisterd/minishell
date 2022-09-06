@@ -7,7 +7,7 @@ void	ft_exec(t_args_exec args_exec)
 		ft_error(ERR_PERROR, "Execve failed", NULL);
 }
 
-void	fill_pipes(t_exec_data *data, int *pipes, int mode)
+void	fill_pipes(t_exec_data *data, int mode)
 {
 	static int	mem_l_pipe = 0;
 	static int	mem_r_pipe = 2;
@@ -21,32 +21,33 @@ void	fill_pipes(t_exec_data *data, int *pipes, int mode)
 	}
 	if (data->ind_cmd == 0 || data->ind_cmd == data->n_cmds - 1)
 	{
-		data->l_pipe = pipes + mem_l_pipe;
-		data->r_pipe = pipes;
+		data->l_pipe = data->pipes + mem_l_pipe;
+		data->r_pipe = data->pipes;
 	}
 	else
 	{
-		data->l_pipe = pipes + mem_l_pipe;
-		data->r_pipe = pipes + mem_r_pipe;
+		data->l_pipe = data->pipes + mem_l_pipe;
+		data->r_pipe = data->pipes + mem_r_pipe;
 		temp = mem_l_pipe;
 		mem_l_pipe = mem_r_pipe;
 		mem_r_pipe = temp;
 	}
 }
 
-void	ft_close_pipes(int	*pipes, int dont_close)
+void	ft_close_pipes(t_exec_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < 4)
 	{
-		if (i != dont_close)
-			if (close(pipes[i]) == -1)
-				ft_error(ERR_PERROR, "Close error", pipes);
+		printf("fd_pipe : %d\n", data->pipes[i]);
+		if (close(data->pipes[i]) == -1)
+			ft_error(ERR_PERROR, "Close error", data);
 		i++;
 	}
-	ft_free(pipes);
+	ft_free(data->pipes);
+	data->pipes = NULL;
 }
 
 int	ft_fork(t_exec_data *data)
@@ -76,21 +77,22 @@ int	ft_fork(t_exec_data *data)
 		while (++i < data->n_cmds)
 		{
 			data->ind_cmd = i;
-			fill_pipes(data, data->pipes, 1);
+			fill_pipes(data, 1);
 			childs[i] = fork();
 			if (childs[i] < 0)
-				ft_error(ERR_PERROR, "Fork failed", data->pipes);
+				ft_error(ERR_PERROR, "Fork failed", data);
 			if (childs[i] == 0)
 				ft_child(data);
 		}
 		data->childs = childs;
-		ft_close_pipes(data->pipes, -1);
+		ft_close_pipes(data);
 		return (ft_wait(data));
 	}
 	return (0);
 }
 
 //TODO :
+//car | car too many file descriptors open
 //ft_error avec data->pipes, bien initialiser data->pipes a NULL et le remettre a nul apres avoir close les pipes
 //write error: No space left on device pour tous les buitins qui ecrivent
 //signaux heredocs

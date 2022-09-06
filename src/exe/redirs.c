@@ -25,12 +25,12 @@ void	create_all_out(t_exec_data *data, char **outfiles)
 		if (outfile == -1)
 		{
 			if (access(outfiles[i], W_OK) == -1)
-				ft_error(ERR_PERM_DENIED, outfiles[i], data->pipes);
+				ft_error(ERR_PERM_DENIED, outfiles[i], data);
 			else
-				ft_error(ERR_PERROR, "Open failed", data->pipes);
+				ft_error(ERR_PERROR, "Open failed", data);
 		}
 		if (close(outfile) == -1)
-			ft_error(ERR_PERROR, "Close failed", data->pipes);
+			ft_error(ERR_PERROR, "Close failed", data);
 		i++;
 	}
 }
@@ -48,14 +48,14 @@ void	open_all_in(t_exec_data *data, char **infiles)
 		if (infile == -1)
 		{
 			if (access(infiles[i], F_OK) == -1)
-				ft_error(ERR_NO_FILE, infiles[i], data->pipes);
+				ft_error(ERR_NO_FILE, infiles[i], data);
 			else if (access(infiles[i], R_OK) == -1)
-				ft_error(ERR_PERM_DENIED, infiles[i], data->pipes);
+				ft_error(ERR_PERM_DENIED, infiles[i], data);
 			else 
-				ft_error(ERR_PERROR, "Open failed", data->pipes);
+				ft_error(ERR_PERROR, "Open failed", data);
 		}
 		if (close(infile) == -1)
-			ft_error(ERR_PERROR, "Close failed", data->pipes);
+			ft_error(ERR_PERROR, "Close failed", data);
 		i++;
 	}
 }

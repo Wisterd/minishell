@@ -56,10 +56,10 @@ char	**ft_get_total_env(t_exec_data *data)
 	{
 		tab_env[i] = ft_strjoin(list->var_name, "=");
 		if (!tab_env[i])
-			ft_error(ERR_MALLOC, NULL, data->pipes);
+			ft_error(ERR_MALLOC, NULL, data);
 		tab_env[i] = ft_strjoin(tab_env[i], list->var_content);
 		if (!tab_env[i])
-			ft_error(ERR_MALLOC, NULL, data->pipes);
+			ft_error(ERR_MALLOC, NULL, data);
 		i++;
 		list = list->next;
 	}

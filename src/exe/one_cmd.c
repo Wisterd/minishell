@@ -14,14 +14,14 @@ static void	one_cmd_in(t_exec_data *data)
 		if (fd_in == -1)
 		{
 			if (access(data->tab_parse[0].infile[ind_last], F_OK) == -1)
-				ft_error(ERR_NO_FILE, data->tab_parse[0].infile[ind_last], data->pipes);
+				ft_error(ERR_NO_FILE, data->tab_parse[0].infile[ind_last], data);
 			else if (access(data->tab_parse[0].infile[ind_last], R_OK) == -1)
-				ft_error(ERR_PERM_DENIED, data->tab_parse[0].infile[ind_last], data->pipes);
+				ft_error(ERR_PERM_DENIED, data->tab_parse[0].infile[ind_last], data);
 			else 
-				ft_error(ERR_PERROR, "Open failed", data->pipes);
+				ft_error(ERR_PERROR, "Open failed", data);
 		}
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+			ft_error(ERR_PERROR, "Dup2 failed", data);
 		close(fd_in);
 	}
 }
@@ -43,12 +43,12 @@ static void	one_cmd_out(t_exec_data *data)
 		if (fd_out == -1)
 		{
 			if (access(data->tab_parse[0].outfile[0], W_OK) == -1)
-				ft_error(ERR_PERM_DENIED, data->tab_parse[0].outfile[ind_last], data->pipes);
+				ft_error(ERR_PERM_DENIED, data->tab_parse[0].outfile[ind_last], data);
 			else
-				ft_error(ERR_PERROR, "Open failed", data->pipes);
+				ft_error(ERR_PERROR, "Open failed", data);
 		}
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+			ft_error(ERR_PERROR, "Dup2 failed", data);
 		close(fd_out);
 	}
 }
@@ -60,7 +60,7 @@ static void	child_one_cmd(t_exec_data *data)
 	if (*data->tab_parse[0].outfile)
 		one_cmd_out(data);
 	if (data->pipes)
-		ft_close_pipes(data->pipes, -1);
+		ft_close_pipes(data);
 	if (!data->args_exec[0].tab_args[0])
 	{
 		close(0);
@@ -85,7 +85,7 @@ int	exe_one_cmd(t_exec_data *data)
 	status = 0;
 	child = fork();
 	if (child < 0)
-		ft_error(ERR_PERROR, "Fork failed", data->pipes);
+		ft_error(ERR_PERROR, "Fork failed", data);
 	if (child == 0)
 		child_one_cmd(data);
 	waitpid(child, &status, 0);

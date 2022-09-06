@@ -50,7 +50,7 @@ extern int g_exit_stat;
 
 //EXE
 //error.c
-void		ft_error(int error_code, char *to_print, int *pipes);
+void		ft_error(int error_code, char *to_print, t_exec_data *data);
 
 //path.c
 char		*get_path_cmd(t_exec_data *data, char *cmd);
@@ -64,9 +64,9 @@ char		*ft_getcwd_perm();
 
 //pipe.c
 void		ft_exec(t_args_exec args_exec);
-void		ft_close_pipes(int	*pipes, int dont_close);
+void		ft_close_pipes(t_exec_data *data);
 int			ft_fork(t_exec_data *data);
-void		fill_pipes(t_exec_data *data, int *pipes, int mode);
+void		fill_pipes(t_exec_data *data, int mode);
 //childs.c 
 void		ft_child(t_exec_data *data);
 

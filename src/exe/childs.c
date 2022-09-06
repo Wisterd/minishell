@@ -16,12 +16,12 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 	if (outfile == -1)
 	{
 		if (access(outname, W_OK) == -1)
-			ft_error(ERR_PERM_DENIED, outname, data->pipes);
+			ft_error(ERR_PERM_DENIED, outname, data);
 		else
-			ft_error(ERR_PERROR, "Open failed", data->pipes);
+			ft_error(ERR_PERROR, "Open failed", data);
 	}
 	if (close(data->r_pipe[1]) == -1)
-		ft_error(ERR_PERROR, "Close failed", data->pipes);
+		ft_error(ERR_PERROR, "Close failed", data);
 	data->r_pipe[1] = outfile;
 }
 
@@ -38,14 +38,14 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 	if (infile == -1)
 	{
 		if (access(inname, F_OK) == -1)
-			ft_error(ERR_NO_FILE, inname, data->pipes);
+			ft_error(ERR_NO_FILE, inname, data);
 		else if (access(inname, R_OK) == -1)
-			ft_error(ERR_PERM_DENIED, inname, data->pipes);
+			ft_error(ERR_PERM_DENIED, inname, data);
 		else 
-			ft_error(ERR_PERROR, "Open failed", data->pipes);
+			ft_error(ERR_PERROR, "Open failed", data);
 	}
 	if (close(data->l_pipe[0]) == -1)
-		ft_error(ERR_PERROR, "Close failed", data->pipes);
+		ft_error(ERR_PERROR, "Close failed", data);
 	data->l_pipe[0] = infile;
 }
 
@@ -87,11 +87,11 @@ void	ft_child(t_exec_data *data)
 	set_fds_inout(&fd_in, &fd_out, data->ind_cmd, data);
 	if (fd_in != STDIN_FILENO)
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+			ft_error(ERR_PERROR, "Dup2 failed", data);
 	if (fd_out != STDOUT_FILENO)
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
-	ft_close_pipes(data->pipes, -1);
+			ft_error(ERR_PERROR, "Dup2 failed", data);
+	ft_close_pipes(data);
 	if (is_builtin(data->args_exec->tab_args[0]))
 	{
 		exe_builtin(data);
@@ -99,7 +99,7 @@ void	ft_child(t_exec_data *data)
 		ft_garbage_collector_perm(END, NULL);
 		close(0);
 		close(1);
-		exit (g_exit_stat);
+		exit(g_exit_stat);
 	}
 	if (!data->tab_parse[data->ind_cmd].tab_args[0])
 	{
