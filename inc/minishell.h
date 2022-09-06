@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/06 01:17:15 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/06 01:35:01 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ void		ft_echo(t_exec_data *data);
 
 //exit.c
 void	ft_exit(t_exec_data *data);
+
+//cd.c
+void	ft_cd(t_exec_data	*data);
 
 //pwd.c
 int	ft_pwd(t_exec_data *data);
