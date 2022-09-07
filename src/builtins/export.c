@@ -17,7 +17,7 @@ static int	check_valid_export(char *var_name)
 	if (!(ft_isalpha(var_name[i]) || var_name[i] == '_'))
 		return (0);
 	i++;
-	while (var_name[i] != '=')
+	while (var_name[i] != '=' && var_name[i])
 	{
 		if (!(ft_isalnum(var_name[i]) || var_name[i] == '_'))
 			return (0);
