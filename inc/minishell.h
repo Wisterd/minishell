@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 19:10:29 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/07 21:51:15 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,20 @@ void		ft_export(t_exec_data *data);
 int			search_replace_var_name(t_env *l_env, char *var_name, char *var_content);
 
 //echo.c
-void		ft_echo(char **tab_args);
+void		ft_echo(t_exec_data *data);
+
+//exit.c
+void	ft_exit(t_exec_data *data);
+
+//cd.c
+void	ft_cd(t_exec_data	*data);
+
+//pwd.c
+int	ft_pwd(t_exec_data *data);
+
+//cd.c
+void	ft_cd(t_exec_data *data);
+
 //utils_env.c
 void		l_add_back(t_env **l_env, char *var_name, \
 	char *var_content);
@@ -128,6 +141,7 @@ void	lexing(t_lexer **deb_lexer, char *prompt);
 //lexer2.c
 t_lexer	**create_deb_lexer(void);
 void	fuz_lex(t_lexer **deb_lexer, int type);
+void	fuz_lex1(t_lexer **deb_lexer, int type);
 void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer);
 int		len_lexer(t_lexer **deb_lexer);
 

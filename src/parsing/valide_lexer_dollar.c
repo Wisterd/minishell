@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 22:20:35 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 22:30:55 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,31 @@ char	*erase_one(char *str)
 	char	*cp;
 
 	i = 1;
-	if (!str)
+	if (!*str)
 		cp = ft_strdup("\0");
 	else
 		cp = ft_malloc(sizeof(char) * ft_strlen(str));
 	error_malloc("erase_one", cp);
-	while (str[i])
+	while (*str && str[i])
 	{
 		cp[i - 1] = str[i];
 		i++;
 	}
-	cp[i - 1] = '\0';
+	if (*str)
+		cp[i - 1] = '\0';
 	ft_free(str);
 	return (cp);
 }
 
 int	is_question(t_lexer *tmp_lexer)
 {
+	char *str;
+
 	if (!ft_strncmp(tmp_lexer->next->contenu, "?", 1))
 	{
+		str = ft_str_deldeb(tmp_lexer->next->contenu, 1);
 		ft_free(tmp_lexer->next->contenu);
-		tmp_lexer->next->contenu = ft_itoa(g_exit_stat);
+		tmp_lexer->next->contenu = ft_strjoin_2free(ft_strdup(ft_itoa(g_exit_stat)), str);
 		error_malloc("is_question", tmp_lexer->next->contenu);
 		return (1);
 	}
@@ -73,8 +77,6 @@ int	erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 	}
 	return (0);
 }
-
-//  t_lexer	*multiple_dollar
 
 t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *data)
 {

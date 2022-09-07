@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 21:28:52 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 21:50:27 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,32 @@ void	fuz_lex(t_lexer **deb_lexer, int type)
 	ft_strncmp(new_lexer->contenu, "/n", 2))
 	{
 		if (new_lexer->type == type && new_lexer->next->type == type)
+		{
+			new_lexer->contenu = ft_strjoin_2free(\
+			new_lexer->contenu, new_lexer->next->contenu);
+			error_malloc("fuz_lex", new_lexer->contenu);
+			tmp_lexer = new_lexer->next->next;
+			ft_free(new_lexer->next);
+			new_lexer->next = tmp_lexer;
+			if (tmp_lexer)
+				tmp_lexer->pre = new_lexer;
+		}
+		else if (new_lexer->next)
+			new_lexer = new_lexer->next;
+	}
+}
+
+void	fuz_lex1(t_lexer **deb_lexer, int type)
+{
+	t_lexer	*new_lexer;
+	t_lexer	*tmp_lexer;
+
+	new_lexer = *deb_lexer;
+	while (new_lexer && new_lexer->next && \
+	ft_strncmp(new_lexer->contenu, "/n", 2))
+	{
+		if (new_lexer->type == type && (new_lexer->next->type == type
+		|| new_lexer->next->type == CMD))
 		{
 			new_lexer->contenu = ft_strjoin_2free(\
 			new_lexer->contenu, new_lexer->next->contenu);

@@ -6,13 +6,11 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 20:08:46 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 22:40:50 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 23:11:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int g_exit_stat = 0;
 
 int	ft_isdigit(int c)
 {
@@ -25,7 +23,7 @@ int	ft_isdigit(int c)
 
 int	ft_atoi_exit(char *str)
 {
-	unsigned long long int	nb;
+	long int	nb;
 	int	i;
 	int signe;
 
@@ -44,41 +42,46 @@ int	ft_atoi_exit(char *str)
 		i++;
 	while(str[i] && ft_isdigit(str[i]))
 		nb = str[i++] - 48 + nb * 10;
-	if(str[i] && !ft_isdigit(str[i]))
+	
+	if ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+	{
+		while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+			i++;
+		if (str[i])
+			return (0);
+	}
+	if ((str[i] && !ft_isdigit(str[i])) || (nb > INT_MAX || (signe * nb < INT_MIN)))
 		return (0);
-	if (nb < LONG_MAX || ((signe * nb) > LONG_MIN))
-		g_exit_stat = nb * signe;
+	g_exit_stat = nb * signe;
 	return (1);
 }
 
-void	ft_exit(char	**tab_args)//, int ac)
+void	ft_exit(t_exec_data *data)
 {
 	int	y;
-	int retour_error;
 
 	y = 1;
-	if (tab_args[y])
-		if (!ft_atoi_exit(tab_args[y]))
+	if (data->args_exec->tab_args[y])
+	{
+		if (!ft_atoi_exit(data->args_exec->tab_args[y]))
 		{
-			printf("exit\nminishell: exit: %s : argument numérique nécessaire", tab_args[y]);
+			ft_putstr_fd("exit\nminishell: exit: ", 2);
+			ft_putstr_fd(data->args_exec->tab_args[y], 2);
+			ft_putstr_fd(" : numeric argument required\n", 2);
 			g_exit_stat = 2;
 			exit(g_exit_stat);
 		}
-	if (tab_args[y + 1] )//|| ac > 2)
+	}
+	if (data->args_exec->tab_args[y] && data->args_exec->tab_args[y + 1])
 	{
-		printf("exit\nminishell: exit: trop d'arguments");
+		ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
 		g_exit_stat = 1;
 		return ;
 	}
+	else
+		protected_putstr("exit\n", "exit", data);
 	while (g_exit_stat < 256)
 		g_exit_stat = g_exit_stat + 256;
 	g_exit_stat = g_exit_stat % 256;
-	printf("exit\n%d", g_exit_stat);
 	exit(g_exit_stat);
 }
-
-// int main (int ac , char **av)
-// {
-	
-// 	ft_exit(av, ac);
-// }

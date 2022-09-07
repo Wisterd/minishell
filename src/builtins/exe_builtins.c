@@ -64,15 +64,22 @@ static void	builtin_out(t_exec_data *data, int mode)
 int	is_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "env") \
-		|| !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "export"))
+		|| !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "exit")\
+		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "cd"))
 		return (1);
 	return (0);
 }
 
 static void	launch_builtin(t_exec_data *data, char *cmd)
 {
+	if (!ft_strcmp(cmd, "pwd"))
+		ft_pwd(data);
+	if (!ft_strcmp(cmd, "cd"))
+		ft_cd(data);
+	if (!ft_strcmp(cmd, "exit"))
+		ft_exit(data);
 	if (!ft_strcmp(cmd, "echo"))
-		ft_echo(data->tab_parse[data->ind_cmd].tab_args);
+		ft_echo(data);
 	if (!ft_strcmp(cmd, "env"))
 		ft_env(data);
 	if (!ft_strcmp(cmd, "unset"))

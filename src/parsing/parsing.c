@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 23:49:03 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 00:23:18 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	//	printf("\n");
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
+	fuz_lex1(deb_lexer, MOT);
 	while (have_type(deb_lexer, SPC))
 		remove_type(deb_lexer, SPC);
 	fuz_lex(deb_lexer, REDIR);
@@ -84,7 +85,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 void	mini_exit(char *prompt, t_exec_data *data)
 {
-	while (ft_strncmp(prompt, "exit", 4) != 0)
+	while (1)
 	{
 		if (prompt)
 			free(prompt);
