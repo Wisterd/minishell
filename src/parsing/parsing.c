@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/06 00:37:08 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 21:54:58 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	//	printf("\n");
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
+	fuz_lex1(deb_lexer, MOT);
 	while (have_type(deb_lexer, SPC))
 		remove_type(deb_lexer, SPC);
 	fuz_lex(deb_lexer, REDIR);
@@ -66,7 +67,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 	// prb solo $ ou char "";
 	tab_parse = to_exec(deb_lexer);	
-	// print_to_exec(tab_parse);
+	print_to_exec(tab_parse);
 	// print_lexer(deb_lexer);
 	if (*deb_lexer)
 	{

@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 19:08:14 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 21:37:20 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,18 @@ char	*erase_one(char *str)
 	char	*cp;
 
 	i = 1;
-	if (!str)
+	if (!*str)
 		cp = ft_strdup("\0");
 	else
 		cp = ft_malloc(sizeof(char) * ft_strlen(str));
 	error_malloc("erase_one", cp);
-	while (str[i])
+	while (*str && str[i])
 	{
 		cp[i - 1] = str[i];
 		i++;
 	}
-	cp[i - 1] = '\0';
+	if (*str)
+		cp[i - 1] = '\0';
 	ft_free(str);
 	return (cp);
 }
