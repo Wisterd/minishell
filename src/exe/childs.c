@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   childs.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 17:15:39 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/07 17:19:16 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	create_outfile(t_exec_data *data, int ind_cmd)
@@ -5,7 +17,7 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 	int		outfile;
 	int		ind_last;
 	char	*outname;
-	
+
 	create_all_out(data, data->tab_parse[ind_cmd].outfile);
 	ind_last = get_ind_last_redir(data->tab_parse[ind_cmd].outredir);
 	outname = data->tab_parse[ind_cmd].outfile[ind_last];
@@ -16,12 +28,12 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 	if (outfile == -1)
 	{
 		if (access(outname, W_OK) == -1)
-			ft_error(ERR_PERM_DENIED, outname, data->pipes);
+			ft_error(ERR_PERM_DENIED, outname, data);
 		else
-			ft_error(ERR_PERROR, "Open failed", data->pipes);
+			ft_error(ERR_PERROR, "Open failed", data);
 	}
 	if (close(data->r_pipe[1]) == -1)
-		ft_error(ERR_PERROR, "Close failed", data->pipes);
+		ft_error(ERR_PERROR, "Close failed", data);
 	data->r_pipe[1] = outfile;
 }
 
@@ -30,7 +42,7 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 	int		infile;
 	int		ind_last;
 	char	*inname;
-	
+
 	open_all_in(data, data->tab_parse[ind_cmd].infile);
 	ind_last = get_ind_last_redir(data->tab_parse[ind_cmd].inredir);
 	inname = data->tab_parse[ind_cmd].infile[ind_last];
@@ -38,14 +50,14 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 	if (infile == -1)
 	{
 		if (access(inname, F_OK) == -1)
-			ft_error(ERR_NO_FILE, inname, data->pipes);
+			ft_error(ERR_NO_FILE, inname, data);
 		else if (access(inname, R_OK) == -1)
-			ft_error(ERR_PERM_DENIED, inname, data->pipes);
-		else 
-			ft_error(ERR_PERROR, "Open failed", data->pipes);
+			ft_error(ERR_PERM_DENIED, inname, data);
+		else
+			ft_error(ERR_PERROR, "Open failed", data);
 	}
 	if (close(data->l_pipe[0]) == -1)
-		ft_error(ERR_PERROR, "Close failed", data->pipes);
+		ft_error(ERR_PERROR, "Close failed", data);
 	data->l_pipe[0] = infile;
 }
 
@@ -75,6 +87,23 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	}
 }
 
+static void	check_no_execve(t_exec_data *data)
+{
+	if (is_builtin(data->args_exec->tab_args[0]))
+	{
+		exe_builtin(data);
+		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
+		exit(g_exit_stat);
+	}
+	if (!data->tab_parse[data->ind_cmd].tab_args[0])
+	{
+		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
+		exit(0);
+	}
+}
+
 void	ft_child(t_exec_data *data)
 {
 	int		fd_in;
@@ -82,28 +111,20 @@ void	ft_child(t_exec_data *data)
 	char	*path_cmd;
 
 	data->args_exec->tab_args = data->tab_parse[data->ind_cmd].tab_args;
-	path_cmd = get_path_cmd(data, \
-		data->args_exec->tab_args[0]);
-	data->args_exec->path_cmd = path_cmd;
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
 	set_fds_inout(&fd_in, &fd_out, data->ind_cmd, data);
 	if (fd_in != STDIN_FILENO)
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
+			ft_error(ERR_PERROR, "Dup2 failed", data);
 	if (fd_out != STDOUT_FILENO)
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data->pipes);
-	ft_close_pipes(data->pipes, -1);
-	if (is_builtin(data->args_exec->tab_args[0]))
-	{
-		exe_builtin(data);
-		ft_garbage_collector(END, NULL);
-		ft_garbage_collector_perm(END, NULL);
-		close(0);
-		close(1);
-		exit (g_exit_stat);
-	}
+			ft_error(ERR_PERROR, "Dup2 failed", data);
+	ft_close_pipes(data);
+	check_no_execve(data);
+	path_cmd = get_path_cmd(data, \
+		data->args_exec->tab_args[0]);
+	data->args_exec->path_cmd = path_cmd;
 	data->args_exec->tab_env = ft_get_total_env(data);
 	ft_exec(*data->args_exec);
 }

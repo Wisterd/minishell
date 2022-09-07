@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredocs.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 17:15:49 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/07 17:34:47 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-static char	*create_temp_file_name()
+static char	*create_temp_file_name(void)
 {
 	int			available;
 	char		*file_name;
@@ -37,7 +49,6 @@ static void	readline_temp_file(char *file_name, char *here_eof)
 	char	*prompt;
 	char	*line;
 	char	*to_write;
-
 
 	prompt = NULL;
 	to_write = ft_strdup("");
@@ -77,7 +88,8 @@ static void	fork_temp_file(t_exec_data *data, int ind_cmd, int ind_redir)
 	if (child < 0)
 		ft_error(ERR_PERROR, "Fork failed", NULL);
 	if (child == 0)
-		readline_temp_file(file_name, data->tab_parse[ind_cmd].infile[ind_redir]);
+		readline_temp_file(file_name, \
+			data->tab_parse[ind_cmd].infile[ind_redir]);
 	waitpid(child, &status, 0);
 	if (WIFEXITED(status))
 		g_exit_stat = WEXITSTATUS(status);
@@ -98,7 +110,8 @@ void	look_for_heredocs(t_exec_data *data)
 		ind_redir = 0;
 		while (data->tab_parse[ind_cmd].inredir[ind_redir])
 		{
-			if (ft_strcmp(data->tab_parse[ind_cmd].inredir[ind_redir], "<<") == 0)
+			if (ft_strcmp(data->tab_parse[ind_cmd].inredir[ind_redir], \
+				"<<") == 0)
 				fork_temp_file(data, ind_cmd, ind_redir);
 			ind_redir++;
 		}

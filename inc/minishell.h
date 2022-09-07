@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/30 00:14:53 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/07 19:10:29 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@
 # define ERR_NO_FILE 14
 # define ERR_PERM_DENIED 15
 # define ERR_PERROR 16
+# define ERR_DIR 17
 
 extern int g_exit_stat;
 
 //EXE
 //error.c
-void		ft_error(int error_code, char *to_print, int *pipes);
+void		ft_error(int error_code, char *to_print, t_exec_data *data);
 
 //path.c
 char		*get_path_cmd(t_exec_data *data, char *cmd);
@@ -64,9 +65,9 @@ char		*ft_getcwd_perm();
 
 //pipe.c
 void		ft_exec(t_args_exec args_exec);
-void		ft_close_pipes(int	*pipes, int dont_close);
+void		ft_close_pipes(t_exec_data *data);
 int			ft_fork(t_exec_data *data);
-void		fill_pipes(t_exec_data *data, int *pipes, int mode);
+void		fill_pipes(t_exec_data *data, int mode);
 //childs.c 
 void		ft_child(t_exec_data *data);
 
@@ -96,7 +97,13 @@ void		ft_env(t_exec_data *data);
 char		*ft_getenv(char *to_get, t_exec_data *data);
 char		**ft_get_total_env(t_exec_data *data);
 //unset.c
-void		ft_unset(t_exec_data *data, char *var_name);
+void		ft_unset(t_exec_data *data);
+
+//export.c
+void		ft_export(t_exec_data *data);
+
+//export2.c
+int			search_replace_var_name(t_env *l_env, char *var_name, char *var_content);
 
 //echo.c
 void		ft_echo(char **tab_args);
