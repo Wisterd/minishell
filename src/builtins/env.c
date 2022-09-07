@@ -92,7 +92,7 @@ void	ft_env(t_exec_data *data)
 			data->l_env = data->l_env->next;
 		}
 		data->l_env = start_list;
-		g_exit_stat = 0;
+		// 	g_exit_stat = 0;
 	}
 }
 
