@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 18:57:46 by mvue              #+#    #+#             */
-/*   Updated: 2022/08/29 19:06:44 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/07 18:53:22 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ char	*ft_strldup(const char *s1, size_t size);
 char	*ft_strjoin_2free(char *s1, char *s2);
 char	*ft_strjoin_1free(char *s1, char *s2);
 char	*ft_strjoin_1free_perm(char *s1, char *s2);
+char	*ft_str_deldeb(char *str, int len);
 
 #endif

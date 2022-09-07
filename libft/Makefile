@@ -12,7 +12,8 @@ ft_strlcat.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjo
 ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c \
 ft_putendl_fd.c ft_putnbr_fd.c ft_striteri.c ft_garbage_collector.c ft_malloc.c \
 ft_free.c ft_strjoin_2free.c ft_strjoin_1free.c ft_strcmp.c ft_strdup_perm.c \
-ft_strjoin_1free_perm.c ft_garbage_collector_perm.c ft_free_perm.c ft_malloc_perm.c
+ft_strjoin_1free_perm.c ft_garbage_collector_perm.c ft_free_perm.c ft_malloc_perm.c \
+ft_str_deldeb.c
 
 OBJ = $(SRC:.c=.o)
 

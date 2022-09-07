@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 20:08:46 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/06 01:30:26 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:36:22 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_exit(t_exec_data *data)
 		return ;
 	}
 	else
-		ft_putstr_fd("exit\n",1);
+		protected_putstr("exit\n", "exit", data);
 	while (g_exit_stat < 256)
 		g_exit_stat = g_exit_stat + 256;
 	g_exit_stat = g_exit_stat % 256;
