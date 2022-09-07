@@ -95,20 +95,3 @@ void	ft_env(t_exec_data *data)
 		g_exit_stat = 0;
 	}
 }
-
-/*
-int	main(int ac, char **av, char *envp[])
-{
-	t_exec_data	data;
-	(void)		ac;
-	(void)		av;
-
-	ft_garbage_collector(INIT, NULL);
-	data.n_cmds = 4;
-	data.pipes = init_pipes(&data);
-	data.l_env = init_env(&data, envp);
-	ft_unset(&data, "ZDOTDIR");
-	ft_env(&data);
-	ft_garbage_collector(END, NULL);
-}
-*/

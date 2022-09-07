@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 17:16:14 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/07 19:29:39 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	ft_exec(t_args_exec args_exec)
@@ -41,7 +53,6 @@ void	ft_close_pipes(t_exec_data *data)
 	i = 0;
 	while (i < 4)
 	{
-		printf("fd_pipe : %d\n", data->pipes[i]);
 		if (close(data->pipes[i]) == -1)
 			ft_error(ERR_PERROR, "Close error", data);
 		i++;
@@ -50,11 +61,31 @@ void	ft_close_pipes(t_exec_data *data)
 	data->pipes = NULL;
 }
 
+void	launch_children(t_exec_data *data)
+{
+	pid_t	*childs;
+	int		i;
+
+	childs = ft_malloc(sizeof(pid_t) * data->n_cmds);
+	if (!childs)
+		ft_error(ERR_MALLOC, NULL, NULL);
+	i = -1;
+	while (++i < data->n_cmds)
+	{
+		data->ind_cmd = i;
+		fill_pipes(data, 1);
+		childs[i] = fork();
+		if (childs[i] < 0)
+			ft_error(ERR_PERROR, "Fork failed", data);
+		if (childs[i] == 0)
+			ft_child(data);
+	}
+	data->childs = childs;
+	ft_close_pipes(data);
+}
+
 int	ft_fork(t_exec_data *data)
 {
-	int		i;
-	pid_t	*childs;
-	
 	if (data->n_cmds == 1)
 	{
 		data->args_exec->tab_args = data->tab_parse[0].tab_args;
@@ -70,34 +101,17 @@ int	ft_fork(t_exec_data *data)
 	}
 	else
 	{
-		childs = ft_malloc(sizeof(pid_t) * data->n_cmds);
-		if (!childs)
-			ft_error(ERR_MALLOC, NULL, NULL);
-		i = -1;
-		while (++i < data->n_cmds)
-		{
-			data->ind_cmd = i;
-			fill_pipes(data, 1);
-			childs[i] = fork();
-			if (childs[i] < 0)
-				ft_error(ERR_PERROR, "Fork failed", data);
-			if (childs[i] == 0)
-				ft_child(data);
-		}
-		data->childs = childs;
-		ft_close_pipes(data);
+		launch_children(data);
 		return (ft_wait(data));
 	}
 	return (0);
 }
 
 //TODO :
-//car | car too many file descriptors open
-//ft_error avec data->pipes, bien initialiser data->pipes a NULL et le remettre a nul apres avoir close les pipes
+///mnt/nfs/homes/mvue/Documents/minishell: Is a directory err 126
+//ft_error avec data->pipes, bien initialiser data->pipes a NULL et 
+//le remettre a nul apres avoir close les pipes
 //write error: No space left on device pour tous les buitins qui ecrivent
 //signaux heredocs
 //chercher tous les ft_malloc pour verifier qu'ils sont proteges
 //check qu'on remet bien g_exit_stat a 0 quand builtins, pipes, cmds simples etc
-//---LEAKS---
-//heredocs et redirs seules dans un pipe
-//heredocs et redirs seules

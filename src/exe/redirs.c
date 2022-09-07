@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirs.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 17:16:20 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/07 19:24:02 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	get_ind_last_redir(char **redirs)
@@ -39,6 +51,7 @@ void	open_all_in(t_exec_data *data, char **infiles)
 {
 	int	i;
 	int	infile;
+
 	i = 0;
 	if (!infiles[1])
 		return ;
@@ -51,7 +64,7 @@ void	open_all_in(t_exec_data *data, char **infiles)
 				ft_error(ERR_NO_FILE, infiles[i], data);
 			else if (access(infiles[i], R_OK) == -1)
 				ft_error(ERR_PERM_DENIED, infiles[i], data);
-			else 
+			else
 				ft_error(ERR_PERROR, "Open failed", data);
 		}
 		if (close(infile) == -1)
@@ -71,7 +84,8 @@ void	unlink_heredocs(t_exec_data *data)
 		ind_redir = 0;
 		while (data->tab_parse[ind_cmd].inredir[ind_redir])
 		{
-			if (ft_strcmp(data->tab_parse[ind_cmd].inredir[ind_redir], "<<") == 0)
+			if (ft_strcmp(data->tab_parse[ind_cmd].inredir[ind_redir], \
+				"<<") == 0)
 				if (unlink(data->tab_parse[ind_cmd].infile[ind_redir]) == -1)
 					ft_error(ERR_PERROR, "Unlink failed", NULL);
 			ind_redir++;

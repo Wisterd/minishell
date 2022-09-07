@@ -1,5 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 17:16:06 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/07 19:07:56 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
+int	is_directory(char *path_cmd)
+{
+	struct stat s;
+
+	if (lstat(path_cmd, &s) == 0)
+		if (S_ISDIR(s.st_mode))
+			return (1);
+	return (0);
+}
 static char	*search_path_cmd(t_exec_data *data, char *cmd, int *path_state)
 {
 	int		i;
@@ -37,6 +58,8 @@ static char	*direct_path(t_exec_data *data, char *cmd)
 	path_cmd = ft_strdup(cmd);
 	if (!path_cmd)
 		ft_error(ERR_MALLOC, NULL, data);
+	if (is_directory(path_cmd))
+		ft_error(ERR_DIR, path_cmd, data); 
 	if (access(path_cmd, F_OK == -1))
 		ft_error(ERR_NO_FILE, path_cmd, data);
 	if (access(path_cmd, X_OK) == -1)
@@ -62,6 +85,8 @@ char	*get_path_cmd(t_exec_data *data, char *cmd)
 			return (path_cmd);
 		}
 		path_cmd = search_path_cmd(data, cmd, &path_state);
+		if (is_directory(path_cmd))
+			ft_error(ERR_DIR, path_cmd, data); 		
 		if (path_state == ACCESSIBLE)
 			return (path_cmd);
 		if (path_state == EXISTS)

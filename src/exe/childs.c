@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   childs.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 17:15:39 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/07 17:19:16 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 void	create_outfile(t_exec_data *data, int ind_cmd)
@@ -5,7 +17,7 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 	int		outfile;
 	int		ind_last;
 	char	*outname;
-	
+
 	create_all_out(data, data->tab_parse[ind_cmd].outfile);
 	ind_last = get_ind_last_redir(data->tab_parse[ind_cmd].outredir);
 	outname = data->tab_parse[ind_cmd].outfile[ind_last];
@@ -30,7 +42,7 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 	int		infile;
 	int		ind_last;
 	char	*inname;
-	
+
 	open_all_in(data, data->tab_parse[ind_cmd].infile);
 	ind_last = get_ind_last_redir(data->tab_parse[ind_cmd].inredir);
 	inname = data->tab_parse[ind_cmd].infile[ind_last];
@@ -41,7 +53,7 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 			ft_error(ERR_NO_FILE, inname, data);
 		else if (access(inname, R_OK) == -1)
 			ft_error(ERR_PERM_DENIED, inname, data);
-		else 
+		else
 			ft_error(ERR_PERROR, "Open failed", data);
 	}
 	if (close(data->l_pipe[0]) == -1)
@@ -75,6 +87,23 @@ static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	}
 }
 
+static void	check_no_execve(t_exec_data *data)
+{
+	if (is_builtin(data->args_exec->tab_args[0]))
+	{
+		exe_builtin(data);
+		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
+		exit(g_exit_stat);
+	}
+	if (!data->tab_parse[data->ind_cmd].tab_args[0])
+	{
+		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
+		exit(0);
+	}
+}
+
 void	ft_child(t_exec_data *data)
 {
 	int		fd_in;
@@ -92,23 +121,7 @@ void	ft_child(t_exec_data *data)
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
 			ft_error(ERR_PERROR, "Dup2 failed", data);
 	ft_close_pipes(data);
-	if (is_builtin(data->args_exec->tab_args[0]))
-	{
-		exe_builtin(data);
-		ft_garbage_collector(END, NULL);
-		ft_garbage_collector_perm(END, NULL);
-		close(0);
-		close(1);
-		exit(g_exit_stat);
-	}
-	if (!data->tab_parse[data->ind_cmd].tab_args[0])
-	{
-		close(0);
-		close(1);
-		ft_garbage_collector(END, NULL);
-		ft_garbage_collector_perm(END, NULL);
-		exit(0);
-	}
+	check_no_execve(data);
 	path_cmd = get_path_cmd(data, \
 		data->args_exec->tab_args[0]);
 	data->args_exec->path_cmd = path_cmd;
