@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 20:08:46 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 19:36:22 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 23:11:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ int	ft_atoi_exit(char *str)
 		i++;
 	while(str[i] && ft_isdigit(str[i]))
 		nb = str[i++] - 48 + nb * 10;
+	
+	if ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+	{
+		while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+			i++;
+		if (str[i])
+			return (0);
+	}
 	if ((str[i] && !ft_isdigit(str[i])) || (nb > INT_MAX || (signe * nb < INT_MIN)))
 		return (0);
 	g_exit_stat = nb * signe;

@@ -6,13 +6,13 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 00:07:34 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 20:05:07 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 22:52:09 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	if_file(t_exec_data *data)
+int	if_file(t_exec_data *data)
 {
 	if (chdir(data->args_exec->tab_args[1]) == -1)
 	{
@@ -29,7 +29,9 @@ void	if_file(t_exec_data *data)
 			ft_putstr_fd(": No such file or directory\n", 2);
 		}
 		g_exit_stat = 1;
+		return (0);
 	}
+	return (1);
 }
 
 void	change_pwd(t_exec_data *data)
@@ -55,15 +57,15 @@ void	change_pwd(t_exec_data *data)
 
 void	new_dir(t_exec_data *data)
 {
-	if_file(data);
-	change_pwd(data);
+	if (if_file(data))
+		change_pwd(data);
 }
 
 void	to_racine(t_exec_data *data)
 {
 	chdir("/");
-	if_file(data);
-	change_pwd(data);
+	if (if_file(data))
+		change_pwd(data);
 }
 
 void	ft_cd(t_exec_data *data)

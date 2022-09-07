@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 18:40:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 22:02:16 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/07 22:16:39 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	ft_echo(t_exec_data	*data)
 	int	y;
 
 	y = 1;
-	while (data->tab_parse->tab_args[y] && data->tab_parse->tab_args[y + 1])
+	while (data->tab_parse->tab_args[y])
 	{
 		if (y == 1 && option_n(data->tab_parse->tab_args[y]))
-			y++;
-		if (data->tab_parse->tab_args[y] && data->tab_parse->tab_args[y + 1])
+			;
+		else if (data->tab_parse->tab_args[y] && data->tab_parse->tab_args[y + 1])
 		{
 			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
 			protected_putstr(" ", "ft_echo", data);
 		}
-		if (data->tab_parse->tab_args[y] && !data->tab_parse->tab_args[y + 1])	
+		else if (data->tab_parse->tab_args[y] && !data->tab_parse->tab_args[y + 1])	
 			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
 		y++;
 	}
