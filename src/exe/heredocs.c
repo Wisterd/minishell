@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:49 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 17:34:47 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 17:39:38 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,13 @@ static void	fork_temp_file(t_exec_data *data, int ind_cmd, int ind_redir)
 		g_exit_stat = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_exit_stat = WTERMSIG(128 + status);
+	ft_free(data->tab_parse[ind_cmd].infile[ind_redir]);
 	if (access(file_name, F_OK) != -1)
-	{
-		ft_free(data->tab_parse[ind_cmd].infile[ind_redir]);
 		data->tab_parse[ind_cmd].infile[ind_redir] = file_name;
+	else
+	{
+		write(1, "\n", 1);
+		data->kill_heredoc = 1;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:14 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 22:05:03 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 17:34:05 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	launch_children(t_exec_data *data)
 
 int	ft_fork(t_exec_data *data)
 {
+	if (data->kill_heredoc == 1)
+		return (130);
 	if (data->n_cmds == 1)
 	{
 		data->args_exec->tab_args = data->tab_parse[0].tab_args;

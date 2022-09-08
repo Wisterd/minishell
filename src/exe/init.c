@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:54 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 17:35:10 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 17:34:32 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	init_data(t_exec_data *data)
 		ft_error(ERR_MALLOC, NULL, data);
 	data->args_exec = args_exec;
 	data->n_cmds = data->tab_parse->nb_cmd;
+	data->kill_heredoc = 0;
 	look_for_heredocs(data);
 	pipes = init_pipes(data);
 	data->pipes = pipes;

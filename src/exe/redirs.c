@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:20 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 19:24:02 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 17:30:23 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ void	open_all_in(t_exec_data *data, char **infiles)
 
 	i = 0;
 	if (!infiles[1])
-	{
-		//printf("bonjour\n");
 		return ;
-	}
 	while (infiles[i])
 	{
 		infile = open(infiles[i], O_RDONLY);
@@ -89,8 +86,9 @@ void	unlink_heredocs(t_exec_data *data)
 		{
 			if (ft_strcmp(data->tab_parse[ind_cmd].inredir[ind_redir], \
 				"<<") == 0)
-				if (unlink(data->tab_parse[ind_cmd].infile[ind_redir]) == -1)
-					ft_error(ERR_PERROR, "Unlink failed", NULL);
+				if (access(data->tab_parse[ind_cmd].infile[ind_redir], F_OK) == 0)
+					if (unlink(data->tab_parse[ind_cmd].infile[ind_redir]) == -1)
+						ft_error(ERR_PERROR, "Unlink failed", NULL);
 			ind_redir++;
 		}
 		ind_cmd++;

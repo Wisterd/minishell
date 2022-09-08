@@ -52,6 +52,7 @@ typedef struct s_exec_data
 	int			*pipes;
 	int			*l_pipe;
 	int			*r_pipe;
+	int			kill_heredoc;
 	int			fd_out_builtin;
 	t_tab_parse	*tab_parse;
 	pid_t		*childs;

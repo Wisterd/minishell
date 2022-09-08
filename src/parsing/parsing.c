@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 00:23:18 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:40:49 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,12 @@ void	*parsing(char *prompt, t_exec_data *data)
 		
 		init_data(data);
 		g_exit_stat = ft_fork(data);
-		unlink_heredocs(data);
-		if (data->n_cmds == 1 && is_builtin(data->args_exec->tab_args[0]))
-			ft_garbage_collector(END, NULL);
+		if (!data->kill_heredoc)
+		{
+			unlink_heredocs(data);
+			if (data->n_cmds == 1 && is_builtin(data->args_exec->tab_args[0]))
+				ft_garbage_collector(END, NULL);
+		}
 	}
 	// ---------------------------------	
 	//free_lexer(deb_lexer);
