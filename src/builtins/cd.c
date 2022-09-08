@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 00:07:34 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 22:52:09 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:44:18 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,4 @@ void	ft_cd(t_exec_data *data)
 		to_racine(data);
 	else if (data->args_exec->tab_args[y])
 		new_dir(data);
-
 }

@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 18:40:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 00:29:37 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:52:27 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	ft_echo(t_exec_data	*data)
 			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
 		y++;
 	}
-	if (data->tab_parse->tab_args[1] && !option_n(data->tab_parse->tab_args[1]))
+	if (!data->tab_parse->tab_args[1] || \
+	(data->tab_parse->tab_args[1] && !option_n(data->tab_parse->tab_args[1])))
 		protected_putstr("\n", "ft_echo", data);
 	g_exit_stat = 0;
 }

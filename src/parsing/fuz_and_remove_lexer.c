@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:04:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 23:24:53 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:02:25 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_lexer	*change_in_quote(t_lexer *tmp_lexer, char *str)
 	{
 		if (!ft_strncmp(tmp_lexer->contenu, "\"", 1))
 			tmp_lexer->type = CMD;
-		else if (!ft_strncmp(tmp_lexer->contenu, "'", 1))
+		else if (!ft_strncmp(tmp_lexer->contenu, "'", 1) || !ft_strncmp(tmp_lexer->contenu, " ", 1))
 			tmp_lexer->type = CMD;
 		else if (!ft_strncmp(str, "\"", 2) \
 		&& !ft_strncmp(tmp_lexer->contenu, "$", 2))

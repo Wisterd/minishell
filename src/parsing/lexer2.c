@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 21:50:27 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:00:42 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	fuz_lex1(t_lexer **deb_lexer, int type)
 	while (new_lexer && new_lexer->next && \
 	ft_strncmp(new_lexer->contenu, "/n", 2))
 	{
-		if (new_lexer->type == type && (new_lexer->next->type == type
+		if (new_lexer->type == CMD)
+			new_lexer->type = MOT;
+		if (new_lexer->type == type && (new_lexer->next->type == type\
 		|| new_lexer->next->type == CMD))
 		{
 			new_lexer->contenu = ft_strjoin_2free(\

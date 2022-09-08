@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:19:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 21:48:30 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 18:24:10 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	**init_arg_cmd(t_lexer **deb_lexer, t_tab_parse *tab_parse)
 	i = 0;
 	while (tmp_lexer)
 	{
-		if (tmp_lexer->type == MOT && (!tmp_lexer->pre \
-		|| (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)))
+		if ((tmp_lexer->type == MOT || tmp_lexer->type == DOLLAR)
+		&& (!tmp_lexer->pre || (tmp_lexer->pre && tmp_lexer->pre->type != REDIR)))
 			i++;
 		if (tmp_lexer->type == PIPE || !tmp_lexer->next)
 		{
