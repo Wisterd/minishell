@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:00 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 17:37:52 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 19:52:40 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ static void	child_one_cmd(t_exec_data *data)
 	}
 	else
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		data->args_exec->path_cmd = \
 			get_path_cmd(data, data->tab_parse[0].tab_args[0]);
 		data->args_exec->tab_env = ft_get_total_env(data);
@@ -98,17 +100,25 @@ int	exe_one_cmd(t_exec_data *data)
 {
 	pid_t	child;
 	int		status;
-
+	int		exit;
+	
 	status = 0;
+	signal(SIGINT, SIG_IGN);
 	child = fork();
 	if (child < 0)
 		ft_error(ERR_PERROR, "Fork failed", data);
 	if (child == 0)
 		child_one_cmd(data);
 	waitpid(child, &status, 0);
+	signals();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
-		return (WTERMSIG(128 + status));
+	{
+		exit = 128 + WTERMSIG(status);
+		if (exit == 130)
+			write(1, "\n", 1);
+		return (exit);
+	}
 	return (status);
 }

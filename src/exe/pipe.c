@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:14 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 17:34:05 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 19:02:34 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	launch_children(t_exec_data *data)
 	if (!childs)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	i = -1;
+	signal(SIGINT, SIG_IGN);
 	while (++i < data->n_cmds)
 	{
 		data->ind_cmd = i;

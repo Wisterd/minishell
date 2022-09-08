@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:39 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 17:19:16 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 18:40:06 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	ft_child(t_exec_data *data)
 	int		fd_out;
 	char	*path_cmd;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	data->args_exec->tab_args = data->tab_parse[data->ind_cmd].tab_args;
 	fd_in = STDIN_FILENO;
 	fd_out = STDOUT_FILENO;
