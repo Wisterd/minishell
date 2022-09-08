@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 19:48:58 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 23:22:53 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,39 @@ t_lexer	*replace_env(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 	return (tmp_lexer = *deb_lexer);
 }
 
+char	*for_env(char *str)
+{
+	int		i;
+	char	*cp;
+
+	
+	i = 0;
+	if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
+		return (str);
+	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i])))
+		i++;
+	cp = ft_substr(str, 0 , i);
+	return (cp);
+}
+
+char	*for_env2(char *str)
+{
+	int		i;
+	char	*cp;
+
+	i = 0;
+	if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
+		return (str);
+	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i])))
+		i++;
+	if (!str[i])
+		return(NULL);
+	cp = ft_strdup(&str[i]);
+	// printf("LAAAAA = %s\n", cp);
+	return (cp);
+}
+
+
 t_lexer	*replace_dollar(t_lexer **deb_lexer, \
 t_lexer *tmp_lexer, t_exec_data *data)
 {
@@ -103,7 +136,9 @@ t_lexer *tmp_lexer, t_exec_data *data)
 		}
 		if (tmp_lexer->next->type == MOT)
 		{
-			env = ft_getenv(tmp_lexer->next->contenu, data);
+			env = ft_getenv(for_env(tmp_lexer->next->contenu), data);
+			if (for_env2(tmp_lexer->next->contenu))
+				env = ft_strjoin(env, for_env2(tmp_lexer->next->contenu));
 			if (erase_dollar(deb_lexer, tmp_lexer, env))
 			{
 				free_one_element(deb_lexer, tmp_lexer);
