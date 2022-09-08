@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:04:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 19:02:25 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:30:01 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_lexer	*change_in_quote(t_lexer *tmp_lexer, char *str)
 	{
 		if (!ft_strncmp(tmp_lexer->contenu, "\"", 1))
 			tmp_lexer->type = CMD;
-		else if (!ft_strncmp(tmp_lexer->contenu, "'", 1) || !ft_strncmp(tmp_lexer->contenu, " ", 1))
+		else if (!ft_strncmp(tmp_lexer->contenu, "'", 1) \
+		|| !ft_strncmp(tmp_lexer->contenu, " ", 1))
 			tmp_lexer->type = CMD;
 		else if (!ft_strncmp(str, "\"", 2) \
 		&& !ft_strncmp(tmp_lexer->contenu, "$", 2))
@@ -44,6 +45,14 @@ t_lexer	*change_in_quote(t_lexer *tmp_lexer, char *str)
 			return (NULL);
 	}
 	return (tmp_lexer);
+}
+
+void	end_quote(t_lexer **deb_lexer, t_lexer *tmp_lexer)
+{
+	ft_free(tmp_lexer->contenu);
+	tmp_lexer->contenu = ft_strdup("");
+	tmp_lexer->type = MOT;
+	free_one_element(deb_lexer, tmp_lexer->pre);
 }
 
 int	in_quote(t_lexer **deb_lexer)
@@ -60,13 +69,8 @@ int	in_quote(t_lexer **deb_lexer)
 			if (!tmp_lexer->next)
 				return (1);
 			tmp_lexer = tmp_lexer->next;
-			if(!strncmp(tmp_lexer->contenu, str , 1))
-			{
-				ft_free(tmp_lexer->contenu);
-				tmp_lexer->contenu = ft_strdup("");
-				tmp_lexer->type = MOT;
-				free_one_element(deb_lexer, tmp_lexer->pre);
-			}
+			if (!strncmp(tmp_lexer->contenu, str, 1))
+				end_quote(deb_lexer, tmp_lexer);
 			else if (!change_in_quote(tmp_lexer, str))
 				return (1);
 			else
