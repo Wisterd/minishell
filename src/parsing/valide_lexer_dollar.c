@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 23:22:53 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 23:45:00 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,9 @@ char	*for_env(char *str)
 	int		i;
 	char	*cp;
 
-	
 	i = 0;
+	if (str[i] == '?')
+		return (ft_strdup("?"));
 	if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
 		return (str);
 	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i])))
@@ -110,13 +111,12 @@ char	*for_env2(char *str)
 
 	i = 0;
 	if (!str || (!ft_isalpha(str[i]) && str[i] != '_'))
-		return (str);
+		return (NULL);
 	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i])))
 		i++;
 	if (!str[i])
 		return(NULL);
 	cp = ft_strdup(&str[i]);
-	// printf("LAAAAA = %s\n", cp);
 	return (cp);
 }
 
