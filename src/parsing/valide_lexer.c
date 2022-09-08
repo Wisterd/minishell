@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:45:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 22:30:15 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:44:07 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int	valide_lexer(t_lexer **deb_lexer, t_exec_data *data)
 		{
 			tmp_lexer = replace_dollar(deb_lexer, tmp_lexer, data);
 			if (tmp_lexer && tmp_lexer->next && (tmp_lexer->next->type == SPC \
-			|| tmp_lexer->next->type == QUOTE || tmp_lexer->next->type == REDIR))
+			|| tmp_lexer->next->type == QUOTE \
+			|| tmp_lexer->next->type == REDIR))
 				tmp_lexer = tmp_lexer->next;
 		}
 		if (tmp_lexer)

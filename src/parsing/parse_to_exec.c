@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 18:17:08 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:43:22 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_lexer *tmp_lexer, int y, int i)
 	return (tab_parse);
 }
 
-t_tab_parse    *exec_redir(t_lexer *tmp_lexer, t_tab_parse    *tab_parse, int y, int x)
+t_tab_parse *exec_redir(t_lexer *tmp_lexer, t_tab_parse *tab_parse, int y, int x)
 {
     static int    cpy = 0;
     static int    i = 0;

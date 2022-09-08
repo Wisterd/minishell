@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 00:07:34 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 17:44:18 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:50:40 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	if_file(t_exec_data *data)
 
 void	change_pwd(t_exec_data *data)
 {
-	t_env *cp;
-	
+	t_env	*cp;
+
 	cp = data->l_env;
 	while (cp)
 	{
@@ -78,7 +78,8 @@ void	ft_cd(t_exec_data *data)
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return ;
 	}
-	else if (data->args_exec->tab_args[y] && !strncmp(data->args_exec->tab_args[y], "/", 1))
+	else if (data->args_exec->tab_args[y] \
+	&& !strncmp(data->args_exec->tab_args[y], "/", 1))
 		to_racine(data);
 	else if (data->args_exec->tab_args[y])
 		new_dir(data);

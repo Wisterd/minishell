@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 18:47:10 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:48:58 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ char	*erase_one(char *str)
 
 int	is_question(t_lexer *tmp_lexer)
 {
-	char *str;
+	char	*str;
 
 	if (!ft_strncmp(tmp_lexer->next->contenu, "?", 1))
 	{
 		str = ft_str_deldeb(tmp_lexer->next->contenu, 1);
 		ft_free(tmp_lexer->next->contenu);
-		tmp_lexer->next->contenu = ft_strjoin_2free(ft_strdup(ft_itoa(g_exit_stat)), str);
+		tmp_lexer->next->contenu = \
+		ft_strjoin_2free(ft_strdup(ft_itoa(g_exit_stat)), str);
 		error_malloc("is_question", tmp_lexer->next->contenu);
 		return (1);
 	}
@@ -78,7 +79,17 @@ int	erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 	return (0);
 }
 
-t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *data)
+t_lexer	*replace_env(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
+{
+	ft_free(tmp_lexer->next->contenu);
+	tmp_lexer->next->contenu = ft_strdup(env);
+	error_malloc("replace dollar", tmp_lexer->next->contenu);
+	free_one_element(deb_lexer, tmp_lexer);
+	return (tmp_lexer = *deb_lexer);
+}
+
+t_lexer	*replace_dollar(t_lexer **deb_lexer, \
+t_lexer *tmp_lexer, t_exec_data *data)
 {
 	char	*env;
 
@@ -99,11 +110,7 @@ t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *da
 				tmp_lexer = *deb_lexer;
 				return (tmp_lexer);
 			}
-			ft_free(tmp_lexer->next->contenu);
-			tmp_lexer->next->contenu = ft_strdup(env);
-			error_malloc("replace dollar", tmp_lexer->next->contenu);
-			free_one_element(deb_lexer, tmp_lexer);
-			tmp_lexer = *deb_lexer;
+			tmp_lexer = replace_env(deb_lexer, tmp_lexer, env);
 		}
 	}
 	return (tmp_lexer);
