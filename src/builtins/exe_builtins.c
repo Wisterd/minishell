@@ -23,11 +23,6 @@ static void	builtin_in(t_exec_data *data, int mode)
 		if (mode == 1)
 			close(fd_in);
 	}
-	if (mode == 0)
-	{
-		if (dup2(fd_in, STDIN_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data);
-	}
 }
 
 static void	builtin_out(t_exec_data *data, int mode)
@@ -54,11 +49,6 @@ static void	builtin_out(t_exec_data *data, int mode)
 	}
 	if (mode == 1)
 		data->fd_out_builtin = fd_out;
-	else
-	{
-		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			ft_error(ERR_PERROR, "Dup2 failed", data);
-	}
 }
 
 int	is_builtin(char *cmd)
@@ -108,5 +98,7 @@ void	exe_builtin(t_exec_data *data)
 			close(data->fd_out_builtin);
 	}
 	else
+	{
 		launch_builtin(data, cmd);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:44 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 19:52:48 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/09 00:56:44 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static char	*check_err_1(int *exit_stat, char *to_print, int error_code)
 		*exit_stat = 1;
 		perror(to_print);
 	}
-	
 	return (error_msg);
 }
 

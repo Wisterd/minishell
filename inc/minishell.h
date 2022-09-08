@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 20:02:38 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 22:58:33 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char		*ft_getcwd_perm();
 void		ft_exec(t_args_exec args_exec);
 void		ft_close_pipes(t_exec_data *data);
 int			ft_fork(t_exec_data *data);
-void		fill_pipes(t_exec_data *data, int mode);
+void		fill_pipes(t_exec_data *data);
 //childs.c 
 void		ft_child(t_exec_data *data);
 
