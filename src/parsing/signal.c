@@ -52,3 +52,29 @@ void	signals(void)
 	if (fail == -1)
 		exit(EXIT_FAILURE);
 }
+
+void	signal_here(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_exit_stat = 130;
+		write(1, "\n", 1);
+	}	
+}
+
+void	signal_heredoc(void)
+{
+	struct sigaction	sa;
+	int					fail;
+
+	fail = 0;
+	//sa.sa_handler = &signal_here;
+	sa.sa_handler = SIG_DFL;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
+	fail = sigaction(SIGINT, &sa, NULL);
+	if (fail == -1)
+		exit(EXIT_FAILURE);
+	
+}

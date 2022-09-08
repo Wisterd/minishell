@@ -62,6 +62,8 @@ static void	readline_temp_file(char *file_name, char *here_eof)
 		if (!ft_strcmp(prompt, here_eof) || !prompt)
 		{
 			write_temp_file(to_write, file_name);
+			if (!prompt)
+				write(1, "\n", 1);
 			break ;
 		}
 		line = ft_strjoin_free(prompt, "\n");
@@ -84,19 +86,25 @@ static void	fork_temp_file(t_exec_data *data, int ind_cmd, int ind_redir)
 	int		status;
 
 	file_name = create_temp_file_name();
+	signal_heredoc();
 	child = fork();
 	if (child < 0)
 		ft_error(ERR_PERROR, "Fork failed", NULL);
 	if (child == 0)
 		readline_temp_file(file_name, \
 			data->tab_parse[ind_cmd].infile[ind_redir]);
+	signal(SIGINT, SIG_IGN);
 	waitpid(child, &status, 0);
+	signals();
 	if (WIFEXITED(status))
 		g_exit_stat = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_exit_stat = WTERMSIG(128 + status);
-	ft_free(data->tab_parse[ind_cmd].infile[ind_redir]);
-	data->tab_parse[ind_cmd].infile[ind_redir] = file_name;
+	if (access(file_name, F_OK) != -1)
+	{
+		ft_free(data->tab_parse[ind_cmd].infile[ind_redir]);
+		data->tab_parse[ind_cmd].infile[ind_redir] = file_name;
+	}
 }
 
 void	look_for_heredocs(t_exec_data *data)

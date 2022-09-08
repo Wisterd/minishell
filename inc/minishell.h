@@ -172,6 +172,7 @@ void		print_to_exec(t_tab_parse *tab_parse);
 
 // signal.c
 void		signals();
+void		signal_heredoc(void);
 
 // parsing.c
 void	mini_exit(char *prompt, t_exec_data *data);
