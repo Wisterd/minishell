@@ -39,7 +39,8 @@ void	ft_echo(t_exec_data	*data)
 			;
 		else if (data->tab_parse->tab_args[y] && data->tab_parse->tab_args[y + 1])
 		{
-			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
+			if (protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data) == -1)
+				return ;
 			protected_putstr(" ", "ft_echo", data);
 		}
 		else if (data->tab_parse->tab_args[y] && !data->tab_parse->tab_args[y + 1])	

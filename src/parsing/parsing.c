@@ -67,11 +67,12 @@ void	*parsing(char *prompt, t_exec_data *data)
 
 	// prb solo $ ou char "";
 	tab_parse = to_exec(deb_lexer);	
-	// print_to_exec(tab_parse);
-	// print_lexer(deb_lexer);
+	//print_to_exec(tab_parse);
+	//print_lexer(deb_lexer);
 	if (*deb_lexer)
 	{
 		data->tab_parse = tab_parse;
+		
 		init_data(data);
 		g_exit_stat = ft_fork(data);
 		unlink_heredocs(data);
@@ -94,7 +95,7 @@ void	mini_exit(char *prompt, t_exec_data *data)
 		{
 			printf("exit\n");
 			ft_garbage_collector_perm(END, NULL);
-			exit(EXIT_SUCCESS);
+			exit(g_exit_stat);
 		}
 		else
 		{
@@ -105,5 +106,5 @@ void	mini_exit(char *prompt, t_exec_data *data)
 	}
 	ft_garbage_collector_perm(END, NULL);
 	rl_clear_history();
-	exit(EXIT_SUCCESS);
+	exit(g_exit_stat);
 }

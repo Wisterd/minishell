@@ -80,4 +80,5 @@ void	ft_export(t_exec_data *data)
 		loop_on_export(data, tab_args[i]);
 		i++;
 	}
+	g_exit_stat = 0;
 }

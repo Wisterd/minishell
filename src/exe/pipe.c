@@ -94,7 +94,6 @@ int	ft_fork(t_exec_data *data)
 			return (exe_one_cmd(data));
 		else
 		{
-			// g_exit_stat = 0;
 			exe_builtin(data);
 			return (g_exit_stat);
 		}

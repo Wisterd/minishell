@@ -26,7 +26,8 @@ int	ft_pwd(t_exec_data *data)
 	}
 	if (str)
 	{
-		protected_putstr(str, "ft_pwd", data);
+		if (protected_putstr(str, "ft_pwd", data) == -1)
+			return (0);
 		protected_putstr("\n", "ft_pwd", data);
 		return (0);
 	}

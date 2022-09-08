@@ -88,16 +88,18 @@ t_tab_parse    *to_exec(t_lexer **deb_lexer)
 {
     int            i;
     int            y;
+    int             x;
     t_lexer        *tmp_lexer;
     t_tab_parse    *tab_parse;
 
     tmp_lexer = *deb_lexer;
     i = 0;
     y = 0;
+    x = 0;
     tab_parse = init_tab_parse(deb_lexer);
     while (tmp_lexer)
     {
-        tab_parse = exec_redir(tmp_lexer, tab_parse, y, i);
+        tab_parse = exec_redir(tmp_lexer, tab_parse, y, x++);
         if (conditon(tmp_lexer))
         {
             tab_parse[y].tab_args[i] = ft_strdup(tmp_lexer->contenu);

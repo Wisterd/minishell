@@ -83,5 +83,7 @@ void	ft_exit(t_exec_data *data)
 	while (g_exit_stat < 256)
 		g_exit_stat = g_exit_stat + 256;
 	g_exit_stat = g_exit_stat % 256;
+	ft_garbage_collector(END, NULL);
+	ft_garbage_collector_perm(END, NULL);
 	exit(g_exit_stat);
 }
