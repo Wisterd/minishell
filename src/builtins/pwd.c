@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 00:28:48 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 20:08:25 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/09 03:09:26 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ int	ft_pwd(t_exec_data *data)
 		return (0);
 	}
 	return (1);
+	g_exit_stat = 0;
 }

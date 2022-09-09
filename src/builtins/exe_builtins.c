@@ -65,7 +65,8 @@ int	is_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "env") \
 		|| !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "exit")\
-		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "cd"))
+		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "cd") \
+		|| !ft_strcmp(cmd, "export"))
 		return (1);
 	return (0);
 }

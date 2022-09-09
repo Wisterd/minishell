@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 20:10:21 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/09 02:03:42 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	parse(t_lexer **deb_lexer, char *prompt, t_exec_data *data)
 	}
 	fuz_lex(deb_lexer, MOT);
 	history(deb_lexer);
+	// print_lexer(deb_lexer);
 	// if (special_c(prompt) == SPECIAL)
 	// 	return (0);
 	if (!valide_lexer(deb_lexer, data))
@@ -55,7 +56,7 @@ void	*parsing(char *prompt, t_exec_data *data)
 	
 	//if (*deb_lexer)
 	//	printf("\n");
-	// print_lexer(deb_lexer);
+	
 	while (near_mot(deb_lexer))
 		fuz_lex(deb_lexer, MOT);
 	
@@ -63,13 +64,13 @@ void	*parsing(char *prompt, t_exec_data *data)
 	while (have_type(deb_lexer, SPC))
 		remove_type(deb_lexer, SPC);
 	fuz_lex(deb_lexer, REDIR);
-	
+	// print_lexer(deb_lexer);
 	// print_lexer(deb_lexer);
 	//// -------- POur marine ------------
 
 	// prb solo $ ou char "";
 	tab_parse = to_exec(deb_lexer);	
-	// print_to_exec(tab_parse);
+	print_to_exec(tab_parse);
 	// print_lexer(deb_lexer);
 	if (*deb_lexer)
 	{
