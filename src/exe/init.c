@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:54 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/09 01:50:28 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/09 01:58:07 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	*init_pipes(t_exec_data *data)
 	}
 	return (pipes);
 }
-
 
 void	init_data(t_exec_data *data)
 {

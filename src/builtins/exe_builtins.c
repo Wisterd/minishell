@@ -1,12 +1,65 @@
 #include "../../inc/minishell.h"
 
-static void	builtin_in(t_exec_data *data, int mode)
+int	create_all_out_builtin(t_exec_data *data, char **outfiles)
+{
+	int	i;
+	int	outfile;
+
+	i = 0;
+	if (!outfiles[1])
+		return (1);
+	while (outfiles[i + 1])
+	{
+		outfile = open(outfiles[i], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (outfile == -1)
+		{
+			if (access(outfiles[i], W_OK) == -1)
+				return (ft_error_no_exit(ERR_PERM_DENIED, outfiles[i], data), 0);
+			else
+				return (ft_error_no_exit(ERR_PERROR, "Open failed", data), 0);
+		}
+		if (close(outfile) == -1)
+			return (ft_error_no_exit(ERR_PERROR, "Close failed", data), 0);
+		i++;
+	}
+	return (1);
+}
+
+int	open_all_in_builtin(t_exec_data *data, char **infiles)
+{
+	int	i;
+	int	infile;
+
+	i = 0;
+	if (!infiles[1])
+		return (1);
+	while (infiles[i])
+	{
+		infile = open(infiles[i], O_RDONLY);
+		if (infile == -1)
+		{
+			if (access(infiles[i], F_OK) == -1)
+				return (ft_error_no_exit(ERR_NO_FILE, infiles[i], data), 0);
+			else if (access(infiles[i], R_OK) == -1)
+				return (ft_error_no_exit(ERR_PERM_DENIED, infiles[i], data), 0);
+			else
+				return (ft_error_no_exit(ERR_PERROR, "Open failed", data), 0);
+		}
+		if (close(infile) == -1)
+			return (ft_error_no_exit(ERR_PERROR, "Close failed", data), 0);
+		i++;
+	}
+	return (1);
+}
+
+static int	builtin_in(t_exec_data *data, int mode)
 {
 	int	fd_in;
 	int	ind_last;
 
 	fd_in = STDIN_FILENO;
-	open_all_in(data, data->tab_parse[data->ind_cmd].infile);
+	if (!open_all_in_builtin(data, data->tab_parse[data->ind_cmd].infile))
+		return (0);
 	ind_last = get_ind_last_redir(data->tab_parse[0].inredir);
 	if (data->tab_parse[data->ind_cmd].infile[0])
 	{
@@ -14,24 +67,28 @@ static void	builtin_in(t_exec_data *data, int mode)
 		if (fd_in == -1)
 		{
 			if (access(data->tab_parse[data->ind_cmd].infile[ind_last], F_OK) == -1)
-				ft_error(ERR_NO_FILE, data->tab_parse[data->ind_cmd].infile[ind_last], data);
+				return (ft_error_no_exit(ERR_NO_FILE, \
+					data->tab_parse[data->ind_cmd].infile[ind_last], data), 0);
 			else if (access(data->tab_parse[data->ind_cmd].infile[ind_last], R_OK) == -1)
-				ft_error(ERR_PERM_DENIED, data->tab_parse[data->ind_cmd].infile[ind_last], data);
+				return (ft_error_no_exit(ERR_PERM_DENIED, \
+					data->tab_parse[data->ind_cmd].infile[ind_last], data), 0);
 			else 
-				ft_error(ERR_PERROR, "Open failed", data);
+				return (ft_error_no_exit(ERR_PERROR, "Open failed", data), 0);
 		}
 		if (mode == 1)
 			close(fd_in);
 	}
+	return (1);
 }
 
-static void	builtin_out(t_exec_data *data, int mode)
+static int	builtin_out(t_exec_data *data, int mode)
 {
 	int	fd_out;
 	int	ind_last;
 
 	fd_out = STDOUT_FILENO;
-	create_all_out(data, data->tab_parse[data->ind_cmd].outfile);
+	if (!create_all_out_builtin(data, data->tab_parse[data->ind_cmd].outfile))
+		return (0);
 	ind_last = get_ind_last_redir(data->tab_parse[data->ind_cmd].outredir);
 	if (data->tab_parse[data->ind_cmd].outfile[0])
 	{
@@ -42,13 +99,15 @@ static void	builtin_out(t_exec_data *data, int mode)
 		if (fd_out == -1)
 		{
 			if (access(data->tab_parse[data->ind_cmd].outfile[0], W_OK) == -1)
-				ft_error(ERR_PERM_DENIED, data->tab_parse[data->ind_cmd].outfile[ind_last], data);
+				return (ft_error_no_exit(ERR_PERM_DENIED, \
+					data->tab_parse[data->ind_cmd].outfile[ind_last], data), 0);
 			else
-				ft_error(ERR_PERROR, "Open failed", data);
+				return (ft_error_no_exit(ERR_PERROR, "Open failed", data), 0);
 		}
 	}
 	if (mode == 1)
 		data->fd_out_builtin = fd_out;
+	return (1);
 }
 
 int	is_builtin(char *cmd)
@@ -88,9 +147,11 @@ void	exe_builtin(t_exec_data *data)
 	if (data->n_cmds == 1)
 	{
 		if (*data->tab_parse[0].infile)
-			builtin_in(data, 1);
+			if (!builtin_in(data, 1))
+				return ;
 		if (*data->tab_parse[0].outfile)
-			builtin_out(data, 1);
+			if (!builtin_out(data, 1))
+				return ;
 		if (data->pipes)
 			ft_close_pipes(data);
 		launch_builtin(data, cmd);

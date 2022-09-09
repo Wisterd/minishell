@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:00 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 19:52:40 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/09 02:11:35 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ static void	child_one_cmd(t_exec_data *data)
 		ft_close_pipes(data);
 	if (!data->args_exec[0].tab_args[0])
 	{
-		close(0);
-		close(1);
 		ft_garbage_collector(END, NULL);
 		ft_garbage_collector_perm(END, NULL);
 		exit(0);
