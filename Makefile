@@ -38,6 +38,8 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	parsing/signal.c \
 	parsing/history.c \
 	parsing/fuz_and_remove_lexer.c \
+	parsing/quote.c \
+	parsing/env_dollar.c \
 	parsing/valide_lexer_dollar.c)
 
 OBJ = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC_FILES))

@@ -6,33 +6,32 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:23:37 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 20:25:20 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:26:18 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	print_lexer(t_lexer **deb_lexer)
-{
-	t_lexer	*new_lexer;
+// void	print_lexer(t_lexer **deb_lexer)
+// {
+// 	t_lexer	*new_lexer;
 
-	new_lexer = *deb_lexer;
-	while (new_lexer)
-	{
-		// printf("-----------------------\n");
-		// printf("lexer n = %d \n", new_lexer->id);
-		printf("contenu = %s \n", new_lexer->contenu);
-		printf("type = %d \n", new_lexer->type);
-		
-		// if (new_lexer->next)
-		// 	printf("id next n = %d \n", new_lexer->next->id);
-		// if (new_lexer->pre)
-		// 	printf("id pre n = %d \n", new_lexer->pre->id);
-		// 
-		//printf("%s", new_lexer->contenu);
-		new_lexer = new_lexer->next;
-	}
-}
+// 	new_lexer = *deb_lexer;
+// 	while (new_lexer)
+// 	{
+// 		// printf("-----------------------\n");
+// 		// printf("lexer n = %d \n", new_lexer->id);
+// 		printf("contenu = %s \n", new_lexer->contenu);
+// 		printf("type = %d \n", new_lexer->type);
+// 		// if (new_lexer->next)
+// 		// 	printf("id next n = %d \n", new_lexer->next->id);
+// 		// if (new_lexer->pre)
+// 		// 	printf("id pre n = %d \n", new_lexer->pre->id);
+// 		// 
+// 		//printf("%s", new_lexer->contenu);
+// 		new_lexer = new_lexer->next;
+// 	}
+// }
 
 void	add_lexer(t_lexer **deb_lexer, t_lexer *lexer)
 {
