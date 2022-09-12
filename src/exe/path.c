@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:06 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 17:47:36 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 18:18:16 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	is_directory(char *path_cmd)
 {
-	struct stat s;
+	struct stat	s;
 
 	if (lstat(path_cmd, &s) == 0)
 		if (S_ISDIR(s.st_mode))
 			return (1);
 	return (0);
 }
+
 static char	*search_path_cmd(t_exec_data *data, char *cmd, int *path_state)
 {
 	int		i;

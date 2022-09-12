@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:00 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/09 02:11:35 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 18:17:51 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	exe_one_cmd(t_exec_data *data)
 	pid_t	child;
 	int		status;
 	int		exit;
-	
+
 	status = 0;
 	signal(SIGINT, SIG_IGN);
 	child = fork();

@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:27 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 19:55:58 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 18:17:34 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_wait(t_exec_data *data)
 	return (res);
 }
 
-char	*ft_getcwd_perm()
+char	*ft_getcwd_perm(void)
 {
 	char	*str_cwd;
 
@@ -71,7 +71,7 @@ char	*ft_getcwd_perm()
 	return (str_cwd);
 }
 
-char	*ft_getcwd()
+char	*ft_getcwd(void)
 {
 	char	*str_cwd;
 
