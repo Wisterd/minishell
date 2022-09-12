@@ -1,26 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 20:28:13 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/12 20:51:32 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
-
-t_env	*init_env(char **envp)
-{
-	t_env	*l_env;
-	int		i;
-
-	i = 0;
-	l_env = ft_malloc_perm(sizeof(t_env));
-	if (!l_env)
-		ft_error(ERR_MALLOC, NULL, NULL);
-	l_env->var_content = ft_strdup_perm(ft_getcwd_perm());
-	l_env->var_name = ft_strdup_perm("?PWD");
-	l_env->next = NULL;
-	l_env->prev = NULL;
-	while (envp[i])
-	{
-		l_add_back(&l_env, get_var_name(envp[i]), \
-			get_var_content(envp[i]));
-		i++;
-	}
-	return (l_env);
-}
 
 char	*ft_getenv(char *to_get, t_exec_data *data)
 {
@@ -36,20 +26,30 @@ char	*ft_getenv(char *to_get, t_exec_data *data)
 	return (NULL);
 }
 
+int	get_last_list_env(t_env *list)
+{
+	int	i;
+
+	i = 0;
+	while (list)
+	{
+		i++;
+		list = list->next;
+	}
+	return (i);
+}
+
 char	**ft_get_total_env(t_exec_data *data)
 {
 	char	**tab_env;
 	t_env	*list;
 	int		i;
 
-	i = 0;
 	list = data->l_env;
-	while (list)
-	{
-		i++;
-		list = list->next;
-	}	
+	i = get_last_list_env(list);
 	tab_env = ft_malloc(sizeof(char *) * (i + 1));
+	if (!tab_env)
+		ft_error(ERR_MALLOC, NULL, data);
 	list = data->l_env;
 	i = 0;
 	while (list->next)
@@ -67,6 +67,19 @@ char	**ft_get_total_env(t_exec_data *data)
 	return (tab_env);
 }
 
+int	protected_write_env(t_exec_data *data)
+{
+	if (protected_putstr(data->l_env->var_name, "env", data) == -1)
+		return (-1);
+	if (protected_putstr("=", "env", data) == -1)
+		return (-1);
+	if (protected_putstr(data->l_env->var_content, "env", data) == -1)
+		return (-1);
+	if (protected_putstr("\n", "env", data) == -1)
+		return (-1);
+	return (0);
+}
+
 void	ft_env(t_exec_data *data)
 {
 	t_env	*start_list;
@@ -81,14 +94,10 @@ void	ft_env(t_exec_data *data)
 		start_list = data->l_env;
 		while (data->l_env)
 		{
-			if (data->l_env->var_name && ft_strncmp("?", data->l_env->var_name, 1))
-			{
-				if (protected_putstr(data->l_env->var_name, "env", data) == -1)
+			if (data->l_env->var_name && ft_strncmp("?", \
+				data->l_env->var_name, 1))
+				if (protected_write_env(data) == -1)
 					return ;
-				protected_putstr("=", "env", data);
-				protected_putstr(data->l_env->var_content, "env", data);
-				protected_putstr("\n", "env", data);
-			}
 			data->l_env = data->l_env->next;
 		}
 		data->l_env = start_list;

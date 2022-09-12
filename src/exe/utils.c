@@ -6,11 +6,21 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:27 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 18:17:34 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 20:11:27 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	is_directory(char *path_cmd)
+{
+	struct stat	s;
+
+	if (lstat(path_cmd, &s) == 0)
+		if (S_ISDIR(s.st_mode))
+			return (1);
+	return (0);
+}
 
 char	*ft_strjoin_free(char *s1, char *s2)
 {

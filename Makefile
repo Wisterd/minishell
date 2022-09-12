@@ -28,6 +28,7 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	builtins/export.c \
 	builtins/export2.c \
 	builtins/exe_builtins.c \
+	builtins/builtins_in_out.c \
 	builtins/utils_env.c \
 	parsing/parsing.c \
 	parsing/lexer.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/12 19:34:44 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:42:29 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,20 @@ void		ft_error(int error_code, char *to_print, t_exec_data *data);
 char		*check_err_1(int *exit_stat, char *to_print, int error_code);
 char		*check_err_127(int *exit_stat, char *to_print, int error_code);
 char		*check_err_126(int *exit_stat, char *to_print, int error_code);
+void		ft_exit_error(int exit_stat);
+
+//error2.c
 void		ft_error_no_exit(int error_code, char *to_print, t_exec_data *data);
+
 //path.c
 char		*get_path_cmd(t_exec_data *data, char *cmd);
 
 //utils.c
 char		*ft_strjoin_free(char *s1, char *s2);
 int			ft_wait(t_exec_data *data);
-void		ft_exit_error(int exit_stat);
 char		*ft_getcwd(void);
 char		*ft_getcwd_perm(void);
+int			is_directory(char *path_cmd);
 
 //pipe.c
 void		ft_exec(t_args_exec args_exec);
@@ -77,6 +81,7 @@ void		ft_child(t_exec_data *data);
 //init.c
 void		init_data(t_exec_data *data);
 int			*init_pipes(t_exec_data *data);
+t_env		*init_env(char **envp);
 
 //one_cmd.c
 int			exe_one_cmd(t_exec_data *data);
@@ -90,15 +95,27 @@ void		unlink_heredocs(t_exec_data *data);
 //heredocs.c
 void		look_for_heredocs(t_exec_data *data);
 
+//heredocs2.c
+void		heredoc_joins(char **prompt, char **line, char **to_write);
+void		ft_wait_heredocs(pid_t child);
+
 ///BUILTINS
+//builtins_in_out.c
+int			builtin_in(t_exec_data *data, int mode);
+int			builtin_out(t_exec_data *data, int mode);
+
 //exe_builtins.c
+int			create_all_out_builtin(t_exec_data *data, char **outfiles);
+int			open_all_in_builtin(t_exec_data *data, char **infiles);
 void		exe_builtin(t_exec_data *data);
 int			is_builtin(char *cmd);
+
 //env.c
 t_env		*init_env(char **envp);
 void		ft_env(t_exec_data *data);
 char		*ft_getenv(char *to_get, t_exec_data *data);
 char		**ft_get_total_env(t_exec_data *data);
+
 //unset.c
 void		ft_unset(t_exec_data *data);
 

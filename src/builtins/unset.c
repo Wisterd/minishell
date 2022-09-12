@@ -1,11 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 19:43:29 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/12 19:46:31 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-//unset et export : que des chiffres, des lettres ou underscore 
-//dans les noms de variables, pas de chiffre comme premier char
+static void	free_list_var(t_env *list)
+{
+	ft_free_perm(list->var_name);
+	list->var_name = NULL;
+	ft_free_perm(list);
+}
 
 static void	rm_var(t_exec_data *data, char *var_name)
 {
-	t_env *list;
+	t_env	*list;
 
 	list = data->l_env;
 	while (list)
@@ -24,9 +40,7 @@ static void	rm_var(t_exec_data *data, char *var_name)
 				list->prev->next = list->next;
 				list->next->prev = list->prev;
 			}
-			ft_free_perm(list->var_name);
-			list->var_name = NULL;
-			ft_free_perm(list);
+			free_list_var(list);
 			return ;
 		}
 		list = list->next;

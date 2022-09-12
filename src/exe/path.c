@@ -6,20 +6,21 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:06 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 19:25:31 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 20:08:17 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_directory(char *path_cmd)
+static void	path_joins(char **path_cmd, char *curr_path, char *cmd, \
+	t_exec_data *data)
 {
-	struct stat	s;
-
-	if (lstat(path_cmd, &s) == 0)
-		if (S_ISDIR(s.st_mode))
-			return (1);
-	return (0);
+	*path_cmd = ft_strjoin(curr_path, "/");
+	if (!*path_cmd)
+		ft_error(ERR_MALLOC, NULL, data);
+	*path_cmd = ft_strjoin_1free(*path_cmd, cmd);
+	if (!*path_cmd)
+		ft_error(ERR_MALLOC, NULL, data);
 }
 
 static char	*search_path_cmd(t_exec_data *data, char *cmd, int *path_state)
@@ -31,22 +32,18 @@ static char	*search_path_cmd(t_exec_data *data, char *cmd, int *path_state)
 	i = 0;
 	path_cmd = NULL;
 	path = ft_split(ft_getenv("PATH", data), ':');
-	while (path[i++] && *path_state != ACCESSIBLE)
+	while (path[i] && *path_state != ACCESSIBLE)
 	{
 		if (path_cmd)
 			ft_free(path_cmd);
-		path_cmd = ft_strjoin(path[i], "/");
-		if (!path_cmd)
-			ft_error(ERR_MALLOC, NULL, data);
-		path_cmd = ft_strjoin_1free(path_cmd, cmd);
-		if (!path_cmd)
-			ft_error(ERR_MALLOC, NULL, data);
+		path_joins(&path_cmd, path[i], cmd, data);
 		if (access(path_cmd, F_OK) != -1)
 		{
 			*path_state = EXISTS;
 			if (access(path_cmd, X_OK) != -1)
 				*path_state = ACCESSIBLE;
 		}
+		i++;
 	}
 	return (path_cmd);
 }

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 20:42:45 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/12 20:50:17 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	protected_putstr(char *str, char *builtin, t_exec_data *data)
 {
-	char *msg;
+	char	*msg;
 
 	if (write(data->fd_out_builtin, str, ft_strlen(str)) == -1)
 	{
@@ -13,6 +25,7 @@ int	protected_putstr(char *str, char *builtin, t_exec_data *data)
 	}
 	return (0);
 }
+
 char	*get_var_content(char *var_path)
 {
 	char	*var_content;
