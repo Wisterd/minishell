@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 06:05:43 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 19:57:44 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 16:34:58 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@ void	catch_signals(int signum)
 	if (signum == SIGQUIT)
 	{
 		g_exit_stat = 131;
-		// write(1, "\n", 1);
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
 	}
 }
 

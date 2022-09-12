@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 19:17:10 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 19:14:24 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 16:32:43 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	parse(t_lexer **deb_lexer, char *prompt, t_exec_data *data)
 	}
 	fuz_lex(deb_lexer, MOT);
 	history(deb_lexer);
-	if (special_c(prompt) == SPECIAL)
-		return (0);
 	if (!valide_lexer(deb_lexer, data))
 		return (0);
 	while (near_mot(deb_lexer))
@@ -38,6 +36,16 @@ int	parse(t_lexer **deb_lexer, char *prompt, t_exec_data *data)
 	while (have_type(deb_lexer, QUOTE))
 		remove_type(deb_lexer, QUOTE);
 	return (1);
+}
+
+void	processing(t_lexer **deb_lexer)
+{
+	while (near_mot(deb_lexer))
+		fuz_lex(deb_lexer, MOT);
+	fuz_lex1(deb_lexer, MOT);
+	while (have_type(deb_lexer, SPC))
+		remove_type(deb_lexer, SPC);
+	fuz_lex(deb_lexer, REDIR);
 }
 
 void	*parsing(char *prompt, t_exec_data *data)
@@ -50,29 +58,13 @@ void	*parsing(char *prompt, t_exec_data *data)
 	{
 		free_lexer(deb_lexer);
 		g_exit_stat = 2;
-		return (NULL); 
+		return (NULL);
 	}
-	//print_lexer(deb_lexer);
-	//if (*deb_lexer)
-	//	printf("\n");
-	while (near_mot(deb_lexer))
-		fuz_lex(deb_lexer, MOT);
-	fuz_lex1(deb_lexer, MOT);
-	while (have_type(deb_lexer, SPC))
-		remove_type(deb_lexer, SPC);
-	fuz_lex(deb_lexer, REDIR);
-	
-	// print_lexer(deb_lexer);
-	//// -------- POur marine ------------
-
-	// prb solo $ ou char "";
-	tab_parse = to_exec(deb_lexer);	
-	//print_to_exec(tab_parse);
-	//print_lexer(deb_lexer);
+	processing(deb_lexer);
+	tab_parse = to_exec(deb_lexer);
 	if (*deb_lexer)
 	{
 		data->tab_parse = tab_parse;
-		
 		init_data(data);
 		g_exit_stat = ft_fork(data);
 		if (!data->kill_heredoc)
@@ -82,8 +74,6 @@ void	*parsing(char *prompt, t_exec_data *data)
 				ft_garbage_collector(END, NULL);
 		}
 	}
-	// ---------------------------------	
-	//free_lexer(deb_lexer);
 	return (NULL);
 }
 

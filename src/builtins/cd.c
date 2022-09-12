@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 00:07:34 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 22:52:09 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/09 03:09:17 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	if_file(t_exec_data *data)
 
 void	change_pwd(t_exec_data *data)
 {
-	t_env *cp;
-	
+	t_env	*cp;
+
 	cp = data->l_env;
 	while (cp)
 	{
@@ -61,13 +61,6 @@ void	new_dir(t_exec_data *data)
 		change_pwd(data);
 }
 
-void	to_racine(t_exec_data *data)
-{
-	chdir("/");
-	if (if_file(data))
-		change_pwd(data);
-}
-
 void	ft_cd(t_exec_data *data)
 {
 	int	y;
@@ -78,9 +71,10 @@ void	ft_cd(t_exec_data *data)
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 		return ;
 	}
-	else if (data->args_exec->tab_args[y] && !strncmp(data->args_exec->tab_args[y], "/", 1))
-		to_racine(data);
+	else if (data->args_exec->tab_args[y] \
+	&& !strncmp(data->args_exec->tab_args[y], "/", 1))
+		new_dir(data);
 	else if (data->args_exec->tab_args[y])
 		new_dir(data);
-
+	g_exit_stat = 0;
 }

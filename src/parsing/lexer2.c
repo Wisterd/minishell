@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 00:01:00 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 21:50:27 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:25:46 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	fuz_lex1(t_lexer **deb_lexer, int type)
 	while (new_lexer && new_lexer->next && \
 	ft_strncmp(new_lexer->contenu, "/n", 2))
 	{
-		if (new_lexer->type == type && (new_lexer->next->type == type
-		|| new_lexer->next->type == CMD))
+		if (new_lexer->type == CMD)
+			new_lexer->type = MOT;
+		if (new_lexer->type == type && (new_lexer->next->type == type \
+			|| new_lexer->next->type == CMD))
 		{
 			new_lexer->contenu = ft_strjoin_2free(\
 			new_lexer->contenu, new_lexer->next->contenu);
@@ -107,19 +109,4 @@ void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer)
 	else
 		free_one_ele(tmp_lexer, to_free);
 	to_free = NULL;
-}
-
-int	len_lexer(t_lexer **deb_lexer)
-{
-	t_lexer	*tmp_lexer;
-	int		i;
-
-	i = 0;
-	tmp_lexer = *deb_lexer;
-	while (tmp_lexer)
-	{
-		i++;
-		tmp_lexer = tmp_lexer->next;
-	}
-	return (i);
 }

@@ -6,49 +6,49 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/08/29 22:16:19 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:41:55 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	print_to_exec(t_tab_parse *tab_parse)
+void    print_to_exec(t_tab_parse *tab_parse)
 {
-	int	i;
-	int	y;
+    int i;
+    int y;
 
-	i = 0;
-	y = 0;
-	while (tab_parse->nb_cmd > y)
-	{
-		while (tab_parse->nb_redir > i)
-		{
-			if (tab_parse[y].infile[i])
-				printf("f = %s %d \n", tab_parse[y].infile[i], i);
-			if (tab_parse[y].inredir[i])
-				printf("r = %s %d \n", tab_parse[y].inredir[i], i);
-			if (tab_parse[y].outfile[i])
-				printf("f = %s %d \n", tab_parse[y].outfile[i], i);
-			if (tab_parse[y].outredir[i])
-				printf("r = %s %d \n", tab_parse[y].outredir[i], i);
-			i++;
-		}
-		i = 0;
-		y++;
-	}
+    i = 0;
+    y = 0;
+    while (tab_parse->nb_cmd > y)
+    {
+        while (tab_parse->nb_redir > i)
+        {
+            if (tab_parse[y].infile[i])
+                printf("f = %s %d \n", tab_parse[y].infile[i], i);
+            if (tab_parse[y].inredir[i])
+                printf("r = %s %d \n", tab_parse[y].inredir[i], i);
+            if (tab_parse[y].outfile[i])
+                printf("f = %s %d \n", tab_parse[y].outfile[i], i);
+            if (tab_parse[y].outredir[i])
+                printf("r = %s %d \n", tab_parse[y].outredir[i], i);
+            i++;
+        }
+        i = 0;
+        y++;
+    }
 }
 
-t_tab_parse	*fill_tab_inredir(t_tab_parse *tab_parse, \
+t_tab_parse *fill_tab_inredir(t_tab_parse *tab_parse, \
 t_lexer *tmp_lexer, int y, int i)
 {
-	tab_parse[y].inredir[i] = ft_strdup(tmp_lexer->contenu);
-	error_malloc("exec inredir", tab_parse[y].inredir[i]);
-	tab_parse[y].infile[i] = ft_strdup(tmp_lexer->next->contenu);
-	error_malloc("exec inrdile", tab_parse[y].infile[i]);
-	return (tab_parse);
+    tab_parse[y].inredir[i] = ft_strdup(tmp_lexer->contenu);
+    error_malloc("exec inredir", tab_parse[y].inredir[i]);
+    tab_parse[y].infile[i] = ft_strdup(tmp_lexer->next->contenu);
+    error_malloc("exec inrdile", tab_parse[y].infile[i]);
+    return (tab_parse);
 }
 
-t_tab_parse    *exec_redir(t_lexer *tmp_lexer, t_tab_parse    *tab_parse, int y, int x)
+t_tab_parse *exec_redir(t_lexer *tmp_lexer, t_tab_parse *tab_parse, int y, int x)
 {
     static int    cpy = 0;
     static int    i = 0;

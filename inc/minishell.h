@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/09 02:34:48 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 16:39:04 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,11 @@ void	remove_type(t_lexer **deb_lexer, int type);
 
 //valide_lexer.c
 int		valide_lexer(t_lexer **deb_lexer, t_exec_data *data);
+
+// env_dollar.c
+t_lexer	*replace_env(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env);
+char	*for_env(char *str);
+char	*for_env2(char *str);
 
 //valide_lexer_dollar.c
 t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *data);

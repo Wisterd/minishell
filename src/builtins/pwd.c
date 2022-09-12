@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 00:28:48 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 20:12:41 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/09 03:09:26 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_pwd(t_exec_data *data)
 {
 	t_env	*cp;
 	char	*str;
-	
+
 	cp = data->l_env;
 	while (cp)
 	{
@@ -32,4 +32,5 @@ int	ft_pwd(t_exec_data *data)
 		return (0);
 	}
 	return (1);
+	g_exit_stat = 0;
 }
