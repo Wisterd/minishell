@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 06:05:43 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/12 16:34:58 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/13 00:44:41 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void	catch_signals(int signum)
 		rl_redisplay();
 	}
 	if (signum == SIGQUIT)
-	{
 		g_exit_stat = 131;
+	if (signum == SIGPIPE)
+	{
+		ft_garbage_collector(END, NULL);
+		ft_garbage_collector_perm(END, NULL);
 	}
 }
 

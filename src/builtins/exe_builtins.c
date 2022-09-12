@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:46:51 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 20:21:31 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 23:00:56 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,5 @@ void	exe_builtin(t_exec_data *data)
 			close(data->fd_out_builtin);
 	}
 	else
-	{
 		launch_builtin(data, cmd);
-	}
 }

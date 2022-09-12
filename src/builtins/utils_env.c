@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:42:45 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 20:50:17 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 23:05:24 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	protected_putstr(char *str, char *builtin, t_exec_data *data)
 	if (write(data->fd_out_builtin, str, ft_strlen(str)) == -1)
 	{
 		msg = ft_strjoin(builtin, ": write error: no space left on device\n");
+		if (!msg)
+			ft_error(ERR_MALLOC, NULL, data);
 		write(2, msg, ft_strlen(msg));
 		g_exit_stat = 1;
 		return (-1);

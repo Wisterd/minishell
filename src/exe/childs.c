@@ -6,13 +6,13 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:39 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 18:40:06 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 23:24:56 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	create_outfile(t_exec_data *data, int ind_cmd)
+int	create_outfile(t_exec_data *data, int ind_cmd)
 {
 	int		outfile;
 	int		ind_last;
@@ -32,12 +32,16 @@ void	create_outfile(t_exec_data *data, int ind_cmd)
 		else
 			ft_error(ERR_PERROR, "Open failed", data);
 	}
-	if (close(data->r_pipe[1]) == -1)
-		ft_error(ERR_PERROR, "Close failed", data);
-	data->r_pipe[1] = outfile;
+	if (data->r_pipe)
+	{
+		if (close(data->r_pipe[1]) == -1)
+			ft_error(ERR_PERROR, "Close failed", data);
+		data->r_pipe[1] = outfile;
+	}
+	return (outfile);
 }
 
-void	open_infile(t_exec_data *data, int ind_cmd)
+int	open_infile(t_exec_data *data, int ind_cmd)
 {
 	int		infile;
 	int		ind_last;
@@ -56,28 +60,35 @@ void	open_infile(t_exec_data *data, int ind_cmd)
 		else
 			ft_error(ERR_PERROR, "Open failed", data);
 	}
-	if (close(data->l_pipe[0]) == -1)
-		ft_error(ERR_PERROR, "Close failed", data);
-	data->l_pipe[0] = infile;
+	if (data->l_pipe)
+	{
+		if (close(data->l_pipe[0]) == -1)
+			ft_error(ERR_PERROR, "Close failed", data);
+		data->l_pipe[0] = infile;
+	}
+	return (infile);
 }
 
 static void	set_fds_inout(int *fd_in, int *fd_out, int ind_cmd, \
 	t_exec_data *exec_data)
 {
+	int	infile;
+	int	outfile;
+
 	if (exec_data->tab_parse[ind_cmd].outfile[0])
-		create_outfile(exec_data, ind_cmd);
+		outfile = create_outfile(exec_data, ind_cmd);
 	if (exec_data->tab_parse[ind_cmd].infile[0])
-		open_infile(exec_data, ind_cmd);
+		infile = open_infile(exec_data, ind_cmd);
 	if (ind_cmd == 0)
 	{
 		if (exec_data->tab_parse[ind_cmd].infile[0])
-			*fd_in = exec_data->l_pipe[0];
+			*fd_in = infile;
 		*fd_out = exec_data->r_pipe[1];
 	}
 	else if (ind_cmd == exec_data->n_cmds - 1)
 	{
 		if (exec_data->tab_parse[ind_cmd].outfile[0])
-			*fd_out = exec_data->r_pipe[1];
+			*fd_out = outfile;
 		*fd_in = exec_data->l_pipe[0];
 	}
 	else
