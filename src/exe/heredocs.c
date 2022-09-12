@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:49 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 17:39:38 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 19:15:40 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,7 @@ static void	readline_temp_file(char *file_name, char *here_eof)
 				write(1, "\n", 1);
 			break ;
 		}
-		line = ft_strjoin_free(prompt, "\n");
-		prompt = NULL;
-		if (!line)
-			ft_error(ERR_MALLOC, NULL, NULL);
-		to_write = ft_strjoin_2free(to_write, line);
-		if (!to_write)
-			ft_error(ERR_MALLOC, NULL, NULL);
+		heredoc_joins(&prompt, &line, &to_write);
 	}
 	ft_garbage_collector(END, NULL);
 	ft_garbage_collector_perm(END, NULL);
@@ -83,7 +77,6 @@ static void	fork_temp_file(t_exec_data *data, int ind_cmd, int ind_redir)
 {
 	char	*file_name;
 	pid_t	child;
-	int		status;
 
 	file_name = create_temp_file_name();
 	signal_heredoc();
@@ -94,12 +87,7 @@ static void	fork_temp_file(t_exec_data *data, int ind_cmd, int ind_redir)
 		readline_temp_file(file_name, \
 			data->tab_parse[ind_cmd].infile[ind_redir]);
 	signal(SIGINT, SIG_IGN);
-	waitpid(child, &status, 0);
-	signals();
-	if (WIFEXITED(status))
-		g_exit_stat = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_exit_stat = WTERMSIG(128 + status);
+	ft_wait_heredocs(child);
 	ft_free(data->tab_parse[ind_cmd].infile[ind_redir]);
 	if (access(file_name, F_OK) != -1)
 		data->tab_parse[ind_cmd].infile[ind_redir] = file_name;
@@ -129,16 +117,3 @@ void	look_for_heredocs(t_exec_data *data)
 		ind_cmd++;
 	}
 }
-
-/*
-int	main(void)
-{
-	int		fd_here;
-	char	*file_name;
-
-	file_name = create_temp_file_name();
-	fd_here = open(file_name, O_WRONLY);
-	if (fd_here == -1)
-		ft_error(ERR_PERROR, "Open failed", NULL);
-}
-*/

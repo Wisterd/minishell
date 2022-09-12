@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_garbage_collector_perm.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 19:27:45 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/12 19:29:54 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 void	ft_garbage_collector_perm(int mode, void *pointer)
 {
 	static t_garbage	*l_garbage = NULL;
-	
+
 	if (mode == INIT)
 	{
 		l_garbage = malloc(sizeof(t_garbage));

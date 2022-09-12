@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 18:57:46 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 18:53:22 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 19:29:17 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <string.h>
 # include <stddef.h>
 
-#define MALLOC 0
-#define FREE 1
-#define END 2
-#define INIT 3
+# define MALLOC 0
+# define FREE 1
+# define END 2
+# define INIT 3
 
 typedef struct s_list
 {

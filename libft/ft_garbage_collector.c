@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_garbage_collector.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 19:27:58 by mvue              #+#    #+#             */
+/*   Updated: 2022/09/12 19:28:52 by mvue             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 void	free_all(t_garbage **l_garbage)
@@ -24,7 +36,7 @@ void	add_front(t_garbage **l_garbage, void *pointer)
 		exit(1);
 	}
 	l_new->prev = NULL;
-	l_new->pointer = pointer; 
+	l_new->pointer = pointer;
 	if (*l_garbage)
 	{
 		(*l_garbage)->prev = l_new;
@@ -37,7 +49,7 @@ void	add_front(t_garbage **l_garbage, void *pointer)
 
 void	rm_ele(t_garbage **l_garbage, void *pointer)
 {
-	t_garbage *list;
+	t_garbage	*list;
 
 	list = *l_garbage;
 	while (list)
@@ -67,7 +79,7 @@ void	rm_ele(t_garbage **l_garbage, void *pointer)
 void	ft_garbage_collector(int mode, void *pointer)
 {
 	static t_garbage	*l_garbage = NULL;
-	
+
 	if (mode == INIT)
 	{
 		l_garbage = malloc(sizeof(t_garbage));

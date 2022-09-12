@@ -6,7 +6,7 @@
 /*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/12 16:39:04 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 19:34:44 by vbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define ERR_PERROR 16
 # define ERR_DIR 17
 
-extern int g_exit_stat;
+extern int	g_exit_stat;
 
 //EXE
 //error.c
@@ -63,8 +63,8 @@ char		*get_path_cmd(t_exec_data *data, char *cmd);
 char		*ft_strjoin_free(char *s1, char *s2);
 int			ft_wait(t_exec_data *data);
 void		ft_exit_error(int exit_stat);
-char		*ft_getcwd();
-char		*ft_getcwd_perm();
+char		*ft_getcwd(void);
+char		*ft_getcwd_perm(void);
 
 //pipe.c
 void		ft_exec(t_args_exec args_exec);
@@ -106,22 +106,23 @@ void		ft_unset(t_exec_data *data);
 void		ft_export(t_exec_data *data);
 
 //export2.c
-int			search_replace_var_name(t_env *l_env, char *var_name, char *var_content);
+int			search_replace_var_name(t_env *l_env, \
+			char *var_name, char *var_content);
 
 //echo.c
 void		ft_echo(t_exec_data *data);
 
 //exit.c
-void	ft_exit(t_exec_data *data);
+void		ft_exit(t_exec_data *data);
 
 //cd.c
-void	ft_cd(t_exec_data	*data);
+void		ft_cd(t_exec_data	*data);
 
 //pwd.c
-int	ft_pwd(t_exec_data *data);
+int			ft_pwd(t_exec_data *data);
 
 //cd.c
-void	ft_cd(t_exec_data *data);
+void		ft_cd(t_exec_data *data);
 
 //utils_env.c
 void		l_add_back(t_env **l_env, char *var_name, \
@@ -131,45 +132,45 @@ char		*get_var_name(char *var_path);
 int			protected_putstr(char *str, char *builtin, t_exec_data *data);
 
 // utilitaires_parsing.c
-char	*chartostr(char c);
-int		special_c(char *str);
+char		*chartostr(char c);
+int			special_c(char *str);
 
 // lexer.c
-void	print_lexer(t_lexer **deb_lexer);
-void	free_lexer(t_lexer **deb_lexer);
-void	create_lexer(t_lexer **deb_lexer, char *str, int type);
-void	history(t_lexer **deb_lexer);
-void	lexing(t_lexer **deb_lexer, char *prompt);
+void		print_lexer(t_lexer **deb_lexer);
+void		free_lexer(t_lexer **deb_lexer);
+void		create_lexer(t_lexer **deb_lexer, char *str, int type);
+void		history(t_lexer **deb_lexer);
+void		lexing(t_lexer **deb_lexer, char *prompt);
 
 //lexer2.c
-t_lexer	**create_deb_lexer(void);
-void	fuz_lex(t_lexer **deb_lexer, int type);
-void	fuz_lex1(t_lexer **deb_lexer, int type);
-void	free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer);
-int		len_lexer(t_lexer **deb_lexer);
+t_lexer		**create_deb_lexer(void);
+void		fuz_lex(t_lexer **deb_lexer, int type);
+void		fuz_lex1(t_lexer **deb_lexer, int type);
+void		free_one_element(t_lexer **deb_lexer, t_lexer *tmp_lexer);
+int			len_lexer(t_lexer **deb_lexer);
 
 // fuz_and_remove_lexer.c
-int		near_mot(t_lexer **deb_lexer);
-int		in_quote(t_lexer **deb_lexer);
-int		have_type(t_lexer **deb_lexer, int type);
-void	remove_type(t_lexer **deb_lexer, int type);
+int			near_mot(t_lexer **deb_lexer);
+int			in_quote(t_lexer **deb_lexer);
+int			have_type(t_lexer **deb_lexer, int type);
+void		remove_type(t_lexer **deb_lexer, int type);
 
 //valide_lexer.c
-int		valide_lexer(t_lexer **deb_lexer, t_exec_data *data);
+int			valide_lexer(t_lexer **deb_lexer, t_exec_data *data);
 
 // env_dollar.c
-t_lexer	*replace_env(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env);
-char	*for_env(char *str);
-char	*for_env2(char *str);
+t_lexer		*replace_env(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env);
+char		*for_env(char *str);
+char		*for_env2(char *str);
 
 //valide_lexer_dollar.c
-t_lexer	*replace_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, t_exec_data *data);
+t_lexer		*replace_dollar(t_lexer **deb_lexer, \
+			t_lexer *tmp_lexer, t_exec_data *data);
 
 // error.c
-void	print_error(t_pars_error error);
-void	error_malloc(char *str, void *not_null);
-
-int		in_quote(t_lexer **deb_lexer);
+void		print_error(t_pars_error error);
+void		error_malloc(char *str, void *not_null);
+int			in_quote(t_lexer **deb_lexer);
 
 //	init_tab_to_exec.c
 t_tab_parse	*init_tab_parse(t_lexer **deb_lexer);
@@ -179,11 +180,11 @@ t_tab_parse	*to_exec(t_lexer **deb_lexer);
 void		print_to_exec(t_tab_parse *tab_parse);
 
 // signal.c
-void		signals();
+void		signals(void);
 void		signal_heredoc(void);
 
 // parsing.c
-void	mini_exit(char *prompt, t_exec_data *data);
+void		mini_exit(char *prompt, t_exec_data *data);
 
 // error
 # define ERROR_MALLOC 42
