@@ -6,30 +6,47 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:54 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 17:34:32 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/09 01:58:07 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+void	close_pipes_until(int *pipes)
+{
+	int	i;
+
+	i = 0;
+	while (pipes[i] != -1)
+	{
+		if (close(pipes[i]) == -1)
+			ft_error(ERR_PERROR, "Close error", NULL);
+		i++;
+	}
+}
+
 int	*init_pipes(t_exec_data *data)
 {
+	int	i;
 	int	*pipes;
+	int	n_pipes;
 
 	if (data->n_cmds == 1)
 		return (NULL);
-	pipes = ft_malloc(sizeof(int) * 4);
+	n_pipes = data->n_cmds - 1;
+	i = 0;
+	pipes = ft_malloc(sizeof(int) * (2 * n_pipes));
 	if (!pipes)
 		ft_error(ERR_MALLOC, NULL, NULL);
-	if (pipe(pipes) == -1)
-		ft_error(ERR_PERROR, "Pipe failed", NULL);
-	if (pipe(pipes + 2) == -1)
+	while (i < n_pipes)
 	{
-		if (close(pipes[0]) == -1)
-			ft_error(ERR_PERROR, "Close failed", NULL);
-		if (close(pipes[1]) == -1)
-			ft_error(ERR_PERROR, "Close failed", NULL);
-		ft_error(ERR_PERROR, "Pipe failed", NULL);
+		if (pipe(pipes + 2 * i) == -1)
+		{
+			pipes[i * 2] = -1;
+			close_pipes_until(pipes);
+			ft_error(ERR_PERROR, "Pipe failed", NULL);
+		}
+		i++;
 	}
 	return (pipes);
 }
@@ -48,5 +65,4 @@ void	init_data(t_exec_data *data)
 	look_for_heredocs(data);
 	pipes = init_pipes(data);
 	data->pipes = pipes;
-	fill_pipes(data, 0);
 }

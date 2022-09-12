@@ -11,6 +11,7 @@ SRC_FILES = $(addprefix $(SRC_DIR), \
 	exe/path.c \
 	exe/pipe.c \
 	exe/error.c \
+	exe/error2.c \
 	exe/utils.c \
 	exe/childs.c \
 	exe/redirs.c \

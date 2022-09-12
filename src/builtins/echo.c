@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 18:40:27 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 00:29:37 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/09 00:38:38 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,26 @@ int	option_n(char *str)
 
 void	ft_echo(t_exec_data	*data)
 {
-	int	y;
+	int		y;
+	char	**args;
 
+	args = data->tab_parse[data->ind_cmd].tab_args;
 	y = 1;
-	while (data->tab_parse->tab_args[y])
+	while (args[y])
 	{
-		if (y == 1 && option_n(data->tab_parse->tab_args[y]))
+		if (y == 1 && option_n(args[y]))
 			;
-		else if (data->tab_parse->tab_args[y] && data->tab_parse->tab_args[y + 1])
+		else if (args[y] && args[y + 1])
 		{
-			if (protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data) == -1)
+			if (protected_putstr(args[y], "ft_echo", data) == -1)
 				return ;
 			protected_putstr(" ", "ft_echo", data);
 		}
-		else if (data->tab_parse->tab_args[y] && !data->tab_parse->tab_args[y + 1])	
-			protected_putstr(data->tab_parse->tab_args[y], "ft_echo", data);
+		else if (args[y] && !args[y + 1])
+			protected_putstr(args[y], "ft_echo", data);
 		y++;
 	}
-	if (data->tab_parse->tab_args[1] && !option_n(data->tab_parse->tab_args[1]))
+	if (!args[1] || (args[1] && !option_n(args[1])))
 		protected_putstr("\n", "ft_echo", data);
 	g_exit_stat = 0;
 }

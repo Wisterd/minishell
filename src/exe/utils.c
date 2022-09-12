@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:27 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/07 20:12:06 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 19:55:58 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,12 @@ int	ft_wait(t_exec_data *data)
 		if (WIFEXITED(status))
 			res = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-			res = WTERMSIG(128 + status);
+			res = 128 + WTERMSIG(status);
 		i++;
 	}
+	signals();
+	if (res == 130)
+		write(1, "\n", 1);
 	return (res);
 }
 

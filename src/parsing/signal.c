@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 06:05:43 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/08 17:25:55 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/08 19:57:44 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	catch_signals(int signum)
 {
 	if (signum == SIGINT)
-	{
+	{	
 		g_exit_stat = 130;
 		write(1, "\n", 1);
-		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	if (signum == SIGQUIT)
@@ -53,22 +53,12 @@ void	signals(void)
 		exit(EXIT_FAILURE);
 }
 
-void	signal_here(int signum)
-{
-	if (signum == SIGINT)
-	{
-		g_exit_stat = 130;
-		close(0);
-	}	
-}
-
 void	signal_heredoc(void)
 {
 	struct sigaction	sa;
 	int					fail;
 
 	fail = 0;
-	//sa.sa_handler = &signal_here;
 	sa.sa_handler = SIG_DFL;
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
@@ -76,5 +66,4 @@ void	signal_heredoc(void)
 	fail = sigaction(SIGINT, &sa, NULL);
 	if (fail == -1)
 		exit(EXIT_FAILURE);
-	
 }

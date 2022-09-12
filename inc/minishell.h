@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/07 21:51:15 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/09 02:34:48 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ extern int g_exit_stat;
 //EXE
 //error.c
 void		ft_error(int error_code, char *to_print, t_exec_data *data);
-
+char		*check_err_1(int *exit_stat, char *to_print, int error_code);
+char		*check_err_127(int *exit_stat, char *to_print, int error_code);
+char		*check_err_126(int *exit_stat, char *to_print, int error_code);
+void		ft_error_no_exit(int error_code, char *to_print, t_exec_data *data);
 //path.c
 char		*get_path_cmd(t_exec_data *data, char *cmd);
 
@@ -67,7 +70,7 @@ char		*ft_getcwd_perm();
 void		ft_exec(t_args_exec args_exec);
 void		ft_close_pipes(t_exec_data *data);
 int			ft_fork(t_exec_data *data);
-void		fill_pipes(t_exec_data *data, int mode);
+void		fill_pipes(t_exec_data *data);
 //childs.c 
 void		ft_child(t_exec_data *data);
 

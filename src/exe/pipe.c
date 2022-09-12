@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:14 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/08 17:34:05 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/09 01:42:19 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,22 @@ void	ft_exec(t_args_exec args_exec)
 		ft_error(ERR_PERROR, "Execve failed", NULL);
 }
 
-void	fill_pipes(t_exec_data *data, int mode)
+void	fill_pipes(t_exec_data *data)
 {
-	static int	mem_l_pipe = 0;
-	static int	mem_r_pipe = 2;
-	int			temp;
-
-	if (mode == 0)
+	if (data->ind_cmd == 0)
 	{
-		mem_l_pipe = 0;
-		mem_r_pipe = 2;
-		return ;
-	}
-	if (data->ind_cmd == 0 || data->ind_cmd == data->n_cmds - 1)
-	{
-		data->l_pipe = data->pipes + mem_l_pipe;
+		data->l_pipe = NULL;
 		data->r_pipe = data->pipes;
+	}
+	else if (data->ind_cmd == data->n_cmds - 1)
+	{
+		data->l_pipe = data->pipes + data->ind_cmd * 2 - 2;
+		data->r_pipe = NULL;
 	}
 	else
 	{
-		data->l_pipe = data->pipes + mem_l_pipe;
-		data->r_pipe = data->pipes + mem_r_pipe;
-		temp = mem_l_pipe;
-		mem_l_pipe = mem_r_pipe;
-		mem_r_pipe = temp;
+		data->l_pipe = data->pipes + data->ind_cmd * 2 - 2;
+		data->r_pipe = data->pipes + data->ind_cmd * 2;
 	}
 }
 
@@ -51,7 +43,7 @@ void	ft_close_pipes(t_exec_data *data)
 	int	i;
 
 	i = 0;
-	while (i < 4)
+	while (i < (data->n_cmds - 1) * 2)
 	{
 		if (close(data->pipes[i]) == -1)
 			ft_error(ERR_PERROR, "Close error", data);
@@ -70,10 +62,11 @@ void	launch_children(t_exec_data *data)
 	if (!childs)
 		ft_error(ERR_MALLOC, NULL, NULL);
 	i = -1;
+	signal(SIGINT, SIG_IGN);
 	while (++i < data->n_cmds)
 	{
 		data->ind_cmd = i;
-		fill_pipes(data, 1);
+		fill_pipes(data);
 		childs[i] = fork();
 		if (childs[i] < 0)
 			ft_error(ERR_PERROR, "Fork failed", data);
@@ -109,6 +102,7 @@ int	ft_fork(t_exec_data *data)
 }
 
 //TODO :
+//echo $ comme premier test, invalid read
 ///mnt/nfs/homes/mvue/Documents/minishell: Is a directory err 126
 //ft_error avec data->pipes, bien initialiser data->pipes a NULL et 
 //le remettre a nul apres avoir close les pipes
