@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:14 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/09 01:42:19 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 21:12:57 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,4 @@ int	ft_fork(t_exec_data *data)
 }
 
 //TODO :
-//echo $ comme premier test, invalid read
-///mnt/nfs/homes/mvue/Documents/minishell: Is a directory err 126
-//ft_error avec data->pipes, bien initialiser data->pipes a NULL et 
-//le remettre a nul apres avoir close les pipes
-//write error: No space left on device pour tous les buitins qui ecrivent
-//signaux heredocs
 //chercher tous les ft_malloc pour verifier qu'ils sont proteges
-//check qu'on remet bien g_exit_stat a 0 quand builtins, pipes, cmds simples etc

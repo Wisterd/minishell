@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:23:03 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/12 16:24:10 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:04:45 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,13 @@ int	in_quote(t_lexer **deb_lexer)
 		tmp_lexer = tmp_lexer->next;
 	}
 	return (0);
+}
+
+void	if_pipe(t_lexer *tmp_lexer, int *i, int *y)
+{
+	if (tmp_lexer->type == PIPE)
+	{
+		*y = *y + 1;
+		*i = 0;
+	}
 }

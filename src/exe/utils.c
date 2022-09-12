@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:27 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 20:11:27 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 21:03:08 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ char	*ft_getcwd_perm(void)
 	char	*str_cwd;
 
 	str_cwd = ft_malloc_perm(sizeof(char) * PATH_MAX);
+	if (!str_cwd)
+		ft_error(ERR_MALLOC, NULL, NULL);
 	if (!getcwd(str_cwd, sizeof(char) * PATH_MAX))
 		ft_error(ERR_PERROR, "Getcwd failed", NULL);
 	return (str_cwd);
@@ -86,6 +88,8 @@ char	*ft_getcwd(void)
 	char	*str_cwd;
 
 	str_cwd = ft_malloc(sizeof(char) * PATH_MAX);
+	if (!str_cwd)
+		ft_error(ERR_MALLOC, NULL, NULL);
 	if (!getcwd(str_cwd, sizeof(char) * PATH_MAX))
 		ft_error(ERR_PERROR, "Getcwd failed", NULL);
 	return (str_cwd);

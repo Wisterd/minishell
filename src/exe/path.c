@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:06 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 20:08:17 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 21:24:07 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static char	*search_path_cmd(t_exec_data *data, char *cmd, int *path_state)
 	i = 0;
 	path_cmd = NULL;
 	path = ft_split(ft_getenv("PATH", data), ':');
+	if (!path)
+		ft_error(ERR_MALLOC, NULL, data);
 	while (path[i] && *path_state != ACCESSIBLE)
 	{
 		if (path_cmd)

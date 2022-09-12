@@ -6,18 +6,20 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:50:31 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 20:50:40 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 21:29:27 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	print_export_error(char *arg)
+static void	print_export_error(char *arg, t_exec_data *data)
 {
 	char	*to_write;
 
 	write(2, "export: '", 8);
 	to_write = ft_strjoin_1free(arg, "': not a valid identifier\n");
+	if (!to_write)
+		ft_error(ERR_MALLOC, NULL, data);
 	write(2, to_write, ft_strlen(to_write));
 }
 
@@ -59,7 +61,7 @@ static void	loop_on_export(t_exec_data *data, char *arg)
 
 	if (!check_valid_export(arg))
 	{
-		print_export_error(arg);
+		print_export_error(arg, data);
 		g_exit_stat = 1;
 	}
 	else if (!has_equal_sign(arg))

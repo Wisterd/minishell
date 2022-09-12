@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:41:22 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/12 20:42:29 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 21:01:04 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,12 +168,15 @@ int			len_lexer(t_lexer **deb_lexer);
 
 // fuz_and_remove_lexer.c
 int			near_mot(t_lexer **deb_lexer);
-int			in_quote(t_lexer **deb_lexer);
 int			have_type(t_lexer **deb_lexer, int type);
 void		remove_type(t_lexer **deb_lexer, int type);
 
 //valide_lexer.c
 int			valide_lexer(t_lexer **deb_lexer, t_exec_data *data);
+
+//quote.c
+void		if_pipe(t_lexer *tmp_lexer, int *i, int *y);
+int			in_quote(t_lexer **deb_lexer);
 
 // env_dollar.c
 t_lexer		*replace_env(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env);

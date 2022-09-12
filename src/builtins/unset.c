@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:43:29 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 19:46:31 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 21:30:38 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ int	check_valid_unset(char *var_name)
 	return (1);
 }
 
-static void	print_unset_error(char *arg)
+static void	print_unset_error(char *arg, t_exec_data *data)
 {
 	char	*to_write;
 
 	write(2, "unset: '", 8);
 	to_write = ft_strjoin_1free(arg, "': not a valid identifier\n");
+	if (!to_write)
+		ft_error(ERR_MALLOC, NULL, data);
 	write(2, to_write, ft_strlen(to_write));
 }
 
@@ -87,7 +89,7 @@ void	ft_unset(t_exec_data *data)
 	{
 		if (!check_valid_unset(tab_args[i]))
 		{
-			print_unset_error(tab_args[i]);
+			print_unset_error(tab_args[i], data);
 			g_exit_stat = 1;
 		}
 		else

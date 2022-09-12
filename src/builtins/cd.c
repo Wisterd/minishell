@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 00:07:34 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/09 03:09:17 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:15:36 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ void	change_pwd(t_exec_data *data)
 void	new_dir(t_exec_data *data)
 {
 	if (if_file(data))
+	{
 		change_pwd(data);
+		g_exit_stat = 0;
+	}
+	g_exit_stat = 1;
 }
 
 void	ft_cd(t_exec_data *data)
@@ -69,6 +73,7 @@ void	ft_cd(t_exec_data *data)
 	if (data->args_exec->tab_args[y] && data->args_exec->tab_args[y + 1])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+		g_exit_stat = 1;
 		return ;
 	}
 	else if (data->args_exec->tab_args[y] \
@@ -76,5 +81,4 @@ void	ft_cd(t_exec_data *data)
 		new_dir(data);
 	else if (data->args_exec->tab_args[y])
 		new_dir(data);
-	g_exit_stat = 0;
 }

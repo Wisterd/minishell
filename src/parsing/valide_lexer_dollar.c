@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valide_lexer_dollar.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarbier <vbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 17:40:42 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/12 16:38:07 by vbarbier         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:11:01 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,13 @@ int	erase_dollar(t_lexer **deb_lexer, t_lexer *tmp_lexer, char *env)
 	return (0);
 }
 
+t_lexer	*erase(t_lexer **deb_lexer, t_lexer *tmp_lexer)
+{
+	free_one_element(deb_lexer, tmp_lexer);
+	tmp_lexer = *deb_lexer;
+	return (tmp_lexer);
+}
+
 t_lexer	*replace_dollar(t_lexer **deb_lexer, \
 t_lexer *tmp_lexer, t_exec_data *data)
 {
@@ -97,12 +104,9 @@ t_lexer *tmp_lexer, t_exec_data *data)
 			env = ft_getenv(for_env(tmp_lexer->next->contenu), data);
 			if (for_env2(tmp_lexer->next->contenu))
 				env = ft_strjoin(env, for_env2(tmp_lexer->next->contenu));
+			error_malloc("replace dollar", tmp_lexer->next->contenu);
 			if (erase_dollar(deb_lexer, tmp_lexer, env))
-			{
-				free_one_element(deb_lexer, tmp_lexer);
-				tmp_lexer = *deb_lexer;
-				return (tmp_lexer);
-			}
+				return (erase(deb_lexer, tmp_lexer));
 			tmp_lexer = replace_env(deb_lexer, tmp_lexer, env);
 		}
 	}

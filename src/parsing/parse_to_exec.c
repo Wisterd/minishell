@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 13:52:44 by vbarbier          #+#    #+#             */
-/*   Updated: 2022/09/12 19:38:05 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/12 21:07:43 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_to_exec(t_tab_parse *tab_parse)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	i = 0;
 	y = 0;
@@ -38,7 +38,7 @@ void	print_to_exec(t_tab_parse *tab_parse)
 	}
 }
 
-t_tab_parse *fill_tab_inredir(t_tab_parse *tab_parse, \
+t_tab_parse	*fill_tab_inredir(t_tab_parse *tab_parse, \
 t_lexer *tmp_lexer, int y, int i)
 {
 	tab_parse[y].inredir[i] = ft_strdup(tmp_lexer->contenu);
@@ -48,11 +48,12 @@ t_lexer *tmp_lexer, int y, int i)
 	return (tab_parse);
 }
 
-t_tab_parse *exec_redir(t_lexer *tmp_lexer, t_tab_parse *tab_parse, int y, int x)
+t_tab_parse	*exec_redir(t_lexer *tmp_lexer, \
+t_tab_parse *tab_parse, int y, int x)
 {
 	static int	cpy = 0;
-    static int	i = 0;
-    static int	z = 0;
+	static int	i = 0;
+	static int	z = 0;
 
 	if (cpy != y || (x == 0 && y == 0))
 	{
@@ -63,7 +64,7 @@ t_tab_parse *exec_redir(t_lexer *tmp_lexer, t_tab_parse *tab_parse, int y, int x
 	{
 		if (!ft_strncmp(tmp_lexer->contenu, "<<", 2) || \
 			!ft_strncmp(tmp_lexer->contenu, "<", 1))
- 			tab_parse = fill_tab_inredir(tab_parse, tmp_lexer, y, i++);
+			tab_parse = fill_tab_inredir(tab_parse, tmp_lexer, y, i++);
 		else
 		{
 			tab_parse[y].outredir[z] = ft_strdup(tmp_lexer->contenu);
@@ -77,14 +78,14 @@ t_tab_parse *exec_redir(t_lexer *tmp_lexer, t_tab_parse *tab_parse, int y, int x
 	return (tab_parse);
 }
 
-int    conditon(t_lexer *tmp_lexer)
+int	conditon(t_lexer *tmp_lexer)
 {
-	return ((tmp_lexer->type == MOT || tmp_lexer->type == DOLLAR)\
+	return ((tmp_lexer->type == MOT || tmp_lexer->type == DOLLAR) \
 		&& (!tmp_lexer->pre || \
 		(tmp_lexer->pre && tmp_lexer->pre->type != REDIR)));
 }
 
-t_tab_parse    *to_exec(t_lexer **deb_lexer)
+t_tab_parse	*to_exec(t_lexer **deb_lexer)
 {
 	int			i;
 	int			y;
@@ -105,11 +106,7 @@ t_tab_parse    *to_exec(t_lexer **deb_lexer)
 			tab_parse[y].tab_args[i] = ft_strdup(tmp_lexer->contenu);
 			error_malloc("to_exec", tab_parse[y].tab_args[i++]);
 		}
-		if (tmp_lexer->type == PIPE)
-		{
-			y++;
-			i = 0;
-		}
+		if_pipe(tmp_lexer, &i, &y);
 		tmp_lexer = tmp_lexer->next;
 	}
 	return (tab_parse);
