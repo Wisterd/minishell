@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:16:14 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 22:03:20 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/13 17:58:15 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,3 @@ int	ft_fork(t_exec_data *data)
 	}
 	return (0);
 }
-
-//TODO :
-//chercher tous les ft_malloc pour verifier qu'ils sont proteges

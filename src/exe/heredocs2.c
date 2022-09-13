@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 19:06:58 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 19:17:03 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/13 17:50:27 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_wait_heredocs(pid_t child)
 	if (WIFEXITED(status))
 		g_exit_stat = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_exit_stat = WTERMSIG(128 + status);
+		g_exit_stat = 128 + WTERMSIG(status);
 }
 
 void	heredoc_joins(char **prompt, char **line, char **to_write)

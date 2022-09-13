@@ -6,7 +6,7 @@
 /*   By: mvue <mvue@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:15:49 by mvue              #+#    #+#             */
-/*   Updated: 2022/09/12 19:15:40 by mvue             ###   ########.fr       */
+/*   Updated: 2022/09/13 17:49:11 by mvue             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static char	*create_temp_file_name(void)
 	while (available == 0 && num <= INT_MAX)
 	{
 		file_name = ft_itoa(num);
+		if (!file_name)
+			ft_error(ERR_MALLOC, NULL, NULL);
+		file_name = ft_strjoin("/tmp/", file_name);
+		if (!file_name)
+			ft_error(ERR_MALLOC, NULL, NULL);
 		available = access(file_name, F_OK);
 		num++;
 	}
